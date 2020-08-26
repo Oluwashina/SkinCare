@@ -12,7 +12,7 @@
                     solo
                     dense flat 
                     class=""
-                    append-icon="mdi-magnify" background-color="#DEDDDD"
+                    append-icon="mdi-magnify" background-color="#f5f3fc"
                 
                     @keyup="search($event)"
                     @change="search($event)"
@@ -93,6 +93,14 @@ export default {
 .heading{
   color: #4E4B46;
   font-weight: bold;
+}
+.card{
+    border: 1px solid rgba(207, 203, 199, 0.25);
+}
+.card-body {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 4px 4px rgba(78, 75, 70, 0.25);
 }
 .btn-green {
   background: #fff;

@@ -65,7 +65,7 @@
               Products
             </v-list-item-title> 
           </v-list-item>
-          <v-list-item router-link to="/" >
+          <v-list-item router-link to="/skinissues" >
             <v-list-item-icon>
                 <v-icon color="#F7941D">mdi-alert-circle-outline</v-icon>
             </v-list-item-icon>
@@ -108,7 +108,7 @@
         </v-list>
         <div style="margin-top: 80px;">
             <div class="text-center">
-                <button class="btn btn-add">Add New Product</button>
+                 <router-link to="/newproduct" class="btn-add" style="text-decoration: none; color:white;">Add New Product</router-link>
             </div> 
         </div>
        

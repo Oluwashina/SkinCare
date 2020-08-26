@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Dashboard from '../views/Dashboard.vue'
 import Products from '../views/Products.vue'
+import NewProduct from '../views/NewProduct.vue'
+import SkinIssues from '../views/SkinIssues.vue'
 import AdminNav from '../Layouts/AdminLayout.vue'
 
 Vue.use(VueRouter)
@@ -30,6 +32,16 @@ Vue.use(VueRouter)
         name: 'Products',
         component: Products
       },
+      {
+        path: '/newproduct',
+        name: 'NewProduct',
+        component: NewProduct
+      },
+      {
+        path: '/skinissues',
+        name: 'SkinIssues',
+        component: SkinIssues
+      }
     ]
   },
   
