@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Dashboard from '../views/Dashboard.vue'
+import Products from '../views/Products.vue'
 import AdminNav from '../Layouts/AdminLayout.vue'
 
 Vue.use(VueRouter)
@@ -23,6 +24,11 @@ Vue.use(VueRouter)
         path: '/dashboard',
         name: 'Dashboard',
         component: Dashboard
+      },
+      {
+        path: '/products',
+        name: 'Products',
+        component: Products
       },
     ]
   },

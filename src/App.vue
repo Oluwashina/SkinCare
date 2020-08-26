@@ -28,5 +28,6 @@ export default {
   *{
     font-family: 'AirbnbCereal';
   }
+ 
   
 </style>
