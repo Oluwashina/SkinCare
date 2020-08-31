@@ -85,7 +85,7 @@
                   <v-img :src="getImageUrl(item.img_url)" height="60" width="80" class="ma-0" contain></v-img>
                 </template>
                 <template v-slot:item.action="{ item }">
-                    <v-btn text  @click=" getFarmById(item._id)" style="border: 1px solid #F7941D; color:#F7941D; border-radius: 25px;" class="text-none" small>View</v-btn>
+                    <v-btn text  @click="View(item._id)" style="border: 1px solid #F7941D; color:#F7941D; border-radius: 25px;" class="text-none" small>View</v-btn>
                 </template>
               </v-data-table>
             </v-card>

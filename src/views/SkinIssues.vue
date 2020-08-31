@@ -22,7 +22,7 @@
 
           <v-toolbar flat style="background-color:white" height="30">
             <v-spacer></v-spacer>
-            <router-link to='/skinissues' class="btn-add" style="text-decoration:none"><span style="">Add New Skin Issue</span></router-link>
+            <router-link to='/skinissues/add' class="btn-add" style="text-decoration:none"><span style="">Add New Skin Issue</span></router-link>
         </v-toolbar>
 
           <!-- list of skin issues -->

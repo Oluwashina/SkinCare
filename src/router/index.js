@@ -6,6 +6,9 @@ import Products from '../views/Products.vue'
 import NewProduct from '../views/NewProduct.vue'
 import SkinIssues from '../views/SkinIssues.vue'
 import AdminNav from '../Layouts/AdminLayout.vue'
+import AddSkinIssue from '../views/AddSkinIssue.vue'
+import Bespoke from '../views/Bespoke.vue';
+import BespokeById from '../views/BespokeById'
 
 Vue.use(VueRouter)
 
@@ -33,7 +36,7 @@ Vue.use(VueRouter)
         component: Products
       },
       {
-        path: '/newproduct',
+        path: '/products/new',
         name: 'NewProduct',
         component: NewProduct
       },
@@ -41,6 +44,21 @@ Vue.use(VueRouter)
         path: '/skinissues',
         name: 'SkinIssues',
         component: SkinIssues
+      },
+      {
+        path: '/skinissues/add',
+        name: 'AddSkinIssue',
+        component: AddSkinIssue
+      },
+      {
+        path: '/bespoke',
+        name: 'Bespoke',
+        component: Bespoke
+      },
+      {
+        path: '/bespoke/:id',
+        name: 'BespokeById',
+        component: BespokeById
       }
     ]
   },
