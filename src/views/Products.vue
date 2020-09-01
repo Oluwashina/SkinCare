@@ -23,24 +23,31 @@
           <!-- list of all products -->
              <div class="row mt-4">
             
-           <div class="col-lg-4 mb-3"  v-for="n in Products" :key="n.name">
+           <div class="col-lg-4 mb-3"  v-for="n in products" :key="n.id">
                 <div class="card">
                 <div class="card-body">
                     <div class="text-center">
-                        <v-img :src="getImageUrl(n.img_url)"></v-img>
+                      <v-img :src="getImageUrl(n.imgUrl)" width="266" height="138"></v-img>
                     </div>
-                    <h5 class="card-title text-center" style="font-weight: bold;">{{n.name}}</h5>
-                    <h6 class="card-text text-center text-color">Qty Available: <span>{{n.duration}}</span> </h6>
-                    <h6 class="card-text text-center text-color">Price NGN: <span>{{n.cost}}</span></h6>
+                    <h5 class="card-title text-center mt-2" style="font-weight: bold;">{{n.name}}</h5>
+                    <h6 class="card-text text-center text-color">Qty Available: <span>{{n.quantityAvailable}}</span> </h6>
+                    <h6 class="card-text text-center text-color">Price NGN: <span>{{n.price}}</span></h6>
                     <div class="text-center">
-                        <button class="btn btn-green"  @click="FundFarm($event, n._id)">Edit</button>
+                        <button class="btn btn-green"  @click="FundFarm($event, n.id)">Edit</button>
                     </div> 
                 </div>
                 </div>
             </div>
 
           </div>
-
+        <!-- <div class="text-center mt-5">
+          <v-pagination @input="next"  v-model="pagination.page" 
+          :length="Math.round(itemsLength / 9)"></v-pagination>
+        </div> -->
+        <div class="text-center mt-5">
+          <v-pagination @input="next"  v-model="pagination.page" 
+          length="3" color="#F7941D"></v-pagination>
+        </div>
      </div>
  </v-container>
 </template>
@@ -49,43 +56,49 @@
 export default {
     data(){
         return{
-            Products: [
-                {
-                    name: 'HAIR GLOW BUTTER',
-                    duration: '4',
-                    roi: '4',
-                    cost: '40',
-                    img_url: '/cream.png'
-                },
-                  {
-                    name: 'HAIR GLOW BUTTER',
-                    duration: '4',
-                    roi: '4',
-                    cost: '40',
-                    img_url: '/cream2.png'
-                },
-                  {
-                    name: 'HAIR GLOW BUTTER',
-                    duration: '4',
-                    roi: '4',
-                    cost: '40',
-                    img_url: '/cream3.png'
-                },
-                  {
-                    name: 'HAIR GLOW BUTTER',
-                    duration: '4',
-                    roi: '4',
-                    cost: '40',
-                    img_url: '/cream.png'
-                }
-            ]
+          pagination: {
+            page: 1,
+            total: 0,
+            perPage: 0,
+            visible: 7
+          },
         }
     },
+    computed:{
+      products(){
+        let products = this.$store.state.products.products
+        
+        return products
+      }
+    },
     methods:{
-          getImageUrl(url){
-          return url
-             }
-    }
+      getImageUrl(url){
+        return url
+      },
+      search(event){
+        let word=event.target.value
+        this.$store.dispatch("productFilter", word )
+        .then(()=>{
+        })
+        .catch(()=>{
+        })
+      },
+      next(page){
+        alert(page);
+        const limit=10;      
+        const OffSet = (page * 10) - 10;
+        console.log("OffSet is "+ OffSet, limit); 
+        // this.$store.dispatch('getProducts', {Offset:OffSet,limit:limit})
+      }, 
+    },
+    created(){
+    
+      this.$store.dispatch("getProducts")
+      .then(()=>{
+      })
+      .catch(()=>{
+      })
+    } 
 }
 </script>
 

@@ -20,10 +20,10 @@
                   <v-icon color="#F7941D">mdi-stack-overflow</v-icon>
                 </div>
                 
-           <v-card-title class="">Total Products</v-card-title>
+           <v-card-title class="" style="font-size: 18px">Total Products</v-card-title>
 
               <v-card-text class="text--primary">
-                <h6 class="heading" style="font-size: 25px">200</h6>
+                <h6 class="heading" style="font-size: 25px">{{productCount}}</h6>
               </v-card-text>
                 </v-card>
             </div>
@@ -39,7 +39,7 @@
                   <v-icon color="#4DC503">mdi-bookmark-check</v-icon>
                 </div>
                 
-           <v-card-title class="">Completed Orders</v-card-title>
+           <v-card-title class="" style="font-size: 18px">Completed Orders</v-card-title>
 
               <v-card-text class="text--primary">
                 <h6 class="heading" style="font-size: 25px">180</h6>
@@ -58,7 +58,7 @@
                   <v-icon color="#F7941D">mdi-calendar-clock</v-icon>
                 </div>
                 
-           <v-card-title class="">Pending Orders</v-card-title>
+           <v-card-title class="" style="font-size: 18px">Pending Orders</v-card-title>
 
               <v-card-text class="text--primary">
                 <h6 class="heading" style="font-size: 25px">10</h6>
@@ -98,38 +98,32 @@
         <div class="col-lg-4">
            <v-card
             max-width=""
-            class="mx-auto"
+            class="mx-auto mt-3"
              >
              <div class="pt-4 ml-4">
                   <v-icon color="#4DC503">mdi-account-multiple-outline</v-icon>
                 </div>
 
         <v-list three-line>
-          <template v-for="(item, index) in items">
-            <v-subheader
-              v-if="item.header"
-              :key="item.header"
-              v-text="item.header"
-            ></v-subheader>
-
+          <template v-for="(item, index) in users" >
+            <v-subheader :key="index" v-if="index===0" class="my-2">Recently Registered Members</v-subheader>
             <v-divider
-              v-else-if="item.divider"
+              v-if="index>0"
               :key="index"
-              :inset="item.inset"
+              class="my-1"
             ></v-divider>
 
             <v-list-item
-              v-else
-              :key="item.title"
+              :key="index"
               
             >
               <v-list-item-avatar>
-                <v-img :src="item.avatar"></v-img>
+                <v-img :src="getImageUrl()"></v-img>
               </v-list-item-avatar>
 
               <v-list-item-content>
-                <v-list-item-title v-html="item.title"></v-list-item-title>
-                <v-list-item-subtitle v-html="item.subtitle"></v-list-item-subtitle>
+                <v-list-item-title v-html="item.firstName+ '' + item.lastName"></v-list-item-title>
+                <v-list-item-subtitle v-html="item.email"></v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </template>
@@ -192,61 +186,38 @@ export default {
               img_url: './cream3.png'
             },
         ],
-      items: [
-        { header: 'Recently Registered Users' },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-          title: 'Ade Johnson',
-          subtitle: "<span class='text--primary'>aliConnors@gmail.com</span> ",
-        },
-        { divider: true, inset: true },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-          title: 'Tolu Ola',
-          subtitle: "<span class='text--primary'>AlexJennifer@gmail.com</span> ",
-        },
-        { divider: true, inset: true },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-          title: 'Tola Yen',
-          subtitle: "<span class='text--primary'>sandraadams@yahoo.com</span> ",
-        },
-        { divider: true, inset: true },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-          title: 'Ola jacob',
-          subtitle: "<span class='text--primary'>TrevorHansen@gmail.com</span>",
-        },
-        { divider: true, inset: true },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg',
-          title: 'Jane Yen',
-          subtitle: "<span class='text--primary'>BrittaHolt@yahoo.com</span>",
-        },
-      ],
+      
     }
   },
   computed:{
-
+    users(){
+      return this.$store.state.auth.users
+    },
+    productCount(){
+      return this.$store.state.products.productsLength
+    }
   },
  methods:{
     getImageUrl(url){
-        if(url){
-          return url
-        }else{
-          return '/logo.png'
-        }
+    if(url){
+      return url
+    }else{
+      return '/avatar.png'
+    }
   }
  },
- created(){
-   this.$store.dispatch("getUsers")
-   .then((success)=>{
-     console.log(success)
-   })
-   .catch((err)=>{
-     console.lg(err)
-   })
- }
+  created(){
+    this.$store.dispatch("getUsers")
+    .then(()=>{
+    })
+    .catch(()=>{
+    })
+    this.$store.dispatch("getProducts")
+    .then(()=>{
+    })
+    .catch(()=>{
+    })
+  }  
 }
  
 </script>

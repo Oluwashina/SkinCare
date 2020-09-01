@@ -1,5 +1,13 @@
 <template>
   <v-container>
+    <v-snackbar v-model="snackbar" :timeout="10000" top color="success">
+      <span>Product Added Successfully...</span> 
+      <v-btn text color="white" @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
+    <v-snackbar v-model="snackbar2" :timeout="10000" top color="red">
+      <span>{{msgErr}}</span> 
+      <v-btn text color="white" @click="snackbar2 = false">Close</v-btn>
+    </v-snackbar>
       <div class="container">
         <h5 class="heading">Add new product</h5>
 
@@ -35,19 +43,19 @@
                   class="form-control input-style"
                   id="quantity"
                   required
-                  v-model="quantity"
+                  v-model="quantityAvailable"
                 />
              </div>
 
               <div class="form-group">
                 <label for="">Product Image</label>
-                  <v-file-input  show-size accept='image/*' label="Choose an image"  color="" background-color="#f5f3fc" solo flat @change="imageUrl($event)" ref="profileUrl"></v-file-input>
+                  <v-file-input  show-size accept='image/*' label="Choose an image"  color="" background-color="#f5f3fc" solo flat @change="onFileChange($event)" ref="productUrl"></v-file-input>
                    <!-- <p class="black--text mt-n6 pt-0" v-if="disabled">please wait, uploading image...<span class="fa fa-circle-o-notch fa-spin"></span></p> -->
               </div>
             
 
               <div class="text-center mt-5">
-                  <button :disabled="loading" @click="SendMessage($event)" class="btn btn-add">Add Product
+                  <button :disabled="loading" @click="AddProduct($event)" class="btn btn-add">Add Product
                     <span class="fa fa-circle-o-notch fa-spin" v-if="loader"></span>
                   </button>
                 </div>
@@ -67,12 +75,42 @@ export default {
           loader: false,
           name: '',
           price: '',
-          quantity: 0
+          quantityAvailable: 0,
+          files:'',
+          snackbar:false,
+          snackbar2:false,
+          msgErr:'',
         }
     },
     methods: {
-      imageUrl(e){
-        console.log(e)
+      onFileChange(e){
+        this.files = e;
+      },
+      AddProduct(event){
+        event.preventDefault();
+          this.loader = true
+          this.loading = true
+          this.$store.dispatch("AddProduct", {
+            "name": this.name,
+            "price": this.price,
+            "quantityAvailable":this.quantityAvailable,
+            "files":this.files
+          })
+          .then(()=>{
+            this.loader = false
+            this.loading = false
+            this.snackbar = true
+            this.name=''
+            this.price=''
+            this.quantityAvailable=''
+          })
+          .catch((err)=>{
+            this.loader = false
+            this.loading = false
+            this.msgErr = err.response.data.message
+            this.snackbar2 = true
+          })  
+         
       }
     } 
 }
