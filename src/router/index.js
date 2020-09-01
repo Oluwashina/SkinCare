@@ -8,7 +8,8 @@ import SkinIssues from '../views/SkinIssues.vue'
 import AdminNav from '../Layouts/AdminLayout.vue'
 import AddSkinIssue from '../views/AddSkinIssue.vue'
 import Bespoke from '../views/Bespoke.vue';
-import BespokeById from '../views/BespokeById'
+import BespokeById from '../views/BespokeById.vue'
+import BespokeAdd from '../views/BespokeAdd.vue'
 
 Vue.use(VueRouter)
 
@@ -59,6 +60,11 @@ Vue.use(VueRouter)
         path: '/bespoke/:id',
         name: 'BespokeById',
         component: BespokeById
+      },
+      {
+        path: '/addbespoke',
+        name: 'BespokeAdd',
+        component: BespokeAdd
       }
     ]
   },

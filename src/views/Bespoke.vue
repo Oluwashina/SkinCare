@@ -26,6 +26,21 @@
         </v-data-table>
 
         </v-tab-item>
+
+        <!-- second tab layout -->
+        <v-tab-item>
+          <v-toolbar class="mt-6" flat style="background-color:white" height="30">
+            <v-spacer></v-spacer>
+            <router-link to='/addbespoke' class="btn-add" style="text-decoration:none; color: white"><span style="">Add a question</span></router-link>
+        </v-toolbar>
+
+        <!-- Questions -->
+        <div class="mt-7 question">
+            <h6 style="font-weight: bold; color: #4E4B46;" class="pt-3">Question 1</h6>
+            <p class="pb-3">WHAT IS THE MAIN CONCERN YOU ARE HAVING TODAY CONCERNING YOUR HAIR OR SKIN?</p>
+          </div>
+
+        </v-tab-item>
         
              
 
@@ -104,5 +119,19 @@ export default {
 }
 .v-tab{
     text-transform: initial;
+}
+.btn-add{
+background: #F7941D;
+  border-radius: 25px;
+  color: #fff;
+  padding: 10px 30px;
+  transition: all 0.5s;
+  border: 1px solid #f7941d;
+}
+.question{
+  background: #D9D7D7;
+  border-radius: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
 }
 </style>
