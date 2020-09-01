@@ -14,6 +14,16 @@ import './fonts/AirbnbCerealExtraBold.ttf';
 import './fonts/AirbnbCerealLight.ttf';
 import './fonts/AirbnbCerealMedium.ttf';
 
+import Axios from 'axios'
+Axios.defaults.baseURL = "http://192.168.1.104:5000/"
+
+Vue.prototype.$http = Axios;
+const token = localStorage.getItem('token'); 
+if (token) {
+  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+}
+
+
 
 new Vue({
   router,

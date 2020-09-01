@@ -8,7 +8,7 @@
             <!-- Question -->
             <div class="row">
                 <div class="col-lg-8">
-                    <div class="form-group mt-5">
+                    <div class="form-group mt-3">
                         <label for="description">Question</label>
                         <textarea class="form-control" id="decription" rows="5"></textarea>
                     </div>

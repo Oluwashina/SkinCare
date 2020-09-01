@@ -97,7 +97,7 @@
               Questionnaires
             </v-list-item-title> 
           </v-list-item> 
-            <v-list-item router-link to="/" >
+            <v-list-item @click="logout()" >
             <v-list-item-icon>
                 <v-icon color="#F7941D">mdi-power-standby</v-icon>
             </v-list-item-icon>

@@ -2,6 +2,20 @@
   <div class="container">
       <div class="row justify-content-center mt-12">
         <div class="col-lg-6">
+
+          <!-- alert deiplay -->
+          <div class="alert alert-danger alert-dismissible fade show" role="alert" v-if="invalid">
+            Invalid Credentials
+             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+             </button>
+        </div>
+        <div class="alert alert-success" role="alert" v-if="success">
+          Login Successful!
+        </div>
+
+        <!-- end of alert display -->
+
           <div class="card">
               <div class="text-center">
                   <img src="/logo.png" class="logo" width="79" height="65"/>
@@ -33,7 +47,10 @@
                         id="password"
                         required
                         v-model="password"
+                         v-bind:class="{'form-control' : true, 'is-invalid' : !validPassword(password) && passwordBlured}"
+                        v-on:blur="passwordBlured = true"
                         />
+                        <div class="invalid-feedback">This field is required</div>
                     </div>
                       
                     <div class="text-right">
@@ -42,7 +59,7 @@
                    
 
                     <div class="text-center mt-3 mb-3">
-                        <button :disabled="isDisabled" @click="Login($event)" class="btn btn-add">Sign In
+                        <button :disabled="signOk" @click="Login($event)" class="btn btn-add">Sign In
                               <span class="fa fa-circle-o-notch fa-spin" v-if="loader"></span>
                           </button>
                     </div>
@@ -63,11 +80,18 @@
 export default {
     data(){
         return{
+           snackbar: true,
+          text: 'Hello, I\'m a snackbar',
           email: '',
           emailBlured: false,
+          passwordBlured: false,
           valid: false,
+          valid1: false,
           password: '',
-          loader: false
+          loader: false,
+          signOk: false,
+          invalid: false,
+          success: false
         }
     },
     methods:{
@@ -77,23 +101,48 @@ export default {
           this.valid = true
         }
       },
+      validatePassword: function(){
+      this.passwordBlured = true;
+        if(this.validPassword(this.password)){
+          this.valid1 = true
+        }
+      },
       validEmail: function(email){
         var re = /(.+)@(.+){2,}\.(.+){2,}/;
         return re.test(email.toLowerCase())
       },
+      validPassword: function(password){
+        return password
+      },
       Login(event){
         event.preventDefault();
         this.validate()
-        if(this.valid){
+        this.validatePassword()
+        if(this.valid == true && this.valid1 == true){
            this.loader = true
-           this.$router.push('/dashboard')
-        }
+           this.signOk = true
+          this.$store.dispatch("Login", {
+            "email": this.email,
+            "password": this.password
+          })
+          .then((success)=>{
+            console.log(success)
+            this.loader = false
+            this.signOk = false
+            this.success = true
+            this.$router.push('/dashboard')
+          })
+          .catch((err)=>{
+            this.loader = false
+            this.signOk = false
+            this.invalid = true
+            console.log(err)
+          })  
+        } 
       }
     },
      computed:{
-     isDisabled: function(){
-      return this.email.length == "" || this.password.length == "";
-    }
+
   }
 }
 </script>

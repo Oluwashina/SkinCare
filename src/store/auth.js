@@ -5,28 +5,32 @@ export const auth = {
         token: localStorage.getItem("token") || '',
         logindetails: {},
         isLogged:false,
+        users: []
     },
-    mutatons: {
-        Login(state,token){
+    mutations: {
+        Token(state,token){
             state.token = token
             state.isLogged = true
             },
         LoginDetails(state, data){
             state.logindetails = data
         },
+        Users(state, data){
+          state.users = data
+        }
     },
     actions:{
         // login here
         Login: ({commit}, payload) => {
             return new Promise((resolve, reject)=>{
-              axios.post("/user_auth",payload)
+              axios.post("/authenticate",payload)
               .then(({data, status})=>{
                 if(status === 200){
-                  const token = data.data.tokens
+                  const token = data.token
                   localStorage.setItem("token", token)
                   axios.defaults.headers.common['Authorization'] = token
-                  commit('Login', token)
-                  commit('LoginDetails', data)
+                  commit('Token', token)
+                  commit('LoginDetails', data.profile)
                   resolve(data);
                 }
               })
@@ -35,5 +39,21 @@ export const auth = {
               });
             })
           },
-    }
+
+        getUsers: ({commit})=>{
+          return new Promise((resolve, reject)=>{
+            axios.get("/members?limit=5")
+            .then(({data, status})=>{
+              if(status === 200){
+                commit('Users', data)
+                resolve(data)
+              }
+            })
+            .catch((error)=>{
+              reject(error)
+            })
+          })
+        }
+    },
+   
 }

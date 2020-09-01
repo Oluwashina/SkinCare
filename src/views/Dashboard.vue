@@ -77,8 +77,7 @@
               <v-data-table
                 :headers="headers"
                 :items="Orders"
-                hide-default-footer=""
-                items-per-page = 5
+                hide-default-footer
                 no-data-text='No new order placed yet'
               >
                 <template v-slot:item.img_url="{ item }">
@@ -227,6 +226,9 @@ export default {
       ],
     }
   },
+  computed:{
+
+  },
  methods:{
     getImageUrl(url){
         if(url){
@@ -235,6 +237,15 @@ export default {
           return '/logo.png'
         }
   }
+ },
+ created(){
+   this.$store.dispatch("getUsers")
+   .then((success)=>{
+     console.log(success)
+   })
+   .catch((err)=>{
+     console.lg(err)
+   })
  }
 }
  

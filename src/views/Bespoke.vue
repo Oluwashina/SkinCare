@@ -37,7 +37,16 @@
         <!-- Questions -->
         <div class="mt-7 question">
             <h6 style="font-weight: bold; color: #4E4B46;" class="pt-3">Question 1</h6>
-            <p class="pb-3">WHAT IS THE MAIN CONCERN YOU ARE HAVING TODAY CONCERNING YOUR HAIR OR SKIN?</p>
+            <div>
+                <div style="">
+                    <p class="pb-3">WHAT IS THE MAIN CONCERN YOU ARE HAVING TODAY CONCERNING YOUR HAIR OR SKIN?</p>
+                </div>
+                <div>
+                    <!--  <span class="ml-12"><i class="mdi mdi-pencil-circle-outline" style="color: #4DC503; font-size: 25px;"></i></span> -->
+                        <!-- <span class="ml-2"><i class="mdi mdi-delete-circle-outline" style="color: #F7941D; font-size: 25px;"></i></span> -->
+                </div>
+            </div>
+             
           </div>
 
         </v-tab-item>
