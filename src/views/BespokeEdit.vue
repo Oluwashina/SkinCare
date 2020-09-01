@@ -3,18 +3,17 @@
       <div class="container">
           <h5 class="heading">Bespoke Cosmetics</h5>
 
-          <p class="mt-7">Add a question</p>
+          <p class="mt-7">Update this question</p>
 
-            <!-- Question -->
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="form-group mt-5">
+          <!-- Question -->
+          <div class="row">
+              <div class="col-lg-8">
+                    <div class="form-group mt-3">
                         <label for="description">Question</label>
-                        <textarea class="form-control" id="decription" rows="5"></textarea>
+                        <textarea class="form-control" id="decription" rows="5" v-model="message"></textarea>
                     </div>
 
-                    <!-- category select -->  
-                    <div class="form-group">
+                     <div class="form-group">
                     <label for="category">Select category</label>
                         <select class="custom-select my-1 mr-sm-2" id="category">
                                 <option selected>Without Option</option>
@@ -23,18 +22,12 @@
                     </div>
 
                      <div class="text-center mt-8 mb-3">
-                        <button :disabled="isDisabled" @click="Login($event)" class="btn btn-add">Add Question
+                        <button :disabled="isDisabled" @click="Login($event)" class="btn btn-add">Update
                             <span class="fa fa-circle-o-notch fa-spin" v-if="loader"></span>
                         </button>
                      </div>
-
-
-                </div>
-            </div>
-
-           
-            
-            
+              </div>
+          </div>
 
       </div>
   </v-container>
@@ -44,7 +37,7 @@
 export default {
     data(){
         return{
-
+            message: 'WHAT IS THE MAIN CONCERN YOU ARE HAVING CONCERNING YOUR SKIN OR HAIR?'
         }
     }
 }
@@ -75,7 +68,7 @@ border-color: rgba(50, 54, 67, 0.2);
     background: #F7941D;
   border-radius: 25px;
   color: #fff;
-  padding: 10px 30px;
+  padding: 10px 70px;
   transition: all 0.5s;
   border: 1px solid #f7941d;
 }
@@ -86,5 +79,4 @@ border-color: rgba(50, 54, 67, 0.2);
   color: #F7941D;
   border: 1px solid #F7941D;
 }
-
 </style>

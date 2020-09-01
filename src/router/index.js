@@ -10,6 +10,7 @@ import AddSkinIssue from '../views/AddSkinIssue.vue'
 import Bespoke from '../views/Bespoke.vue';
 import BespokeById from '../views/BespokeById.vue'
 import BespokeAdd from '../views/BespokeAdd.vue'
+import BespokeEdit from '../views/BespokeEdit.vue'
 
 Vue.use(VueRouter)
 
@@ -65,6 +66,11 @@ Vue.use(VueRouter)
         path: '/addbespoke',
         name: 'BespokeAdd',
         component: BespokeAdd
+      },
+      {
+        path: '/editbespoke/:id',
+        name: 'BespokeEdit',
+        component: BespokeEdit
       }
     ]
   },
