@@ -33,18 +33,27 @@
                     <h6 class="card-text text-center text-color">Qty Available: <span>{{n.quantityAvailable}}</span> </h6>
                     <h6 class="card-text text-center text-color">Price NGN: <span>{{n.price}}</span></h6>
                     <div class="text-center">
-                        <button class="btn btn-green"  @click="FundFarm($event, n.id)">Edit</button>
+                        <button class="btn btn-green"  @click="Edit($event, n.id)">Edit</button>
                     </div> 
                 </div>
                 </div>
             </div>
 
           </div>
+
+          <div class="mt-12" v-if="products.length===0">
+              <h6 class="text-center ">No Products added yet!</h6>
+               <div class="text-center mt-6">
+                 <router-link to="/products/new" class="btn-add" style="text-decoration: none; color:white;">Add New Product</router-link>
+            </div> 
+          </div>
+
+
         <!-- <div class="text-center mt-5">
           <v-pagination @input="next"  v-model="pagination.page" 
           :length="Math.round(itemsLength / 9)"></v-pagination>
         </div> -->
-        <div class="text-center mt-5">
+        <div class="text-center mt-5" v-if="products.length > 0">
           <v-pagination @input="next"  v-model="pagination.page" 
           length="3" color="#F7941D"></v-pagination>
         </div>
@@ -114,6 +123,14 @@ export default {
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0px 4px 4px rgba(78, 75, 70, 0.25);
+}
+.btn-add{
+    background: #F7941D;
+  border-radius: 25px;
+  color: #fff;
+  padding: 10px 30px;
+  transition: all 0.5s;
+  border: 1px solid #f7941d;
 }
 .btn-green {
   background: #fff;

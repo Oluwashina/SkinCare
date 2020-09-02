@@ -35,18 +35,52 @@
         </v-toolbar>
 
         <!-- Questions -->
-        <div class="mt-7 question">
+        <div class="mt-7 mb-3 question">
             <h6 style="font-weight: bold; color: #4E4B46;" class="pt-3">Question 1</h6>
-            <div>
+            
                 <div style="">
-                    <p class="pb-3">WHAT IS THE MAIN CONCERN YOU ARE HAVING TODAY CONCERNING YOUR HAIR OR SKIN?</p>
+                    <p class="">WHAT IS THE MAIN CONCERN YOU ARE HAVING TODAY CONCERNING YOUR HAIR OR SKIN?</p>
+                    <div class="mt-n4">
+                        <span @click="Edit()"><i class="mdi mdi-pencil-circle-outline" style="color: #4DC503; font-size: 30px; cursor: pointer;"></i></span>
+                        <span @click="Delete()" class="ml-2"><i class="mdi mdi-delete-circle-outline" style="color: #F7941D; font-size: 30px; cursor: pointer;"></i></span>
+                    </div>
                 </div>
-                <div>
-                    <!--  <span class="ml-12"><i class="mdi mdi-pencil-circle-outline" style="color: #4DC503; font-size: 25px;"></i></span> -->
-                        <!-- <span class="ml-2"><i class="mdi mdi-delete-circle-outline" style="color: #F7941D; font-size: 25px;"></i></span> -->
+          </div>
+
+          <div class="question mb-3">
+            <h6 style="font-weight: bold; color: #4E4B46;" class="pt-3">Question 2</h6>
+            
+                <div style="">
+                    <p class="">WHAT IS THE MAIN CONCERN YOU ARE HAVING TODAY CONCERNING YOUR HAIR OR SKIN?</p>
+                    <div class="mt-n4">
+                        <span @click="Edit()"><i class="mdi mdi-pencil-circle-outline" style="color: #4DC503; font-size: 30px; cursor: pointer;"></i></span>
+                        <span @click="Delete()" class="ml-2"><i class="mdi mdi-delete-circle-outline" style="color: #F7941D; font-size: 30px; cursor: pointer;"></i></span>
+                    </div>
                 </div>
-            </div>
-             
+          </div>
+
+          <div class="question mb-3">
+            <h6 style="font-weight: bold; color: #4E4B46;" class="pt-3">Question 3</h6>
+            
+                <div style="">
+                    <p class="">WHAT IS THE MAIN CONCERN YOU ARE HAVING TODAY CONCERNING YOUR HAIR OR SKIN?</p>
+                    <div class="mt-n4">
+                        <span @click="Edit()"><i class="mdi mdi-pencil-circle-outline" style="color: #4DC503; font-size: 30px; cursor: pointer;"></i></span>
+                        <span @click="Delete()" class="ml-2"><i class="mdi mdi-delete-circle-outline" style="color: #F7941D; font-size: 30px; cursor: pointer;"></i></span>
+                    </div>
+                </div>
+          </div>
+
+          <div class="question">
+            <h6 style="font-weight: bold; color: #4E4B46;" class="pt-3">Question 4</h6>
+            
+                <div style="">
+                    <p class="">WHAT IS THE MAIN CONCERN YOU ARE HAVING TODAY CONCERNING YOUR HAIR OR SKIN?</p>
+                    <div class="mt-n4">
+                        <span @click="Edit()"><i class="mdi mdi-pencil-circle-outline" style="color: #4DC503; font-size: 30px; cursor: pointer;"></i></span>
+                        <span @click="Delete()" class="ml-2"><i class="mdi mdi-delete-circle-outline" style="color: #F7941D; font-size: 30px; cursor: pointer;"></i></span>
+                    </div>
+                </div>
           </div>
 
         </v-tab-item>
@@ -116,6 +150,12 @@ export default {
     methods: {
         View(id){
             this.$router.push('/bespoke/'+ id)
+        },
+        Edit(){
+            this.$router.push('/editbespoke/2')
+        },
+        Delete(){
+            alert("Deleted successfully!")
         }
     }
 }

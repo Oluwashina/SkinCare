@@ -54,7 +54,7 @@
                     </div>
                       
                     <div class="text-right">
-                       <router-link to="/" style="text-decoration: none; color: #4E4B46;" >Forgot Password</router-link>
+                       <router-link to="/" style="text-decoration: none; color: #4E4B46;" >Forgot Password?</router-link>
                     </div>
                    
 
