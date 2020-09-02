@@ -11,6 +11,7 @@ import Bespoke from '../views/Bespoke.vue';
 import BespokeById from '../views/BespokeById.vue'
 import BespokeAdd from '../views/BespokeAdd.vue'
 import BespokeEdit from '../views/BespokeEdit.vue'
+import EditProduct from '../views/EditProduct.vue'
 
 Vue.use(VueRouter)
 
@@ -41,6 +42,11 @@ Vue.use(VueRouter)
         path: '/products/new',
         name: 'NewProduct',
         component: NewProduct
+      },
+       {
+        path: '/product/edit/:id',
+        name: 'EditProduct',
+        component: EditProduct
       },
       {
         path: '/skinissues',

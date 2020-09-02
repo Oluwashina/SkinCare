@@ -5,7 +5,8 @@ export const products = {
         
         products: [],
         productsOriginal: [],
-        productsLength:0
+        productsLength:0,
+        product: {}
     },
     mutations: {
         Products(state, data){
@@ -19,6 +20,10 @@ export const products = {
                 return item.name.toLowerCase().includes(word.toLowerCase());
             });
         },
+        EditProduct(state, id){
+          var product = state.products.find(pro => pro.id === id)
+          state.product = product
+        }
     },
     actions:{
         getProducts: ({commit})=>{
@@ -64,6 +69,10 @@ export const products = {
                  });
             })
         },
+        editProduct: ({commit}, payload) =>{
+            commit('EditProduct', payload)
+        }
+
     },
    
 }

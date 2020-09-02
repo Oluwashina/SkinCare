@@ -8,8 +8,9 @@
       <span>{{msgErr}}</span> 
       <v-btn text color="white" @click="snackbar2 = false">Close</v-btn>
     </v-snackbar>
+
       <div class="container">
-        <h5 class="heading">Add new product</h5>
+        <h5 class="heading">Edit Product</h5>
 
         <div class="row mt-5">
           <div class="col-lg-8">
@@ -22,10 +23,7 @@
                   id="name"
                   required
                   v-model="name"
-                   v-bind:class="{'form-control' : true, 'is-invalid' : !validName(name) && nameBlured}"
-                     v-on:blur="nameBlured = true"
                 />
-                  <div class="invalid-feedback">This field is required</div>
             </div>
              
              <div class="form-group">
@@ -36,10 +34,7 @@
                   id="price"
                   required
                   v-model="price"
-                   v-bind:class="{'form-control' : true, 'is-invalid' : !validPrice(price) && priceBlured}"
-                   v-on:blur="priceBlured = true"
                 />
-                  <div class="invalid-feedback">This field is required</div>
              </div>
 
               <div class="form-group">
@@ -53,17 +48,22 @@
                 />
              </div>
 
-              <div class="form-group">
-                <label for="">Product Image</label>
-                  <v-file-input  show-size accept='image/*' label="Choose an image"  color="" background-color="#f5f3fc" solo flat @change="onFileChange($event)" ref="productUrl"></v-file-input>
-                   <p style="color: red; font-size: 13px;" class="mt-n6 pt-0" v-if="imageSelect">This field is required</p>
-                   <!-- <p class="black--text mt-n6 pt-0" v-if="disabled">please wait, uploading image...<span class="fa fa-circle-o-notch fa-spin"></span></p> -->
+
+             <!--   Preview product image  -->
+             <h6>Product Image</h6>
+              <div id="preview" class="mt-5">              
+                    <v-img height="400" :src="url" alt=""></v-img>
               </div>
-              
+
+              <div class="form-group mt-3">
+                <label for="">Change Product Image</label>
+                  <v-file-input  show-size accept='image/*' label="Choose an image"  color="" background-color="#f5f3fc" solo flat @change="onFileChange($event)" ref="productUrl"></v-file-input>
+                   <p class="black--text mt-n6 pt-0" v-if="disabled">please wait, uploading image...<span class="fa fa-circle-o-notch fa-spin"></span></p>
+              </div>
             
 
               <div class="text-center mt-5">
-                  <button :disabled="loading" @click="AddProduct($event)" class="btn btn-add">Add Product
+                  <button :disabled="loading" @click="UpdateProduct($event)" class="btn btn-add">Update Product
                     <span class="fa fa-circle-o-notch fa-spin" v-if="loader"></span>
                   </button>
                 </div>
@@ -81,55 +81,27 @@ export default {
         return{
           loading: false,
           loader: false,
-          name: '',
-          nameBlured: false,
-          price: '',
-          priceBlured: false,
-          quantityAvailable: 0,
+          url: this.$store.state.products.product.imgUrl,
+          name: this.$store.state.products.product.name,
+          price: this.$store.state.products.product.price,
+          quantityAvailable: this.$store.state.products.product.quantityAvailable,
           files:'',
-          imageSelect: false,
           snackbar:false,
           snackbar2:false,
           msgErr:'',
-          valid: false,
-          valid1: false
         }
     },
+    computed: {
+        
+    },
     methods: {
-       validName: function(name){
-        return name
-      },
-        validPrice: function(price){
-        return price
-      },
-      validateName: function(){
-      this.nameBlured = true;
-        if(this.validName(this.name)){
-          this.valid = true
-        }
-      },
-       validatePrice: function(){
-      this.priceBlured = true;
-        if(this.validPrice(this.price)){
-          this.valid1 = true
-        }
-      },
-      validateImage: function(){
-        if(this.files == ''){
-          this.imageSelect = true
-        }
-      },
       onFileChange(e){
         this.files = e;
-        this.imageSelect = false
+        this.url = URL.createObjectURL(e);
       },
-      AddProduct(event){
+      UpdateProduct(event){
         event.preventDefault();
-         this.validateName()
-        this.validatePrice()
-        this.validateImage()
-         if(this.valid == true && this.valid1 == true && this.imageSelect == false){
-            this.loader = true
+          this.loader = true
           this.loading = true
           this.$store.dispatch("AddProduct", {
             "name": this.name,
@@ -151,7 +123,7 @@ export default {
             this.msgErr = err.response.data.message
             this.snackbar2 = true
           })  
-         }
+         
       }
     } 
 }

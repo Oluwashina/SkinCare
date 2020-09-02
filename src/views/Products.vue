@@ -33,7 +33,7 @@
                     <h6 class="card-text text-center text-color">Qty Available: <span>{{n.quantityAvailable}}</span> </h6>
                     <h6 class="card-text text-center text-color">Price NGN: <span>{{n.price}}</span></h6>
                     <div class="text-center">
-                        <button class="btn btn-green"  @click="Edit($event, n.id)">Edit</button>
+                        <button class="btn btn-green"  @click="Edit(n.id)">Edit</button>
                     </div> 
                 </div>
                 </div>
@@ -99,6 +99,10 @@ export default {
         console.log("OffSet is "+ OffSet, limit); 
         // this.$store.dispatch('getProducts', {Offset:OffSet,limit:limit})
       }, 
+      Edit(id){
+        this.$store.dispatch('editProduct', id) 
+        this.$router.push('/product/edit/'+id) 
+      }
     },
     created(){
     
