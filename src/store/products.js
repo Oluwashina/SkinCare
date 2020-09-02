@@ -4,6 +4,7 @@ export const products = {
     state: {
         
         products: [],
+        pageproducts: [],
         productsOriginal: [],
         productsLength:0,
         product: {}
@@ -13,6 +14,9 @@ export const products = {
           state.products = data
           state.productsOriginal = data
           state.productsLength = data.length
+        },
+        PageProducts(state, data){
+          state.pageproducts = data
         },
         ProductFilter(state,word){
             word=word.toLowerCase()
@@ -26,12 +30,26 @@ export const products = {
         }
     },
     actions:{
-        getProducts: ({commit})=>{
+      getProducts: ({commit})=>{
+        return new Promise((resolve, reject)=>{
+          axios.get('/products')
+          .then(({data, status})=>{
+            if(status === 200){
+              commit('Products', data)
+              resolve(data)
+            }
+          })
+          .catch((error)=>{
+            reject(error)
+          })
+        })
+      },
+        getPageProducts: ({commit},payload)=>{
           return new Promise((resolve, reject)=>{
-            axios.get("/products")
+            axios.get(`/products?limit=${payload.limit}&offset=${payload.Offset}`)
             .then(({data, status})=>{
               if(status === 200){
-                commit('Products', data)
+                commit('PageProducts', data)
                 resolve(data)
               }
             })
@@ -69,8 +87,47 @@ export const products = {
                  });
             })
         },
+        UpdateProduct: ({commit}, payload)=>{
+          var bodyFormData = new FormData();
+          bodyFormData.set('name', payload.name);
+          bodyFormData.set('price', payload.price);
+          bodyFormData.set('quantityAvailable', payload.quantityAvailable);
+          bodyFormData.append('files', payload.files);
+          return new Promise((resolve, reject)=>{
+            axios({
+              method: 'put',
+              url: '/products/'+payload.id,
+              data: bodyFormData,
+              config: { }
+                  })
+              .then(({data, status}) => {
+                  if(status===200){
+                      resolve(data)
+                      commit()
+                  }
+                
+              })
+              .catch((error)=>{
+                  reject(error)
+               });
+          })
+        },
         editProduct: ({commit}, payload) =>{
             commit('EditProduct', payload)
+        },
+        offsetProduct: ({commit})=>{
+          return new Promise((resolve, reject)=>{
+            axios.get("/products")
+            .then(({data, status})=>{
+              if(status === 200){
+                commit('Products', data)
+                resolve(data)
+              }
+            })
+            .catch((error)=>{
+              reject(error)
+            })
+          })
         }
 
     },

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-snackbar v-model="snackbar" :timeout="10000" top color="success">
-      <span>Product Added Successfully...</span> 
+      <span>Product Updated successfully...</span> 
       <v-btn text color="white" @click="snackbar = false">Close</v-btn>
     </v-snackbar>
     <v-snackbar v-model="snackbar2" :timeout="10000" top color="red">
@@ -103,24 +103,23 @@ export default {
         event.preventDefault();
           this.loader = true
           this.loading = true
-          this.$store.dispatch("AddProduct", {
+          this.$store.dispatch("UpdateProduct", {
             "name": this.name,
             "price": this.price,
             "quantityAvailable":this.quantityAvailable,
-            "files":this.files
+            "files":this.url,
+            "id": this.$store.state.products.product.id
           })
           .then(()=>{
             this.loader = false
             this.loading = false
             this.snackbar = true
-            this.name=''
-            this.price=''
-            this.quantityAvailable=''
           })
           .catch((err)=>{
+              console.log(err)
             this.loader = false
             this.loading = false
-            this.msgErr = err.response.data.message
+            // this.msgErr = err.response.data.message
             this.snackbar2 = true
           })  
          

@@ -23,7 +23,7 @@
           <!-- list of all products -->
              <div class="row mt-4">
             
-           <div class="col-lg-4 mb-3"  v-for="n in products" :key="n.id">
+           <div class="col-lg-4 mb-3"  v-for="n in pageproducts" :key="n.id">
                 <div class="card">
                 <div class="card-body">
                     <div class="text-center">
@@ -49,14 +49,14 @@
           </div>
 
 
-        <!-- <div class="text-center mt-5">
-          <v-pagination @input="next"  v-model="pagination.page" 
-          :length="Math.round(itemsLength / 9)"></v-pagination>
-        </div> -->
         <div class="text-center mt-5" v-if="products.length > 0">
-          <v-pagination @input="next"  v-model="pagination.page" 
-          length="3" color="#F7941D"></v-pagination>
+          <v-pagination @input="next" v-model="pagination.page" 
+          :length="Math.ceil(products.length / 5)" color="#F7941D"></v-pagination>
         </div>
+        <!-- <div class="text-center mt-5" v-if="products.length > 0">
+          <v-pagination @input="next" circle  v-model="pagination.page" 
+          length="3" color="#F7941D"></v-pagination>
+        </div> -->
      </div>
  </v-container>
 </template>
@@ -78,6 +78,11 @@ export default {
         let products = this.$store.state.products.products
         
         return products
+      },
+      pageproducts(){
+        let pageproducts = this.$store.state.products.pageproducts
+        
+        return pageproducts
       }
     },
     methods:{
@@ -94,10 +99,10 @@ export default {
       },
       next(page){
         alert(page);
-        const limit=10;      
-        const OffSet = (page * 10) - 10;
-        console.log("OffSet is "+ OffSet, limit); 
-        // this.$store.dispatch('getProducts', {Offset:OffSet,limit:limit})
+        // const limit=10;      
+        // const OffSet = (page * 10) - 10;
+        // console.log("OffSet is "+ OffSet, limit); 
+        this.$store.dispatch('getPageProducts', {Offset:page,limit:5})
       }, 
       Edit(id){
         this.$store.dispatch('editProduct', id) 
@@ -105,8 +110,12 @@ export default {
       }
     },
     created(){
-    
-      this.$store.dispatch("getProducts")
+       this.$store.dispatch("getProducts")
+      .then(()=>{
+      })
+      .catch(()=>{
+      })
+      this.$store.dispatch("getPageProducts", {Offset:1,limit:5})
       .then(()=>{
       })
       .catch(()=>{
