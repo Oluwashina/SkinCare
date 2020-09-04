@@ -85,7 +85,7 @@ export default {
           name: this.$store.state.products.product.name,
           price: this.$store.state.products.product.price,
           quantityAvailable: this.$store.state.products.product.quantityAvailable,
-          files:'',
+          files: this.$store.state.products.product.imgUrl,
           snackbar:false,
           snackbar2:false,
           msgErr:'',
@@ -97,6 +97,7 @@ export default {
     methods: {
       onFileChange(e){
         this.files = e;
+        console.log(this.files)
         this.url = URL.createObjectURL(e);
       },
       UpdateProduct(event){
@@ -107,7 +108,7 @@ export default {
             "name": this.name,
             "price": this.price,
             "quantityAvailable":this.quantityAvailable,
-            "files":this.url,
+            "files":this.files,
             "id": this.$store.state.products.product.id
           })
           .then(()=>{

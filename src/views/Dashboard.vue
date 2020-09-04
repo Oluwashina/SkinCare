@@ -42,7 +42,7 @@
            <v-card-title class="" style="font-size: 18px">Completed Orders</v-card-title>
 
               <v-card-text class="text--primary">
-                <h6 class="heading" style="font-size: 25px">180</h6>
+                <h6 class="heading" style="font-size: 25px">{{completedOrder}}</h6>
               </v-card-text>
                 </v-card>
             </div>
@@ -61,7 +61,7 @@
            <v-card-title class="" style="font-size: 18px">Pending Orders</v-card-title>
 
               <v-card-text class="text--primary">
-                <h6 class="heading" style="font-size: 25px">10</h6>
+                <h6 class="heading" style="font-size: 25px">{{pendingOrder}}</h6>
               </v-card-text>
                 </v-card>
             </div>
@@ -76,15 +76,15 @@
               </v-card-title>
               <v-data-table
                 :headers="headers"
-                :items="Orders"
+                :items="NewOrders"
                 hide-default-footer
                 no-data-text='No new order placed yet'
               >
-                <template v-slot:item.img_url="{ item }">
-                  <v-img :src="getImageUrl(item.img_url)" height="60" width="80" class="ma-0" contain></v-img>
+                <template v-slot:item.imgUrl="{ item }">
+                  <v-img :src="getImageUrl(item.imgUrl)" height="60" width="80" class="ma-0" contain></v-img>
                 </template>
                 <template v-slot:item.action="{ item }">
-                    <v-btn text  @click="View(item._id)" style="border: 1px solid #F7941D; color:#F7941D; border-radius: 25px;" class="text-none" small>View</v-btn>
+                    <v-btn text  @click="View(item.id)" style="border: 1px solid #F7941D; color:#F7941D; border-radius: 25px;" class="text-none" small>View</v-btn>
                 </template>
               </v-data-table>
             </v-card>
@@ -148,7 +148,7 @@ export default {
               text: 'Item Image',
               align: 'start',
               sortable: false,
-              value: 'img_url',
+              value: 'imgUrl',
             },
             {
               text: 'Name',
@@ -159,33 +159,7 @@ export default {
             { text: 'Quantity', value: 'quantity' },
             { text: '', value: 'action', sortable: false, },
           ],
-          Orders : [
-            {
-              name: 'Hair Glow Butter',
-              quantity: 3,
-              img_url: './cream2.png'
-            },
-             {
-              name: 'Hair Glow Butter',
-              quantity: 7,
-              img_url: './cream.png'
-            },
-             {
-              name: 'Hair Glow Butter',
-              quantity: 9,
-              img_url: './cream3.png'
-            },
-             {
-              name: 'Hair Glow Butter',
-              quantity: 7,
-              img_url: './cream.png'
-            },
-             {
-              name: 'Hair Glow Butter',
-              quantity: 3,
-              img_url: './cream3.png'
-            },
-        ],
+         
       
     }
   },
@@ -195,6 +169,15 @@ export default {
     },
     productCount(){
       return this.$store.state.products.productsLength
+    },
+    completedOrder(){
+      return this.$store.state.orders.ordersCount.completedOrder
+    },
+    pendingOrder(){
+      return this.$store.state.orders.ordersCount.pendingOrder
+    },
+     NewOrders(){
+      return this.$store.state.orders.neworders
     }
   },
  methods:{
@@ -204,6 +187,9 @@ export default {
     }else{
       return '/avatar.png'
     }
+  },
+  View(id){
+    alert(id)
   }
  },
   created(){
@@ -212,8 +198,19 @@ export default {
     })
     .catch(()=>{
     })
-    this.$store.dispatch("getProducts")
+    this.$store.dispatch("getProductsCount")
     .then(()=>{
+    })
+    .catch(()=>{
+    })
+    this.$store.dispatch("ordersCount")
+    .then(()=>{
+    })
+    .catch(()=>{
+    })
+    this.$store.dispatch("NewOrders")
+    .then((success)=>{
+      console.log(success)
     })
     .catch(()=>{
     })

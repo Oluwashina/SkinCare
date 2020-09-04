@@ -49,9 +49,9 @@
           </div>
 
 
-        <div class="text-center mt-5" v-if="products.length > 0">
+        <div class="text-center mt-5" v-if="products > 0">
           <v-pagination @input="next" v-model="pagination.page" 
-          :length="Math.ceil(products.length / 5)" color="#F7941D"></v-pagination>
+          :length="Math.ceil(products / 5)" color="#F7941D"></v-pagination>
         </div>
         <!-- <div class="text-center mt-5" v-if="products.length > 0">
           <v-pagination @input="next" circle  v-model="pagination.page" 
@@ -75,7 +75,7 @@ export default {
     },
     computed:{
       products(){
-        let products = this.$store.state.products.products
+        let products = this.$store.state.products.productsLength
         
         return products
       },
@@ -98,7 +98,6 @@ export default {
         })
       },
       next(page){
-        alert(page);
         // const limit=10;      
         // const OffSet = (page * 10) - 10;
         // console.log("OffSet is "+ OffSet, limit); 
@@ -110,8 +109,9 @@ export default {
       }
     },
     created(){
-       this.$store.dispatch("getProducts")
-      .then(()=>{
+       this.$store.dispatch("getProductsCount")
+      .then(( )=>{
+      
       })
       .catch(()=>{
       })

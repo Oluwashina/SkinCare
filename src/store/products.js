@@ -11,16 +11,18 @@ export const products = {
     },
     mutations: {
         Products(state, data){
-          state.products = data
-          state.productsOriginal = data
-          state.productsLength = data.length
+          state.products = data 
+        },
+        ProductsCount(state, data){
+          state.productsLength = data.countOfAllProduct
         },
         PageProducts(state, data){
           state.pageproducts = data
+          state.productsOriginal = data
         },
         ProductFilter(state,word){
             word=word.toLowerCase()
-            state.products = state.productsOriginal.filter(function (item) {
+            state.pageproducts = state.productsOriginal.filter(function (item) {
                 return item.name.toLowerCase().includes(word.toLowerCase());
             });
         },
@@ -36,6 +38,20 @@ export const products = {
           .then(({data, status})=>{
             if(status === 200){
               commit('Products', data)
+              resolve(data)
+            }
+          })
+          .catch((error)=>{
+            reject(error)
+          })
+        })
+      },
+      getProductsCount: ({commit})=>{
+        return new Promise((resolve, reject)=>{
+          axios.get('/products/count')
+          .then(({data, status})=>{
+            if(status === 200){
+              commit('ProductsCount', data)
               resolve(data)
             }
           })
