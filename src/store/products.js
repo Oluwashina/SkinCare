@@ -27,7 +27,7 @@ export const products = {
             });
         },
         EditProduct(state, id){
-          var product = state.products.find(pro => pro.id === id)
+          var product = state.pageproducts.find(pro => pro.id === id)
           state.product = product
         }
     },
