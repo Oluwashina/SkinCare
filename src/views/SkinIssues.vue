@@ -28,20 +28,25 @@
           <!-- list of skin issues -->
             <div class="row mt-5">
             
-           <div class="col-lg-4 mb-3"  v-for="n in Skin" :key="n.name">
+           <div class="col-lg-4 mb-3"  v-for="n in Issues" :key="n.id">
                 <div class="card">
-                     <img :src="getImageUrl(n.img_url)" class="card-img-top" alt="Images" style="background-repeat: no-repeat; height: 172.14px;" />
+                     <img :src="getImageUrl(n.imgUrl)" class="card-img-top" alt="Images" style="background-repeat: no-repeat; height: 172.14px;" />
                 <div class="card-body">
                     <h5 class="card-title text-center" style="font-weight: bold;">{{n.name}}</h5>
                     <h6 class="card-text text-center text-color">Category: <span>{{n.category}}</span> </h6>
                     <div class="text-center mt-5">
-                        <button class="btn btn-green"  @click="Edit($event, n._id)">Edit</button>
+                        <button class="btn btn-green"  @click="Edit(n.id)">Edit</button>
                     </div> 
                 </div>
                 </div>
             </div>
 
           </div>
+
+           <div class="text-center mt-5">
+          <v-pagination @input="next" v-model="pagination.page" 
+          :length="1" color="#F7941D"></v-pagination>
+        </div>
 
       </div>
   </v-container>
@@ -51,34 +56,32 @@
 export default {
     data(){
         return{
-             Skin: [
-                {
-                    name: 'ALOPELIA AREATA',
-                    category: 'Skin',
-                    img_url: '/skin.png'
-                },
-                  {
-                    name: 'ALOPELIA AREATA',
-                    category: 'Skin',
-                    img_url: '/cream2.png'
-                },
-                   {
-                    name: 'ALOPELIA AREATA',
-                    category: 'Skin',
-                    img_url: '/skin.png'
-                },
-                   {
-                    name: 'JUGA BOI',
-                    category: 'Skin',
-                    img_url: '/skin.png'
-                },
-            ]
+            pagination: {
+            page: 1,
+            total: 0,
+            perPage: 0,
+            visible: 7
+          },
         }
     },
     methods:{
          getImageUrl(url){
           return url
              }
+    },
+    computed: {
+      Issues(){
+        return this.$store.state.skin.issues
+      }
+    },
+    created(){
+      this.$store.dispatch("GetSkinIssues")
+      .then((success)=>{
+        console.log(success)
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
     }
 }
 </script>

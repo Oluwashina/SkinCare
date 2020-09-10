@@ -1,6 +1,11 @@
 <template>
   <v-container>
       <div class="container">
+         <v-snackbar v-model="snackbar" :timeout="10000" top color="success">
+          <span>Symptom added successfully.</span> 
+          <v-btn text color="white" @click="snackbar = false">Close</v-btn>
+        </v-snackbar>
+
             <h5 class="heading">Add New Skin Issue</h5>
 
             <v-tabs class="mt-4" background-color="transparent"
@@ -16,10 +21,15 @@
                             <form>
                                 <div class="form-group">
                                 <label for="category">Select category</label>
-                                     <select class="custom-select my-1 mr-sm-2" id="category">
-                                            <option selected>Hair</option>
-                                            <option value="1">Skin</option>
-                                        </select>
+                                <select class="custom-select my-1 mr-sm-2" v-model="selected" id="category">
+                                  <option v-for="(cat, index) in category" 
+                                        :key="index"
+                                      :value="cat"
+                                  >
+                                    {{ cat }}
+                                  </option>
+                               </select>
+                            
                                 </div>
 
                                 <div class="form-group">
@@ -30,11 +40,14 @@
                                         id="symptoms"
                                         required
                                         v-model="symptoms"
+                                        v-bind:class="{'form-control' : true, 'is-invalid' : !validSymptom(symptoms) && symptomBlured}"
+                                         v-on:blur="symptomBlured = true"
                                         />
+                                         <div class="invalid-feedback">Please add a symptom</div>
                                     </div>
 
                                      <div class="text-center mt-5">
-                                    <button :disabled="loading" @click="SendMessage($event)" class="btn btn-add">Add Symptom
+                                    <button :disabled="loading" @click="AddSymptom($event)" class="btn btn-add">Add Symptom
                                         <span class="fa fa-circle-o-notch fa-spin" v-if="loader"></span>
                                     </button>
                                     </div>
@@ -62,10 +75,14 @@
 
                                      <div class="form-group">
                                         <label for="category">Select category</label>
-                                            <select class="custom-select my-1 mr-sm-2" id="category">
-                                                    <option selected>Hair</option>
-                                                    <option value="1">Skin</option>
-                                                </select>
+                                          <select @change="onChange($event)"  class="custom-select my-1 mr-sm-2" v-model="selected1" id="category">
+                                              <option v-for="cat in category1" 
+                                                :key="cat.id" 
+                                                  :value="cat.name"
+                                              >
+                                                {{ cat.name }}
+                                              </option>
+                                          </select>
                                         </div>
 
                                          <div class="form-group">
@@ -73,13 +90,38 @@
                                             <textarea class="form-control" id="decription" rows="5"></textarea>
                                         </div>
 
-                                          <div class="form-group">
+
+                                    <div class="row mb-n3">
+                                      <div class="col-10">
+                                         <div class="form-group">
                                         <label for="category">Select Symptoms</label>
-                                            <select class="custom-select my-1 mr-sm-2" id="category">
-                                                    <option selected>Hair</option>
-                                                    <option value="1">Skin</option>
-                                                </select>
+                                             <select class="custom-select mr-sm-2" v-model="selectedsymptom" id="category">
+                                               <option selected disabled value="pick">Pick a symptom</option>
+                                              <option v-for="cat in Symptoms" 
+                                                :key="cat.id" 
+                                                  :value="cat.symptom"
+                                              >
+                                                {{ cat.symptom }}
+                                              </option>
+                                          </select>
+                                           
                                         </div>
+                                      </div>
+                                      <div class="col-2">
+                                        <v-btn @click="addChip()" class="my-8" fab small dark color="#4DC503">
+                                              <v-icon dark>mdi-plus</v-icon>
+                                            </v-btn>
+                                      </div>
+                                    </div>
+                                         
+
+                                            <v-chip close v-for="(tag) in selectedChips"
+                                              :key="tag" 
+                                               class="mt-n2 mb-5 ma-2"  
+                                                @click:close="close(tag)"
+                                            >
+                                          {{tag}}
+                                        </v-chip> 
 
                                           <div class="form-group">
                                             <label for="">Upload Image</label>
@@ -107,8 +149,89 @@
 export default {
     data(){
         return{
-
+          symptoms: '',
+          symptomBlured: false,
+          snackbar: false,
+          valid: false,
+          loader: false,
+          loading: false,
+          selected: 'Hair',
+          selected1: 'Hair',
+          category: ['Hair', 'Skin'],
+          category1: [
+              {id: 1, name: 'Hair'},
+              {id: 2, name: 'Skin'},
+          ],
+          selectedsymptom: 'pick',
+          chip1: true,
+          selectedChips: ['Hitching', 'Dandruff', 'Eczema', 'Duola'],
         }
+    },
+    methods: {
+      close(id){
+      let i = this.selectedChips.indexOf(id);
+      this.selectedChips.splice(i,1); 
+    },
+      addChip(){
+        // var yes = "Munmi"
+        this.selectedChips.push(...this.selectedsymptom.split(","));
+      },
+      validSymptom: function(symptoms){
+        return symptoms
+      },
+      validateSymptom: function(){
+      this.symptomBlured = true;
+        if(this.validSymptom(this.symptoms)){
+          this.valid = true
+        }
+      },
+      AddSymptom(event){
+        event.preventDefault();
+        this.validateSymptom()
+        if(this.valid == true){
+          this.loader = false
+          this.loading = true
+          this.$store.dispatch("AddSymptom",{
+            "category": this.selected,
+            "symptom": this.symptoms
+          })
+          .then(()=>{
+            this.symptoms = ''
+            this.loader = false,
+            this.loading = false
+            this.snackbar = true
+            this.symptomBlured = false
+          })
+          .catch((err)=>{
+            console.log(err)
+            this.loader = false,
+            this.loading = false
+          })
+           
+        }
+      },
+      onChange(event) {
+          this.$store.dispatch("getSymptoms", event.target.value)
+          .then(()=>{
+          })
+          .catch((err)=>{
+            console.log(err)
+          })
+      }
+    },
+    computed: {
+      Symptoms(){
+        return this.$store.state.skin.symptoms
+      }
+    },
+    created(){
+      this.$store.dispatch("getSymptoms", this.selected1)
+      .then(()=>{
+
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
     }
 }
 </script>
@@ -131,7 +254,7 @@ export default {
   outline: 0 none;
 }
 .custom-select{
-    color: black
+    color: black;
 }
 .custom-select:focus{
   border-color: rgba(50, 54, 67, 0.2);
