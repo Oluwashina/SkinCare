@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Dashboard from '../views/Dashboard.vue'
+import RequestedProducts from '../views/RequestedProducts.vue'
+import OrderById from '../views/OrderById.vue'
 import Products from '../views/Products.vue'
 import NewProduct from '../views/NewProduct.vue'
 import SkinIssues from '../views/SkinIssues.vue'
@@ -32,6 +34,16 @@ Vue.use(VueRouter)
         path: '/dashboard',
         name: 'Dashboard',
         component: Dashboard
+      },
+      {
+        path: '/orders/:id',
+        name: 'OrderById',
+        component: OrderById
+      },
+      {
+        path: '/requestedproducts',
+        name: 'RequestedProducts',
+        component: RequestedProducts
       },
       {
         path: '/products',

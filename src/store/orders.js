@@ -3,7 +3,8 @@ import axios from 'axios';
 export const orders = {
     state: {
         neworders: [],
-        ordersCount: {}
+        ordersCount: {},
+        orderById:{}
     },
     mutations: {
         NewOrders(state, data){
@@ -11,6 +12,9 @@ export const orders = {
         },
         ordersCount(state, data){
             state.ordersCount = data.countOfAllOrder
+        },
+        OrderById(state, item){
+          state.orderById = item
         }
         
     },
@@ -42,7 +46,11 @@ export const orders = {
             reject(error)
           })
         })
-      },   
+      },
+      OrderById: ({commit}, item) => {
+        commit('OrderById', item)
+            
+    }   
         
     },
    

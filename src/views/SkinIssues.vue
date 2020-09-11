@@ -45,7 +45,7 @@
 
            <div class="text-center mt-5">
           <v-pagination @input="next" v-model="pagination.page" 
-          :length="1" color="#F7941D"></v-pagination>
+          :length="Math.ceil(IssuesLength / 5)" color="#F7941D"></v-pagination>
         </div>
 
       </div>
@@ -67,17 +67,30 @@ export default {
     methods:{
          getImageUrl(url){
           return url
-             }
+             },
+          next(page){
+            this.$store.dispatch('GetSkinIssuesLimit', {Offset:page,limit:5})
+      }, 
     },
     computed: {
       Issues(){
         return this.$store.state.skin.issues
+      },
+      IssuesLength(){
+         return this.$store.state.skin.issuesLength
       }
     },
     created(){
-      this.$store.dispatch("GetSkinIssues")
-      .then((success)=>{
-        console.log(success)
+      this.$store.dispatch("GetSkinIssuesLimit", {Offset:1,limit:5})
+      .then(()=>{
+        
+      })
+      .catch((err)=>{
+        console.log(err)
+      }),
+       this.$store.dispatch("GetSkinIssues")
+      .then(()=>{
+       
       })
       .catch((err)=>{
         console.log(err)

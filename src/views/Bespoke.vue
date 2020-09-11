@@ -11,6 +11,19 @@
 
         <!-- first tab layout -->
         <v-tab-item>
+             <v-card class="mt-5">
+                <v-card-title>
+                <v-spacer></v-spacer>
+                <v-text-field
+                    v-model="search"
+                    append-icon="mdi-magnify"
+                    label="Search"
+                    single-line
+                    hide-details
+                    color='#F7941D'
+                  
+                ></v-text-field>
+                </v-card-title>
             <v-data-table
             :headers="headers"
             :items="Entries"
@@ -18,12 +31,14 @@
             class="elevation-1 mt-5"
             hide-default-footer
             no-data-text='No Entries made yet!!!'
+            :search="search"
         >
         <template v-slot:item.action="{ item }">
                     <v-btn text  @click="View(item.id)" style="border: 1px solid #F7941D; color:#F7941D; border-radius: 25px;" class="text-none" small>View</v-btn>
          </template>
         
         </v-data-table>
+             </v-card>
 
         </v-tab-item>
 
@@ -108,6 +123,7 @@ export default {
             { text: 'Date', value: 'date' },
             { text: '', value: 'action', sortable: false, },
             ],
+            search: '',
             Entries: [
                 {
                     username: 'JaneCooper',

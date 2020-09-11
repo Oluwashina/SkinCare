@@ -6,6 +6,11 @@
           <v-btn text color="white" @click="snackbar = false">Close</v-btn>
         </v-snackbar>
 
+           <v-snackbar v-model="snackbar1" :timeout="10000" top color="success">
+          <span>Skin issue successfully added.</span> 
+          <v-btn text color="white" @click="snackbar1 = false">Close</v-btn>
+        </v-snackbar>
+
             <h5 class="heading">Add New Skin Issue</h5>
 
             <v-tabs class="mt-4" background-color="transparent"
@@ -67,10 +72,13 @@
                                         <input
                                         type="text"
                                         class="form-control input-style"
-                                        id="symptoms"
+                                        id="issueName"
                                         required
-                                        v-model="symptoms"
+                                        v-model="issueName"
+                                        v-bind:class="{'form-control' : true, 'is-invalid' : !validIssueName(issueName) && nameBlured}"
+                                         v-on:blur="nameBlured = true"
                                         />
+                                         <div class="invalid-feedback">Please add a name</div>
                                     </div>
 
                                      <div class="form-group">
@@ -87,7 +95,12 @@
 
                                          <div class="form-group">
                                             <label for="description">Description</label>
-                                            <textarea class="form-control" id="decription" rows="5"></textarea>
+                                            <textarea class="form-control" id="decription" rows="5"
+                                            v-model="description"
+                                             v-bind:class="{'form-control' : true, 'is-invalid' : !validDescription(description) && descriptionBlured}"
+                                               v-on:blur="descriptionBlured = true"
+                                             />
+                                             <div class="invalid-feedback">Please add a description</div>
                                         </div>
 
 
@@ -95,15 +108,16 @@
                                       <div class="col-10">
                                          <div class="form-group">
                                         <label for="category">Select Symptoms</label>
-                                             <select class="custom-select mr-sm-2" v-model="selectedsymptom" id="category">
+                                             <select @change="onChangeSymptom($event)" class="custom-select mr-sm-2" v-model="selectedsymptom" id="category">
                                                <option selected disabled value="pick">Pick a symptom</option>
-                                              <option v-for="cat in Symptoms" 
-                                                :key="cat.id" 
-                                                  :value="cat.symptom"
+                                              <option v-for="(cat, index) in Symptoms" 
+                                                :key="index" 
+                                                  :value="cat"
                                               >
-                                                {{ cat.symptom }}
+                                                {{ cat }}
                                               </option>
                                           </select>
+                                          <p style="color: red; font-size: 13px;" class="mt-2 pt-0" v-if="symptompick">Kindly use the add button to add the symptom selected</p>
                                            
                                         </div>
                                       </div>
@@ -125,13 +139,14 @@
 
                                           <div class="form-group">
                                             <label for="">Upload Image</label>
-                                            <v-file-input  show-size accept='image/*' label="Choose an image"  color="" background-color="#f5f3fc" solo flat @change="imageUrl($event)" ref="profileUrl"></v-file-input>
+                                            <v-file-input show-size accept='image/*' label="Choose an image"  color="" background-color="#f5f3fc" solo flat @change="imageUrl($event)" ref="profileUrl"></v-file-input>
+                                             <p style="color: red; font-size: 13px;" class="mt-n6 pt-0" v-if="imageSelect">This field is required</p>
                                             <!-- <p class="black--text mt-n6 pt-0" v-if="disabled">please wait, uploading image...<span class="fa fa-circle-o-notch fa-spin"></span></p> -->
                                         </div>
 
                                      <div class="text-center mt-5">
-                                    <button :disabled="loading" @click="SendMessage($event)" class="btn btn-add">Add Skin Issue
-                                        <span class="fa fa-circle-o-notch fa-spin" v-if="loader"></span>
+                                    <button :disabled="loading1" @click="AddIssue($event)" class="btn btn-add">Add Skin Issue
+                                        <span class="fa fa-circle-o-notch fa-spin" v-if="loader1"></span>
                                     </button>
                                     </div>
 
@@ -150,11 +165,22 @@ export default {
     data(){
         return{
           symptoms: '',
+          issueName: '',
+          description: '',
+          descriptionBlured: false,
+          nameBlured: false,
           symptomBlured: false,
+          imageSelect: false,
           snackbar: false,
+          snackbar1: false,
+          symptompick: false,
           valid: false,
+          valid1: false,
+          valid2: false,
           loader: false,
           loading: false,
+          loader1: false,
+          loading1: false,
           selected: 'Hair',
           selected1: 'Hair',
           category: ['Hair', 'Skin'],
@@ -164,25 +190,73 @@ export default {
           ],
           selectedsymptom: 'pick',
           chip1: true,
-          selectedChips: ['Hitching', 'Dandruff', 'Eczema', 'Duola'],
+          selectedChips: [],
+          files: '',
+          profileUrl: ''
         }
     },
     methods: {
+    imageUrl(e){
+      if(e){
+       this.files = e;
+       this.imageSelect = false
+       this.profileUrl = e
+      }else{
+          this.profileUrl = ''
+          this.imageSelect = true
+      }
+    },
       close(id){
       let i = this.selectedChips.indexOf(id);
-      this.selectedChips.splice(i,1); 
+      this.selectedChips.splice(i,1);
+      if(this.selectedChips.length == 0){
+        this.symptompick = true
+      } 
     },
       addChip(){
-        // var yes = "Munmi"
-        this.selectedChips.push(...this.selectedsymptom.split(","));
+        if(this.selectedsymptom == 'pick' && this.selectedChips.length == 0){
+          this.symptompick = true
+        }
+        else{
+          this.symptompick = false
+           this.selectedChips.push(...this.selectedsymptom.split(","));
+        }  
       },
       validSymptom: function(symptoms){
         return symptoms
+      },
+      validIssueName: function(issueName){
+        return issueName
+      },
+      validDescription: function(description){
+        return description
       },
       validateSymptom: function(){
       this.symptomBlured = true;
         if(this.validSymptom(this.symptoms)){
           this.valid = true
+        }
+      },
+      validateIssueName: function(){
+      this.nameBlured = true;
+        if(this.validIssueName(this.issueName)){
+          this.valid1 = true
+        }
+      },
+      validateDescription: function(){
+      this.descriptionBlured = true;
+        if(this.validDescription(this.description)){
+          this.valid2 = true
+        }
+      },
+      validateImage: function(){
+        if(this.profileUrl == ''){
+          this.imageSelect = true
+        }
+      },
+      validateSymptomPick: function(){
+        if(this.selectedsymptom == 'pick' && this.selectedChips.length == 0){
+          this.symptompick = true
         }
       },
       AddSymptom(event){
@@ -210,13 +284,54 @@ export default {
            
         }
       },
+      AddIssue(event){
+        event.preventDefault()
+        this.validateIssueName();
+        this.validateDescription();
+        this.validateImage();
+        this.validateSymptomPick();
+         if(this.valid1 == true && this.valid2 == true && this.imageSelect == false && this.symptompick == false){
+           this.loader1 = true
+          this.loading1 = true
+          this.$store.dispatch("AddSkinIssue",{
+            "category": this.selected1,
+            "symptom": this.selectedChips,
+             "name": this.issueName,
+             "files": this.files,
+              "description": this.description
+          })
+          .then(()=>{
+            this.issueName = ''
+            this.description = ''
+            this.loader1 = false,
+            this.loading1 = false
+            this.snackbar1 = true
+            this.nameBlured = false
+            this.descriptionBlured = false
+          })
+          .catch((err)=>{
+            console.log(err)
+            this.loader1 = false,
+            this.loading1 = false
+          })
+         }
+
+      },
       onChange(event) {
           this.$store.dispatch("getSymptoms", event.target.value)
           .then(()=>{
+            this.selectedsymptom = 'pick'
           })
           .catch((err)=>{
             console.log(err)
           })
+      },
+      onChangeSymptom(event){
+        if(event.target.value !== 'pick' && this.selectedChips.length !== 0){
+            this.symptompick = false
+        }else{
+          this.symptompick = true
+        }
       }
     },
     computed: {
@@ -226,7 +341,8 @@ export default {
     },
     created(){
       this.$store.dispatch("getSymptoms", this.selected1)
-      .then(()=>{
+      .then((success)=>{
+        console.log(success)
 
       })
       .catch((err)=>{

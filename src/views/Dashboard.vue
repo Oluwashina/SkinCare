@@ -84,7 +84,7 @@
                   <v-img :src="getImageUrl(item.imgUrl)" height="60" width="80" class="ma-0" contain></v-img>
                 </template>
                 <template v-slot:item.action="{ item }">
-                    <v-btn text  @click="View(item.id)" style="border: 1px solid #F7941D; color:#F7941D; border-radius: 25px;" class="text-none" small>View</v-btn>
+                    <v-btn text  @click="View(item)" style="border: 1px solid #F7941D; color:#F7941D; border-radius: 25px;" class="text-none" small>View</v-btn>
                 </template>
               </v-data-table>
             </v-card>
@@ -188,8 +188,13 @@ export default {
       return '/avatar.png'
     }
   },
-  View(id){
-    alert(id)
+  View(item){
+    this.$store.dispatch("OrderById", item)
+    .then(()=>{
+      this.$router.push(`orders/${item.id}`)
+    })
+    .catch(()=>{
+    })
   }
  },
   created(){

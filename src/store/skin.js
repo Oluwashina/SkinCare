@@ -3,17 +3,21 @@ import axios from 'axios';
 export const skin = {
     state: {        
         issues: [],
-        symptoms: []   
+        symptoms: [],
+        issuesLength: 0   
     },
     mutations: {
         Products(state, data){
           state.products = data 
         },
         Symptoms(state, data){
-          state.symptoms = data
+          state.symptoms = data.symptom
         },
         Issues(state, data){
           state.issues = data
+        },
+        IssuesLength(state, data){
+          state.issuesLength = data.length
         }
      
     },
@@ -46,21 +50,22 @@ export const skin = {
             })
           })
         },
-        UpdateProduct: ({commit}, payload)=>{
+        AddSkinIssue: ({commit}, payload)=>{
           var bodyFormData = new FormData();
           bodyFormData.set('name', payload.name);
-          bodyFormData.set('price', payload.price);
-          bodyFormData.set('quantityAvailable', payload.quantityAvailable);
+          bodyFormData.set('description', payload.description);
+          bodyFormData.set('symptom', JSON.stringify(payload.symptom));
+          bodyFormData.set('category', payload.category);
           bodyFormData.append('files', payload.files);
           return new Promise((resolve, reject)=>{
             axios({
-              method: 'put',
-              url: '/products/'+payload.id,
+              method: 'post',
+              url: '/skinissue',
               data: bodyFormData,
               config: { }
                   })
               .then(({data, status}) => {
-                  if(status===200){
+                  if(status===201){
                       resolve(data)
                       commit()
                   }
@@ -71,12 +76,26 @@ export const skin = {
                });
           })
         },
-        editProduct: ({commit}, payload) =>{
+        editSkinIssues: ({commit}, payload) =>{
             commit('EditProduct', payload)
         },
         GetSkinIssues: ({commit})=>{
           return new Promise((resolve, reject)=>{
-            axios.get("/skinissue")
+            axios.get(`/skinissue`)
+            .then(({data, status})=>{
+              if(status === 200){
+                commit('IssuesLength', data)
+                resolve(data)
+              }
+            })
+            .catch((error)=>{
+              reject(error)
+            })
+          })
+        },
+        GetSkinIssuesLimit: ({commit},payload)=>{
+          return new Promise((resolve, reject)=>{
+            axios.get(`/skinissue?limit=${payload.limit}&offset=${payload.Offset}`)
             .then(({data, status})=>{
               if(status === 200){
                 commit('Issues', data)
