@@ -27,6 +27,19 @@
                 />
                   <div class="invalid-feedback">This field is required</div>
             </div>
+
+               <div class="form-group">
+                          <label for="category">Product Category</label>
+                          <select class="custom-select my-1 mr-sm-2" v-model="selected" id="category">
+                            <option v-for="(cat, index) in category" 
+                                  :key="index"
+                                :value="cat"
+                            >
+                              {{ cat }}
+                            </option>
+                          </select>
+                      
+                    </div>
              
              <div class="form-group">
                <label for="email">Price</label>
@@ -52,6 +65,18 @@
                   v-model="quantityAvailable"
                 />
              </div>
+
+               <div class="form-group">
+                <label for="description">Product Description</label>
+                <textarea class="form-control" id="decription" rows="5"
+                 v-model="description"
+                  v-bind:class="{'form-control' : true, 'is-invalid' : !validDescription(description) && descriptionBlured}"
+                    v-on:blur="descriptionBlured = true"
+              
+                  />
+                  <div class="invalid-feedback">Please add a description</div>
+            </div>
+
 
               <div class="form-group">
                 <label for="">Product Image</label>
@@ -82,17 +107,22 @@ export default {
           loading: false,
           loader: false,
           name: '',
+          description: '',
+          descriptionBlured: false,
           nameBlured: false,
           price: '',
           priceBlured: false,
           quantityAvailable: 0,
+           selected: 'Hair',
+          category: ['Hair', 'Skin'],
           files:'',
           imageSelect: false,
           snackbar:false,
           snackbar2:false,
           msgErr:'',
           valid: false,
-          valid1: false
+          valid1: false,
+          valid2: false
         }
     },
     methods: {
@@ -102,10 +132,19 @@ export default {
         validPrice: function(price){
         return price
       },
+      validDescription: function(description){
+        return description
+      },
       validateName: function(){
       this.nameBlured = true;
         if(this.validName(this.name)){
           this.valid = true
+        }
+      },
+       validateDescription: function(){
+      this.descriptionBlured = true;
+        if(this.validDescription(this.description)){
+          this.valid2 = true
         }
       },
        validatePrice: function(){
@@ -120,22 +159,29 @@ export default {
         }
       },
       onFileChange(e){
+          if(e){
         this.files = e;
         this.imageSelect = false
+        }else{
+            this.imageSelect = true
+        }
       },
       AddProduct(event){
         event.preventDefault();
          this.validateName()
         this.validatePrice()
+        this.validateDescription()
         this.validateImage()
-         if(this.valid == true && this.valid1 == true && this.imageSelect == false){
+         if(this.valid == true && this.valid1 == true && this.valid2 == true && this.imageSelect == false){
             this.loader = true
           this.loading = true
           this.$store.dispatch("AddProduct", {
             "name": this.name,
             "price": this.price,
             "quantityAvailable":this.quantityAvailable,
-            "files":this.files
+            "files":this.files,
+            "category": this.selected,
+            "description": this.description
           })
           .then(()=>{
             this.loader = false
@@ -143,7 +189,11 @@ export default {
             this.snackbar = true
             this.name=''
             this.price=''
+            this.description = ''
             this.quantityAvailable=''
+            this.nameBlured = false
+            this.priceBlured = false
+            this.descriptionBlured = false
           })
           .catch((err)=>{
             this.loader = false
@@ -161,6 +211,14 @@ export default {
 .heading{
   color: #4E4B46;
   font-weight: bold;
+}
+.custom-select{
+    color: black;
+}
+.custom-select:focus{
+  border-color: rgba(50, 54, 67, 0.2);
+  box-shadow: 0px 5px 30px rgba(50, 54, 67, 0.2);
+  outline: 0 none;
 }
 .input-style {
   padding: 20px 20px;
@@ -185,5 +243,13 @@ export default {
     0px 4.5px 10px rgba(255, 255, 255, 0.14);
   color: #F7941D;
   border: 1px solid #F7941D;
+}
+textarea{
+   padding: 20px 20px;  
+}
+textarea:focus{
+border-color: rgba(50, 54, 67, 0.2);
+  box-shadow: 0px 5px 30px rgba(50, 54, 67, 0.2);
+  outline: 0 none;
 }
 </style>

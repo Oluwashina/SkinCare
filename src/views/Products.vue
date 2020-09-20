@@ -3,9 +3,9 @@
      <div class="container">    
           <div class="row">
               <div class="col-lg-6">
-                   <h5 class="heading">All Products</h5>
+                   <h5 class="heading">Products</h5>
               </div>
-              <div class="col-lg-6">
+              <!-- <div class="col-lg-6">
                   <v-text-field
                     label="Search"
                     height="10"
@@ -17,13 +17,22 @@
                     @keyup="search($event)"
                     @change="search($event)"
                 ></v-text-field>
-              </div>
+              </div> -->
           </div>
 
-          <!-- list of all products -->
+            <v-tabs class="" background-color="transparent"
+      color="#000000">
+         <v-tabs-slider color="#F7941D"></v-tabs-slider>
+                <v-tab>Hair Products</v-tab>
+                <v-tab>Skin Products</v-tab>
+
+                  <!-- first tab -->
+                <v-tab-item>
+
+                   <!-- list of all products -->
              <div class="row mt-4">
             
-           <div class="col-lg-4 mb-3"  v-for="n in pageproducts" :key="n.id">
+           <div class="col-lg-4 mb-3"  v-for="n in hairproducts" :key="n.id">
                 <div class="card">
                 <div class="card-body">
                     <div class="text-center">
@@ -33,7 +42,7 @@
                     <h6 class="card-text text-center text-color">Qty Available: <span>{{n.quantityAvailable}}</span> </h6>
                     <h6 class="card-text text-center text-color">Price NGN: <span>{{n.price}}</span></h6>
                     <div class="text-center">
-                        <button class="btn btn-green"  @click="Edit(n.id)">Edit</button>
+                        <button class="btn btn-green"  @click="EditHair(n.id)">Edit</button>
                     </div> 
                 </div>
                 </div>
@@ -41,22 +50,64 @@
 
           </div>
 
-          <div class="mt-12" v-if="products.length===0">
-              <h6 class="text-center ">No Products added yet!</h6>
+          <div class="mt-12" v-if="hairproducts.length===0">
+              <h6 class="text-center ">No Hair Products added yet!</h6>
                <div class="text-center mt-6">
                  <router-link to="/products/new" class="btn-add" style="text-decoration: none; color:white;">Add New Product</router-link>
             </div> 
           </div>
 
 
-        <div class="text-center mt-5" v-if="products > 0">
-          <v-pagination @input="next" v-model="pagination.page" 
-          :length="Math.ceil(products / 5)" color="#F7941D"></v-pagination>
+        <div class="text-center mt-5" v-if="hairCount > 0">
+          <v-pagination @input="nextHair" v-model="pagination.page" 
+          :length="Math.ceil(hairCount / 5)" color="#F7941D"></v-pagination>
         </div>
-        <!-- <div class="text-center mt-5" v-if="products.length > 0">
-          <v-pagination @input="next" circle  v-model="pagination.page" 
-          length="3" color="#F7941D"></v-pagination>
-        </div> -->
+
+                </v-tab-item>
+
+                <!-- second tab -->
+                <v-tab-item>
+
+                       <!-- list of all products -->
+                    <div class="row mt-4">
+            
+                    <div class="col-lg-4 mb-3"  v-for="n in skinproducts" :key="n.id">
+                          <div class="card">
+                          <div class="card-body">
+                              <div class="text-center">
+                                <v-img :src="getImageUrl(n.imgUrl)" width="266" height="138"></v-img>
+                              </div>
+                              <h5 class="card-title text-center mt-2" style="font-weight: bold;">{{n.name}}</h5>
+                              <h6 class="card-text text-center text-color">Qty Available: <span>{{n.quantityAvailable}}</span> </h6>
+                              <h6 class="card-text text-center text-color">Price NGN: <span>{{n.price}}</span></h6>
+                              <div class="text-center">
+                                  <button class="btn btn-green"  @click="EditSkin(n.id)">Edit</button>
+                              </div> 
+                          </div>
+                          </div>
+                      </div>
+
+                  </div>
+
+                    <div class="mt-12" v-if="skinproducts.length===0">
+                      <h6 class="text-center ">No Skin Products added yet!</h6>
+                      <div class="text-center mt-6">
+                        <router-link to="/products/new" class="btn-add" style="text-decoration: none; color:white;">Add New Product</router-link>
+                    </div> 
+                  </div>
+
+
+                <div class="text-center mt-5" v-if="skinCount > 0">
+                  <v-pagination @input="nextSkin" v-model="pagination.page" 
+                  :length="Math.ceil(skinCount / 5)" color="#F7941D"></v-pagination>
+                </div>
+
+
+                </v-tab-item>
+                
+            </v-tabs>
+
+
      </div>
  </v-container>
 </template>
@@ -79,10 +130,25 @@ export default {
         
         return products
       },
-      pageproducts(){
-        let pageproducts = this.$store.state.products.pageproducts
+      hairCount(){
+        let hairCount = this.$store.state.products.HairCount
         
-        return pageproducts
+        return hairCount
+      },
+      skinCount(){
+        let skinCount = this.$store.state.products.SkinCount
+        
+        return skinCount
+      },
+      hairproducts(){
+        let hairproducts = this.$store.state.products.hairproducts
+        
+        return hairproducts
+      },
+      skinproducts(){
+        let skinproducts = this.$store.state.products.skinproducts
+        
+        return skinproducts
       }
     },
     methods:{
@@ -97,25 +163,37 @@ export default {
         .catch(()=>{
         })
       },
-      next(page){
+      nextHair(page){
         // const limit=10;      
         // const OffSet = (page * 10) - 10;
         // console.log("OffSet is "+ OffSet, limit); 
-        this.$store.dispatch('getPageProducts', {Offset:page,limit:5})
+        this.$store.dispatch('getHairProducts', {Offset:page,limit:5})
       }, 
-      Edit(id){
+      nextSkin(page){ 
+      this.$store.dispatch('getSkinProducts', {Offset:page,limit:5})
+    }, 
+      EditHair(id){
         this.$store.dispatch('editProduct', id) 
+        this.$router.push('/product/edit/'+id) 
+      },
+       EditSkin(id){
+        this.$store.dispatch('skinProduct', id) 
         this.$router.push('/product/edit/'+id) 
       }
     },
     created(){
        this.$store.dispatch("getProductsCount")
-      .then(( )=>{
+      .then(()=>{
       
       })
       .catch(()=>{
       })
-      this.$store.dispatch("getPageProducts", {Offset:1,limit:5})
+      this.$store.dispatch("getHairProducts", {Offset:1,limit:5})
+      .then(()=>{
+      })
+      .catch(()=>{
+      })
+      this.$store.dispatch("getSkinProducts", {Offset:1,limit:5})
       .then(()=>{
       })
       .catch(()=>{

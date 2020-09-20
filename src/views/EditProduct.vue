@@ -25,6 +25,19 @@
                   v-model="name"
                 />
             </div>
+
+             <div class="form-group">
+                      <label for="category">Product Category</label>
+                      <select class="custom-select my-1 mr-sm-2" v-model="selected" id="category">
+                        <option v-for="(cat, index) in category" 
+                              :key="index"
+                            :value="cat"
+                        >
+                          {{ cat }}
+                        </option>
+                      </select>
+                      
+               </div>
              
              <div class="form-group">
                <label for="email">Price</label>
@@ -47,6 +60,15 @@
                   v-model="quantityAvailable"
                 />
              </div>
+
+               <div class="form-group">
+                <label for="description">Product Description</label>
+                <textarea class="form-control" id="decription" rows="5"
+                 v-model="description"
+                 required
+                  />
+                  <div class="invalid-feedback">Please add a description</div>
+            </div>
 
 
              <!--   Preview product image  -->
@@ -85,10 +107,13 @@ export default {
           name: this.$store.state.products.product.name,
           price: this.$store.state.products.product.price,
           quantityAvailable: this.$store.state.products.product.quantityAvailable,
+          description: this.$store.state.products.product.description,
           files: this.$store.state.products.product.imgUrl,
           snackbar:false,
           snackbar2:false,
           msgErr:'',
+          selected: this.$store.state.products.product.category,
+          category: ['Hair', 'Skin'],
         }
     },
     computed: {
@@ -109,6 +134,8 @@ export default {
             "price": this.price,
             "quantityAvailable":this.quantityAvailable,
             "files":this.files,
+            "category": this.selected,
+            "description": this.description,
             "id": this.$store.state.products.product.id
           })
           .then(()=>{
@@ -157,5 +184,21 @@ export default {
     0px 4.5px 10px rgba(255, 255, 255, 0.14);
   color: #F7941D;
   border: 1px solid #F7941D;
+}
+.custom-select{
+    color: black;
+}
+.custom-select:focus{
+  border-color: rgba(50, 54, 67, 0.2);
+  box-shadow: 0px 5px 30px rgba(50, 54, 67, 0.2);
+  outline: 0 none;
+}
+textarea{
+   padding: 20px 20px;  
+}
+textarea:focus{
+border-color: rgba(50, 54, 67, 0.2);
+  box-shadow: 0px 5px 30px rgba(50, 54, 67, 0.2);
+  outline: 0 none;
 }
 </style>

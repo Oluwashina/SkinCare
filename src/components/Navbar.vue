@@ -65,6 +65,14 @@
               Products
             </v-list-item-title> 
           </v-list-item>
+           <v-list-item router-link to="/products" >
+            <v-list-item-icon>
+              <v-icon color="#F7941D">mdi-cart-variant</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title style="font-size:14px" >
+             Orders
+            </v-list-item-title> 
+          </v-list-item>
           <v-list-item router-link to="/skinissues" >
             <v-list-item-icon>
                 <v-icon color="#F7941D">mdi-alert-circle-outline</v-icon>

@@ -4,9 +4,12 @@ export const products = {
     state: {
         
         products: [],
-        pageproducts: [],
+        hairproducts: [],
+        skinproducts: [],
         productsOriginal: [],
         productsLength:0,
+        HairCount: 0,
+        SkinCount: 0,
         product: {}
     },
     mutations: {
@@ -15,10 +18,15 @@ export const products = {
         },
         ProductsCount(state, data){
           state.productsLength = data.countOfAllProduct
+          state.HairCount = data.countHair
+          state.SkinCount = data.counSkin
         },
-        PageProducts(state, data){
-          state.pageproducts = data
+        HairProducts(state, data){
+          state.hairproducts = data
           state.productsOriginal = data
+        },
+        SkinProducts(state, data){
+          state.skinproducts = data
         },
         ProductFilter(state,word){
             word=word.toLowerCase()
@@ -27,7 +35,11 @@ export const products = {
             });
         },
         EditProduct(state, id){
-          var product = state.pageproducts.find(pro => pro.id === id)
+          var product = state.hairproducts.find(pro => pro.id === id)
+          state.product = product
+        },
+        SkinProduct(state, id){
+          var product = state.skinproducts.find(pro => pro.id === id)
           state.product = product
         }
     },
@@ -60,12 +72,26 @@ export const products = {
           })
         })
       },
-        getPageProducts: ({commit},payload)=>{
+        getHairProducts: ({commit},payload)=>{
           return new Promise((resolve, reject)=>{
-            axios.get(`/products?limit=${payload.limit}&offset=${payload.Offset}`)
+            axios.get(`/products/Hair?limit=${payload.limit}&offset=${payload.Offset}`)
             .then(({data, status})=>{
               if(status === 200){
-                commit('PageProducts', data)
+                commit('HairProducts', data)
+                resolve(data)
+              }
+            })
+            .catch((error)=>{
+              reject(error)
+            })
+          })
+        },
+        getSkinProducts: ({commit},payload)=>{
+          return new Promise((resolve, reject)=>{
+            axios.get(`/products/Skin?limit=${payload.limit}&offset=${payload.Offset}`)
+            .then(({data, status})=>{
+              if(status === 200){
+                commit('SkinProducts', data)
                 resolve(data)
               }
             })
@@ -83,6 +109,8 @@ export const products = {
             bodyFormData.set('name', payload.name);
             bodyFormData.set('price', payload.price);
             bodyFormData.set('quantityAvailable', payload.quantityAvailable);
+            bodyFormData.set('category', payload.category);
+            bodyFormData.set('description', payload.description);
             bodyFormData.append('files', payload.files);
             return new Promise((resolve, reject)=>{
               axios({
@@ -108,6 +136,8 @@ export const products = {
           bodyFormData.set('name', payload.name);
           bodyFormData.set('price', payload.price);
           bodyFormData.set('quantityAvailable', payload.quantityAvailable);
+          bodyFormData.set('category', payload.category);
+          bodyFormData.set('description', payload.description);
           bodyFormData.append('files', payload.files);
           return new Promise((resolve, reject)=>{
             axios({
@@ -131,6 +161,9 @@ export const products = {
         editProduct: ({commit}, payload) =>{
             commit('EditProduct', payload)
         },
+        skinProduct: ({commit}, payload) =>{
+          commit('SkinProduct', payload)
+      },
         offsetProduct: ({commit})=>{
           return new Promise((resolve, reject)=>{
             axios.get("/products")
