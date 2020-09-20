@@ -26,7 +26,7 @@
                     >
                         
                         <template v-slot:item.action="{ item }">
-                            <v-btn text  @click="View(item)" style="border: 1px solid #F7941D; color:#F7941D; border-radius: 25px;" class="text-none" small>View</v-btn>
+                            <v-btn text  @click="View(item.id)" style="border: 1px solid #F7941D; color:#F7941D; border-radius: 25px;" class="text-none" small>View</v-btn>
                         </template>
                     </v-data-table>
                     </v-card>
@@ -84,6 +84,7 @@ export default {
     methods: {
         View(id){
             alert(id)
+            this.$router.push('/requestedproducts/'+id)
         },
         
     }

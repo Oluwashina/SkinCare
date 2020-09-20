@@ -65,14 +65,76 @@
               Products
             </v-list-item-title> 
           </v-list-item>
-           <v-list-item router-link to="/products" >
-            <v-list-item-icon>
-              <v-icon color="#F7941D">mdi-cart-variant</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title style="font-size:14px" >
-             Orders
-            </v-list-item-title> 
+          <v-list dense>
+        <template v-for="item in items">
+          <v-row
+            v-if="item.heading"
+            :key="item.heading"
+            align="center"
+          >
+            <v-col cols="6">
+              <v-subheader v-if="item.heading">
+                {{ item.heading }}
+              </v-subheader>
+            </v-col>
+            <v-col
+              cols="6"
+              class="text-center"
+            >
+              <a
+                href="#!"
+                class="body-2 black--text"
+              >EDIT</a>
+            </v-col>
+          </v-row>
+          <v-list-group
+            v-else-if="item.children"
+            :key="item.text"
+            v-model="item.model"
+            prepend-icon="mdi-cart-variant"
+            :append-icon="item.model ? item.icon : item['icon-alt']"
+          >
+            <template v-slot:activator>
+              <v-list-item-content>
+                <v-list-item-title>
+                  {{ item.text }}
+                </v-list-item-title>
+              </v-list-item-content>
+            </template>
+            <v-list-item
+              v-for="(child, i) in item.children"
+              :key="i"
+              link 
+              router :to ="child.route"
+                
+            >
+              <v-list-item-action v-if="child.icon">
+                <v-icon color="#F7941D">{{ child.icon }}</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>
+                  {{ child.text }}
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-group>
+          <v-list-item
+            v-else
+            :key="item.text"  
+            link       
+          >
+            <v-list-item-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>
+                {{ item.text }}
+              </v-list-item-title>
+            </v-list-item-content>
           </v-list-item>
+        </template>
+      </v-list>
+          
           <v-list-item router-link to="/skinissues" >
             <v-list-item-icon>
                 <v-icon color="#F7941D">mdi-alert-circle-outline</v-icon>
@@ -131,6 +193,19 @@
     data: () => ({
         drawer: null,
         notificationDialog:false,
+         items: [
+        {
+          icon: 'mdi-chevron-down',
+          'icon-alt': 'mdi-chevron-down',
+          text: 'Orders',
+          model: false,
+          children: [
+            { icon: 'mdi-order-bool-ascending-variant', text: 'New Orders', route: '/neworders' },
+            { icon: 'mdi-order-bool-ascending-variant', text: 'Pending Orders', route: '/pendingorders' },
+            { icon: 'mdi-order-bool-ascending-variant', text: 'Completed Orders', route: '/completedorders' },
+          ],
+        },
+      ],
     }),
     methods:{
       logout(){
@@ -160,6 +235,9 @@
   color: white;
   padding: 10px 40px;
   font-size: 15px;
+}
+.v-list-item__title{
+  color: #4E4B46;
 }
 
 </style>

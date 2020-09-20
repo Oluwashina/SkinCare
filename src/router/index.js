@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Dashboard from '../views/Dashboard.vue'
 import RequestedProducts from '../views/RequestedProducts.vue'
+import RequestedProductsById from '../views/RequestedProductsById.vue'
 import NewOrders from '../views/NewOrders.vue'
 import OrderById from '../views/OrderById.vue'
 import Products from '../views/Products.vue'
@@ -74,6 +75,11 @@ Vue.use(VueRouter)
         path: '/requestedproducts',
         name: 'RequestedProducts',
         component: RequestedProducts
+      },
+      {
+        path: '/requestedproducts/:id',
+        name: 'RequestedProductsById',
+        component: RequestedProductsById
       },
       {
         path: '/products',
