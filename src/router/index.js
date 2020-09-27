@@ -21,6 +21,10 @@ import DispatchedOrders from '../views/Dispatched.vue'
 import PendingOrderById from '../views/PendingOrderById'
 import CompletedOrders from '../views/CompletedOrders.vue'
 import CompletedOrdersById from '../views/CompletedOrdersById.vue'
+import Questionnaire from '../views/Questionnaire.vue'
+import QuestionnaireById from '../views/QuestionnaireById.vue'
+import QuestionnaireAdd from '../views/QuestionnaireAdd.vue'
+import QuestionnaireEdit from '../views/QuestionnaireEdit.vue'
 
 Vue.use(VueRouter)
 
@@ -131,7 +135,27 @@ Vue.use(VueRouter)
         path: '/editbespoke/:id',
         name: 'BespokeEdit',
         component: BespokeEdit
-      }
+      },
+      {
+        path: '/questionnaire',
+        name: 'Questionnaire',
+        component: Questionnaire
+      },
+      {
+        path: '/questionnaire/:id',
+        name: 'QuestionnaireById',
+        component: QuestionnaireById
+      },
+      {
+        path: '/addquestionnaire',
+        name: 'QuestionnaireAdd',
+        component: QuestionnaireAdd
+      },
+      {
+        path: '/editquestionnaire/:id',
+        name: 'QuestionnaireEdit',
+        component: QuestionnaireEdit
+      },
     ]
   },
   

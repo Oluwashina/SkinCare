@@ -159,7 +159,7 @@
              Requested Products
             </v-list-item-title> 
           </v-list-item> 
-            <v-list-item router-link to="/" >
+            <v-list-item router-link to="/questionnaire" >
             <v-list-item-icon>
                 <v-icon color="#F7941D">mdi-help</v-icon>
             </v-list-item-icon>
