@@ -20,14 +20,13 @@ export default {
 
 
 <style>
-@font-face{
+ /* @font-face{
     font-family: 'AirbnbCereal';
     src: local('AirbnbCereal'), 
           url(./fonts/AirbnbCerealBook.ttf);
-  }  
+  }   */
+
   *{
-    font-family: 'AirbnbCereal';
+    font-family: 'Roboto', sans-serif;
   }
- 
-  
 </style>

@@ -1,7 +1,7 @@
 <template>
   <v-container>
         <div class="container">
-                <h5 class="heading">Pending Orders</h5>
+                <h5 class="heading">Dispatched Orders</h5>
                 <v-row class="mt-5">
                 <v-col cols="12" md="12" sm="12">
                     <v-card>
@@ -19,7 +19,7 @@
                         </v-card-title>
                     <v-data-table
                         :headers="headers"
-                        :items="products"
+                        :items="DispatchedOrders"
                         hide-default-footer
                         no-data-text='No pending products yet'
                         :search="search"
@@ -46,11 +46,11 @@ export default {
                 text: 'Customer Name',
                 align: 'start',
                 sortable: false,
-                value: 'name',
+                value: 'firstName',
             },
-            { text: 'Product requested', value: 'product' },
-            { text: 'Quantity', value: 'qty' },
-            { text: 'Dispatch Date', value: 'date' },
+            { text: 'Product requested', value: 'name' },
+            { text: 'Quantity', value: 'quantity' },
+            { text: 'Dispatch Date', value: 'updatedAt' },
             { text: '', value: 'action', sortable: false, },
             ],
             products: [
@@ -83,10 +83,29 @@ export default {
     },
     methods: {
         View(id){
-            alert(id)
-            this.$router.push('/pendingorders/'+id)
-        },
-        
+             this.$store.dispatch("OrderById", id)
+            .then((success)=>{
+                console.log(success)
+                  this.$router.push('/pendingorders/'+id)
+            })
+            .catch(()=>{
+            })
+          
+        },     
+    },
+     computed:{
+         DispatchedOrders(){
+      return this.$store.state.orders.dispatcheddata
+        }
+    },
+    created(){
+        this.$store.dispatch('DispatchedOrders')
+        .then((success)=>{
+            console.log(success)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
     }
 }
 </script>

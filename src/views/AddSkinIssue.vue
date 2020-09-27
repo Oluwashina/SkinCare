@@ -161,6 +161,7 @@
 </template>
 
 <script>
+import iziToast from 'izitoast'
 export default {
     data(){
         return{
@@ -273,7 +274,10 @@ export default {
             this.symptoms = ''
             this.loader = false,
             this.loading = false
-            this.snackbar = true
+              iziToast.success({
+              message: 'Symptom added successfully!',
+              progressBar: false,
+              })
             this.symptomBlured = false
           })
           .catch((err)=>{
@@ -295,7 +299,7 @@ export default {
           this.loading1 = true
           this.$store.dispatch("AddSkinIssue",{
             "category": this.selected1,
-            "symptom": this.selectedChips,
+            "symptom": this.selectedChips,  
              "name": this.issueName,
              "files": this.files,
               "description": this.description

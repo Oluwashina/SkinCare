@@ -19,7 +19,7 @@
                         </v-card-title>
                     <v-data-table
                         :headers="headers"
-                        :items="products"
+                        :items="NewOrders"
                         hide-default-footer
                         no-data-text='No completed orders yet'
                         :search="search"
@@ -46,11 +46,11 @@ export default {
                 text: 'Customer Name',
                 align: 'start',
                 sortable: false,
-                value: 'name',
+                value: 'firstName',
             },
-            { text: 'Product requested', value: 'product' },
-            { text: 'Quantity', value: 'qty' },
-            { text: 'Order Date', value: 'date' },
+            { text: 'Product requested', value: 'name' },
+            { text: 'Quantity', value: 'quantity' },
+            { text: 'Order Date', value: 'createdAt'},
             { text: '', value: 'action', sortable: false, },
             ],
             products: [
@@ -84,9 +84,29 @@ export default {
     methods: {
         View(id){
             alert(id)
-            this.$router.push('/orders/'+id)
+            this.$store.dispatch("OrderById", id)
+            .then((success)=>{
+                console.log(success)
+                this.$router.push('/orders/'+id)
+            })
+            .catch(()=>{
+            })
+          
         },
-        
+    },
+    computed:{
+         NewOrders(){
+      return this.$store.state.orders.neworders
+        }
+    },
+    created(){
+        this.$store.dispatch('NewOrders')
+        .then((success)=>{
+            console.log(success)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
     }
 }
 </script>

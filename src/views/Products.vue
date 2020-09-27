@@ -174,11 +174,11 @@ export default {
     }, 
       EditHair(id){
         this.$store.dispatch('editProduct', id) 
-        this.$router.push('/product/edit/'+id) 
+        this.$router.push('/products/edit/'+id) 
       },
        EditSkin(id){
         this.$store.dispatch('skinProduct', id) 
-        this.$router.push('/product/edit/'+id) 
+        this.$router.push('/products/edit/'+id) 
       }
     },
     created(){

@@ -70,6 +70,10 @@ export default {
              },
           next(page){
             this.$store.dispatch('GetSkinIssuesLimit', {Offset:page,limit:5})
+      },
+       Edit(id){
+        this.$store.dispatch('editSkinIssues', id) 
+        this.$router.push('/skinissues/edit/'+id) 
       }, 
     },
     computed: {

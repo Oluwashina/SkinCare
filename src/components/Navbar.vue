@@ -201,7 +201,7 @@
           model: false,
           children: [
             { icon: 'mdi-order-bool-ascending-variant', text: 'New Orders', route: '/neworders' },
-            { icon: 'mdi-order-bool-ascending-variant', text: 'Pending Orders', route: '/pendingorders' },
+            { icon: 'mdi-order-bool-ascending-variant', text: 'Dispatched Orders', route: '/dispatchedorders' },
             { icon: 'mdi-order-bool-ascending-variant', text: 'Completed Orders', route: '/completedorders' },
           ],
         },

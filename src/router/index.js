@@ -9,6 +9,7 @@ import OrderById from '../views/OrderById.vue'
 import Products from '../views/Products.vue'
 import NewProduct from '../views/NewProduct.vue'
 import SkinIssues from '../views/SkinIssues.vue'
+import EditSkinIssues from '../views/EditSkinIssues.vue'
 import AdminNav from '../Layouts/AdminLayout.vue'
 import AddSkinIssue from '../views/AddSkinIssue.vue'
 import Bespoke from '../views/Bespoke.vue';
@@ -16,7 +17,7 @@ import BespokeById from '../views/BespokeById.vue'
 import BespokeAdd from '../views/BespokeAdd.vue'
 import BespokeEdit from '../views/BespokeEdit.vue'
 import EditProduct from '../views/EditProduct.vue'
-import PendingOrders from '../views/PendingOrders.vue'
+import DispatchedOrders from '../views/Dispatched.vue'
 import PendingOrderById from '../views/PendingOrderById'
 import CompletedOrders from '../views/CompletedOrders.vue'
 import CompletedOrdersById from '../views/CompletedOrdersById.vue'
@@ -52,9 +53,9 @@ Vue.use(VueRouter)
         component: OrderById
       },
       {
-        path: '/pendingorders',
-        name: 'PendingOrders',
-        component: PendingOrders
+        path: '/dispatchedorders',
+        name: 'DispatchedOrders',
+        component: DispatchedOrders
       },
       {
         path: '/pendingorders/:id',
@@ -92,7 +93,7 @@ Vue.use(VueRouter)
         component: NewProduct
       },
        {
-        path: '/product/edit/:id',
+        path: '/products/edit/:id',
         name: 'EditProduct',
         component: EditProduct
       },
@@ -100,6 +101,11 @@ Vue.use(VueRouter)
         path: '/skinissues',
         name: 'SkinIssues',
         component: SkinIssues
+      },
+      {
+        path: '/skinissues/edit/:id',
+        name: 'EditSkinIssues',
+        component: EditSkinIssues
       },
       {
         path: '/skinissues/add',

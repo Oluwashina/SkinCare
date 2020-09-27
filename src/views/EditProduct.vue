@@ -1,9 +1,6 @@
 <template>
   <v-container>
-    <v-snackbar v-model="snackbar" :timeout="10000" top color="success">
-      <span>Product Updated successfully...</span> 
-      <v-btn text color="white" @click="snackbar = false">Close</v-btn>
-    </v-snackbar>
+    
     <v-snackbar v-model="snackbar2" :timeout="10000" top color="red">
       <span>{{msgErr}}</span> 
       <v-btn text color="white" @click="snackbar2 = false">Close</v-btn>
@@ -98,6 +95,7 @@
 </template>
 
 <script>
+import iziToast from 'izitoast'
 export default {
     data(){
         return{
@@ -141,7 +139,10 @@ export default {
           .then(()=>{
             this.loader = false
             this.loading = false
-            this.snackbar = true
+             iziToast.success({
+              message: 'Product updated successfully!',
+              progressBar: false,
+              })
           })
           .catch((err)=>{
               console.log(err)
