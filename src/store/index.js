@@ -4,6 +4,7 @@ import {auth} from './auth'
 import {products} from './products'
 import {orders} from './orders'
 import {skin} from './skin'
+import {bespoke} from './bespoke'
 
 Vue.use(Vuex)
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
     auth: auth,
     products: products,
     orders: orders,
-    skin: skin
+    skin: skin,
+    bespoke: bespoke
   }
 })

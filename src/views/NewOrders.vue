@@ -21,7 +21,7 @@
                         :headers="headers"
                         :items="NewOrders"
                         hide-default-footer
-                        no-data-text='No completed orders yet'
+                        no-data-text='No new orders placed yet'
                         :search="search"
                     >
                         

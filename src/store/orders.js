@@ -21,7 +21,11 @@ export const orders = {
           state.dispatcheddata = dispatched
         },
        CompletedOrders(state, data){
-         state.completedOrders = data
+          let completed = data
+          for(let i=0; i<completed.length; i++){
+              completed[i].updatedAt = moment(completed[i].updatedAt).format('LL')
+          }
+          state.completedOrders = completed
        },
         ordersCount(state, data){
             state.ordersCount = data.countOfAllOrder

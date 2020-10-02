@@ -50,7 +50,7 @@ export default {
             },
             { text: 'Product requested', value: 'name' },
             { text: 'Quantity', value: 'quantity' },
-            { text: 'Completed', value: 'createdAt' },
+            { text: 'Completed', value: 'updatedAt' },
             { text: '', value: 'action', sortable: false, },
             ],
             products: [
@@ -83,8 +83,15 @@ export default {
     },
     methods: {
         View(id){
-            alert(id)
-            this.$router.push('/completedorders/'+id)
+                 alert(id)
+            this.$store.dispatch("OrderById", id)
+            .then((success)=>{
+                console.log(success)
+                this.$router.push('/completedorders/'+id)
+            })
+            .catch(()=>{
+            })
+            
         },
         
     },

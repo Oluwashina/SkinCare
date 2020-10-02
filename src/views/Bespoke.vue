@@ -1,5 +1,26 @@
 <template>
   <v-container>
+
+  <!--DELETE Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Question</h5>
+      
+      </div>
+      <div class="modal-body">
+        You are about to delete a question. Would you like to continue?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary white--text" data-dismiss="modal">NO</button>
+        <button type="button" class="btn btn-primary white--text">DELETE</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end of delete modal -->
+
       <div class="container">
          <h5 class="heading">Bespoke Cosmetics</h5>
 
@@ -50,53 +71,19 @@
         </v-toolbar>
 
         <!-- Questions -->
-        <div class="mt-7 mb-3 question">
-            <h6 style="font-weight: bold; color: #4E4B46;" class="pt-3">Question 1</h6>
+        <div class="mt-7 mb-3 question" v-for="(question, index) in Questions" :key="question.id">
+            <h6 style="font-weight: bold; color: #4E4B46;" class="pt-3">Question {{index + 1}}</h6>
             
                 <div style="">
-                    <p class="">WHAT IS THE MAIN CONCERN YOU ARE HAVING TODAY CONCERNING YOUR HAIR OR SKIN?</p>
+                    <p class="">{{question.question}}</p>
                     <div class="mt-n4">
-                        <span @click="Edit()"><i class="mdi mdi-pencil-circle-outline" style="color: #4DC503; font-size: 30px; cursor: pointer;"></i></span>
-                        <span @click="Delete()" class="ml-2"><i class="mdi mdi-delete-circle-outline" style="color: #F7941D; font-size: 30px; cursor: pointer;"></i></span>
+                        <span @click="Edit(question.id)"><i class="mdi mdi-pencil-circle-outline" style="color: #4DC503; font-size: 30px; cursor: pointer;"></i></span>
+                        <span class="ml-2" @click="Delete(question.id)"><i class="mdi mdi-delete-circle-outline" style="color: #F7941D; font-size: 30px; cursor: pointer;"></i></span>
                     </div>
                 </div>
           </div>
 
-          <div class="question mb-3">
-            <h6 style="font-weight: bold; color: #4E4B46;" class="pt-3">Question 2</h6>
-            
-                <div style="">
-                    <p class="">WHAT IS THE MAIN CONCERN YOU ARE HAVING TODAY CONCERNING YOUR HAIR OR SKIN?</p>
-                    <div class="mt-n4">
-                        <span @click="Edit()"><i class="mdi mdi-pencil-circle-outline" style="color: #4DC503; font-size: 30px; cursor: pointer;"></i></span>
-                        <span @click="Delete()" class="ml-2"><i class="mdi mdi-delete-circle-outline" style="color: #F7941D; font-size: 30px; cursor: pointer;"></i></span>
-                    </div>
-                </div>
-          </div>
 
-          <div class="question mb-3">
-            <h6 style="font-weight: bold; color: #4E4B46;" class="pt-3">Question 3</h6>
-            
-                <div style="">
-                    <p class="">WHAT IS THE MAIN CONCERN YOU ARE HAVING TODAY CONCERNING YOUR HAIR OR SKIN?</p>
-                    <div class="mt-n4">
-                        <span @click="Edit()"><i class="mdi mdi-pencil-circle-outline" style="color: #4DC503; font-size: 30px; cursor: pointer;"></i></span>
-                        <span @click="Delete()" class="ml-2"><i class="mdi mdi-delete-circle-outline" style="color: #F7941D; font-size: 30px; cursor: pointer;"></i></span>
-                    </div>
-                </div>
-          </div>
-
-          <div class="question">
-            <h6 style="font-weight: bold; color: #4E4B46;" class="pt-3">Question 4</h6>
-            
-                <div style="">
-                    <p class="">WHAT IS THE MAIN CONCERN YOU ARE HAVING TODAY CONCERNING YOUR HAIR OR SKIN?</p>
-                    <div class="mt-n4">
-                        <span @click="Edit()"><i class="mdi mdi-pencil-circle-outline" style="color: #4DC503; font-size: 30px; cursor: pointer;"></i></span>
-                        <span @click="Delete()" class="ml-2"><i class="mdi mdi-delete-circle-outline" style="color: #F7941D; font-size: 30px; cursor: pointer;"></i></span>
-                    </div>
-                </div>
-          </div>
 
         </v-tab-item>
         
@@ -108,6 +95,7 @@
 </template>
 
 <script>
+import iziToast from 'izitoast'
 export default {
     data(){
         return{
@@ -118,61 +106,63 @@ export default {
                 sortable: false,
                 value: 'username',
             },
-            { text: 'Full Name', value: 'fullname' },
+            { text: 'Full Name', value: 'firstName' },
             { text: 'Email', value: 'email' },
-            { text: 'Date', value: 'date' },
+            { text: 'Date', value: 'updatedAt' },
             { text: '', value: 'action', sortable: false, },
             ],
             search: '',
-            Entries: [
-                {
-                    username: 'JaneCooper',
-                    fullname: 'Jane Cooper',
-                    email: 'janecooper@gmail.com',
-                    date: '21/08/2020',
-                    id: 1
-                },
-                 {
-                    username: 'JaneCooper',
-                    fullname: 'Jane Cooper',
-                    email: 'janecooper@gmail.com',
-                    date: '21/08/2020',
-                    id: 2
-                },
-                 {
-                    username: 'JaneCooper',
-                    fullname: 'Jane Cooper',
-                    email: 'janecooper@gmail.com',
-                    date: '21/08/2020',
-                    id: 3
-                },
-                 {
-                    username: 'Codydan',
-                    fullname: 'Jane Cooper',
-                    email: 'janecoope12r@gmail.com',
-                    date: '21/08/2020',
-                    id: 4
-                },
-                 {
-                    username: 'JaneCooper',
-                    fullname: 'Jane Cooper',
-                    email: 'janecooper@gmail.com',
-                    date: '21/08/2020',
-                    id: 5
-                }
-            ]
+           
         }
     },
     methods: {
         View(id){
+            alert(id)
+             this.$store.dispatch('viewEntry', id) 
             this.$router.push('/bespoke/'+ id)
         },
-        Edit(){
-            this.$router.push('/editbespoke/2')
+        Edit(id){
+               this.$store.dispatch('editQuestion', id) 
+             this.$router.push('/editbespoke/'+ id)
         },
-        Delete(){
-            alert("Deleted successfully!")
+        Delete(id){
+             this.$store.dispatch('DeleteQuestions', id)
+            .then((success)=>{
+                console.log(success)
+                 iziToast.success({
+                message: 'Question deleted successfully!',
+                progressBar: false,
+                })
+                this.$store.dispatch('BespokeQuestions')
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
         }
+    },
+    computed:{
+        Entries(){
+            return this.$store.state.bespoke.entries
+        },
+        Questions(){
+            return this.$store.state.bespoke.questions
+        }
+    },
+    created(){
+        this.$store.dispatch('BespokeQuestions')
+        .then((success)=>{
+            console.log(success)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+         this.$store.dispatch('BespokeEntries')
+        .then((success)=>{
+            console.log(success)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
     }
 }
 </script>

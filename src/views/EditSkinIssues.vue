@@ -182,8 +182,6 @@ export default {
               "id": this.$store.state.skin.issue.id
             })
             .then(()=>{
-              this.name = ''
-              this.description = ''
               this.loader = false,
               this.loading = false
                   iziToast.success({

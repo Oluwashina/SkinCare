@@ -10,10 +10,10 @@
                 </v-list-item-avatar>
             </div>
                 <div>
-                <p class="ml-2 mt-2">Entry code: 112121</p>
-                <p class="ml-2">Submitted by: Jane Cooper</p>
-                <p class="ml-2">Email: Janecooper@gmail.com</p>
-                <p class="ml-2">Date: 21/08/2020</p>
+                <p class="ml-2 mt-2">Entry code: {{Entries.entryCode}}</p>
+                <p class="ml-2">Submitted by: {{Entries.firstName}} {{Entries.lastName}}</p>
+                <p class="ml-2">Email: {{Entries.email}}</p>
+                <p class="ml-2">Date: {{Entries.updatedAt}}}</p>
                 </div>      
           </div>
 
@@ -64,6 +64,14 @@ export default {
   data(){
     return{
       
+    }
+  },
+  methods:{
+
+  },
+  computed:{
+    Entries(){
+      return this.$store.state.bespoke.entry
     }
   }
 }
