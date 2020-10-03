@@ -18,7 +18,7 @@ Vue.config.productionTip = false
 // import './fonts/AirbnbCerealMedium.ttf';
 
 import Axios from 'axios'
-// Axios.defaults.baseURL = "http://192.168.1.104:5000/"
+// Axios.defaults.baseURL = "http://192.168.43.10:5000/"
 Axios.defaults.baseURL = "https://ahiajara.herokuapp.com/"
 
 Vue.prototype.$http = Axios;

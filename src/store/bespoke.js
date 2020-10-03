@@ -73,6 +73,23 @@ export const bespoke = {
           });
           })
         },
+        replyBespoke: ({commit},payload)=>{
+          return new Promise((resolve, reject)=>{
+            let send = {
+              "reply": payload.reply,
+          }
+            axios.put("/entry/"+payload.id, send)
+            .then(({status, data})=>{
+                if(status === 200){
+                resolve(data);
+                commit()
+                }
+            })
+            .catch((error)=>{
+                reject(error);
+            });
+            })
+        },
         EditBespoke: ({commit},payload)=>{
             return new Promise((resolve, reject)=>{
                 let send = {
