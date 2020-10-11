@@ -176,7 +176,7 @@
             </v-list-item-title> 
           </v-list-item> 
         </v-list>
-        <div style="margin-top: 80px;">
+        <div style="margin-top: 50px;">
             <div class="text-center">
                  <router-link to="/products/new" class="btn-add" style="text-decoration: none; color:white;">Add New Product</router-link>
             </div> 

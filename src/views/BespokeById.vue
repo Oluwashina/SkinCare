@@ -13,7 +13,7 @@
                 <p class="ml-2 mt-2">Entry code: {{Entries.entryCode}}</p>
                 <p class="ml-2">Submitted by: {{Entries.firstName}} {{Entries.lastName}}</p>
                 <p class="ml-2">Email: {{Entries.email}}</p>
-                <p class="ml-2">Date: {{Entries.updatedAt}}}</p>
+                <p class="ml-2">Date: {{Entries.createdAt}}</p>
                 </div> 
 
 
@@ -24,13 +24,13 @@
              <div v-for="(question, index) in Questions" :key="question.id">
               <div class="mt-3 question">
                 <h6 style="font-weight: bold; color: #4E4B46;" class="pt-3">Question {{index + 1}}</h6>
-                <p class="pb-3">{{question.question}}</p>
+                <p class="pb-3">{{question.Question}}</p>
               </div>
 
               <!-- Answer Part -->
               <div class="mt-2 answer">
                 <h6 style="font-weight: bold; color: #4E4B46;" class="pt-3">Answer</h6>
-                <p class="pb-3">{{question.answer}}</p>
+                <p class="pb-3">{{question.Answer}}</p>
               </div>
              </div>
 
@@ -57,6 +57,7 @@
 
 <script>
 import iziToast from 'izitoast'
+import moment from 'moment'
 export default {
   data(){
     return{
@@ -88,7 +89,7 @@ export default {
           this.loading = true
             this.$store.dispatch('replyBespoke', {
                 "reply": this.replyMessage,
-                  "id": id
+                "id": id
             })
             .then((success)=>{
                 this.loader = false
@@ -110,7 +111,9 @@ export default {
   },
   computed:{
     Entries(){
-      return this.$store.state.bespoke.entry
+        let entry = this.$store.state.bespoke.entry
+          entry.createdAt = moment(entry.createdAt).format('LL')          
+          return entry
     },
     Questions(){
       return this.$store.state.bespoke.entry.questionAndAnswer

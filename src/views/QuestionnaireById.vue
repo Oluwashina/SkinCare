@@ -10,47 +10,45 @@
                 </v-list-item-avatar>
             </div>
                 <div>
-                <p class="ml-2 mt-2">Entry code: 112121</p>
-                <p class="ml-2">Submitted by: Ajayi Ekpetim</p>
-                <p class="ml-2">Email: AjayiEkpe@gmail.com</p>
-                <p class="ml-2">Date: 21/08/2020</p>
+                <p class="ml-2 mt-2">Entry code: {{Entries.entryCode}}</p>
+                <p class="ml-2">Submitted by: {{Entries.firstName}} {{Entries.lastName}}</p>
+                <p class="ml-2">Email: {{Entries.email}}</p>
+                <p class="ml-2">Date: {{Entries.createdAt}}</p>
                 </div>      
           </div>
 
-          <!-- Question & Answer Section -->
+            <!-- Question & Answer Section -->
              <!-- Qeustion part -->
-          <div class="mt-3 question">
-            <h6 style="font-weight: bold; color: #4E4B46;" class="pt-3">Question 1</h6>
-            <p class="pb-3">WHAT IS THE MAIN CONCERN YOU ARE HAVING TODAY CONCERNING YOUR HAIR OR SKIN?</p>
-          </div>
+             <div v-for="(question, index) in Questions" :key="question.id">
+              <div class="mt-3 question">
+                <h6 style="font-weight: bold; color: #4E4B46;" class="pt-3">Question {{index + 1}}</h6>
+                <p class="pb-3">{{question.Question}}</p>
+              </div>
 
-          <!-- Answer Part -->
-           <div class="mt-2 answer">
-            <h6 style="font-weight: bold; color: #4E4B46;" class="pt-3">Answer</h6>
-            <p class="pb-3">Skin</p>
-          </div>
+              <!-- Answer Part -->
+              <div class="mt-2 answer">
+                <h6 style="font-weight: bold; color: #4E4B46;" class="pt-3">Answer</h6>
+                <p class="pb-3">{{question.Answer}}</p>
+              </div>
+             </div>
 
-          <!-- Question 2 -->
-           <div class="mt-2 question">
-            <h6 style="font-weight: bold; color: #4E4B46;" class="pt-3">Question 2</h6>
-            <p class="pb-3">DO YOU ALWAYS HAVE PIMPLES?</p>
-          </div>
-
-          <!-- Answer 2 -->
-           <div class="mt-2 answer">
-            <h6 style="font-weight: bold; color: #4E4B46;" class="pt-3">Answer</h6>
-            <p class="pb-3">Very Often</p>
-          </div>
-
+         
+         
           <!-- message reply section -->
           <div class="form-group mt-5">
               <label for="description">Send a reply</label>
-              <textarea class="form-control" id="decription" rows="5"></textarea>
+              <textarea class="form-control" id="decription"
+               rows="5"
+                v-model="replyMessage"
+                v-bind:class="{'form-control' : true, 'is-invalid' : !validMessage(replyMessage) && messageBlured}"
+              v-on:blur="messageBlured = true"
+               ></textarea>
+               <div class="invalid-feedback">This field is required</div>
           </div>
 
           <!-- send messsage -->
             <div class="text-center mt-5 mb-3">
-                <button :disabled="isDisabled" @click="Login($event)" class="btn btn-add">Send
+                <button :disabled="loading" @click="SendFeedback($event)" class="btn btn-add">Send
                       <span class="fa fa-circle-o-notch fa-spin" v-if="loader"></span>
                   </button>
            </div>
@@ -60,8 +58,67 @@
 </template>
 
 <script>
+import moment from 'moment'
+import iziToast from 'izitoast'
 export default {
-
+  data(){
+    return{
+       replyMessage: '',
+      loader: false,
+      loading: false,
+      messageBlured: false,
+      valid: false,
+    }
+  },
+  methods:{
+    validMessage: function(replyMessage){
+        return replyMessage
+      },
+      validateMessage: function(){
+      this.messageBlured = true;
+        if(this.validMessage(this.replyMessage)){
+          this.valid = true
+        }
+      },
+       SendFeedback(event){
+      event.preventDefault()
+      this.validateMessage()
+      var id = this.$route.params.id
+        if(this.valid == true){
+          this.loader =  true
+          this.loading = true
+            this.$store.dispatch('replyRequest', {
+                "reply": this.replyMessage,
+                "id": id
+            })
+            .then((success)=>{
+                this.loader = false
+                 this.loading = false
+                 this.messageBlured= false
+                 iziToast.success({
+                    message: 'Reply has been sent successfully!',
+                    progressBar: false,
+                    })
+                console.log(success)
+            })
+            .catch((err)=>{
+                console.log(err)
+                this.loader = false
+                this.loading = false
+            })
+        }
+      }
+  },
+  computed:{
+    Entries(){
+        let entry = this.$store.state.questionnaire.question
+          entry.createdAt = moment(entry.createdAt).format('LL')          
+          return entry
+    },
+    Questions(){
+      return this.$store.state.questionnaire.question.questionAndAnswer
+    }
+  }
 }
 </script>
 

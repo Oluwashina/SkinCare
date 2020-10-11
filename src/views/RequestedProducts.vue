@@ -19,7 +19,7 @@
                         </v-card-title>
                     <v-data-table
                         :headers="headers"
-                        :items="products"
+                        :items="Requested"
                         hide-default-footer
                         no-data-text='No requested products yet'
                         :search="search"
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
     data(){
         return{
@@ -46,47 +47,42 @@ export default {
                 text: 'Name',
                 align: 'start',
                 sortable: false,
-                value: 'name',
+                value: 'firstName',
             },
-            { text: 'Product requested', value: 'product' },
-            { text: 'Quantity', value: 'qty' },
-            { text: 'Date', value: 'date' },
+            { text: 'Product requested', value: 'productId.name' },
+            { text: 'Quantity', value: 'quantitySelected' },
+            { text: 'Date', value: 'createdAt' },
             { text: '', value: 'action', sortable: false, },
             ],
-            products: [
-                {
-                    name: 'JaneCooper',
-                    product: 'Epiderm',
-                    qty: '23',
-                    date: '21/08/2020',
-                    id: 1
-                },
-                {
-                    name: 'JaneCooper',
-                    product: 'Caro white',
-                    qty: '23',
-                    date: '21/08/2020',
-                    id: 2
-                },
-                {
-                    name: 'JaneCooper',
-                    product: 'Tydineal',
-                    qty: '2',
-                    date: '21/08/2020',
-                    id: 3
-                },
-                 
-                 
-            ],
+          
             search:''
         }
     },
     methods: {
         View(id){
             alert(id)
+             this.$store.dispatch('viewRequested', id) 
             this.$router.push('/requestedproducts/'+id)
         },
         
+    },
+     computed:{
+        Requested(){
+             let requested =  this.$store.state.requested.requested
+                for(let i=0; i<requested.length; i++){
+                    requested[i].createdAt = moment(requested[i].createdAt).format('LL')
+                }
+            return requested
+        },
+    },
+    created(){
+         this.$store.dispatch('RequestedProducts')
+        .then((success)=>{
+            console.log(success)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
     }
 }
 </script>

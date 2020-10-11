@@ -7,7 +7,7 @@
       color="#000000">
          <v-tabs-slider color="#F7941D"></v-tabs-slider>
                 <v-tab>All Entries</v-tab>
-        <v-tab>Update Questions</v-tab>
+        <!-- <v-tab>Update Questions</v-tab> -->
 
         <!-- first tab layout -->
         <v-tab-item>
@@ -43,14 +43,14 @@
         </v-tab-item>
 
         <!-- second tab layout -->
-        <v-tab-item>
+        <!-- <v-tab-item>
           <v-toolbar class="mt-6" flat style="background-color:white" height="30">
             <v-spacer></v-spacer>
             <router-link to='/addquestionnaire' class="btn-add" style="text-decoration:none; color: white"><span style="">Add a question</span></router-link>
-        </v-toolbar>
+        </v-toolbar> -->
 
         <!-- Questions -->
-        <div class="mt-7 mb-3 question">
+        <!-- <div class="mt-7 mb-3 question">
             <h6 style="font-weight: bold; color: #4E4B46;" class="pt-3">Question 1</h6>
             
                 <div style="">
@@ -99,7 +99,7 @@
           </div>
 
         </v-tab-item>
-        
+         -->
              
 
           </v-tabs>
@@ -108,6 +108,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
      data(){
         return{
@@ -118,53 +119,19 @@ export default {
                 sortable: false,
                 value: 'username',
             },
-            { text: 'Full Name', value: 'fullname' },
+            { text: 'Full Name', value: 'firstName' },
             { text: 'Email', value: 'email' },
-            { text: 'Date', value: 'date' },
+            { text: 'Date', value: 'createdAt' },
             { text: '', value: 'action', sortable: false, },
             ],
             search: '',
-            Entries: [
-                {
-                    username: 'JaneCooper',
-                    fullname: 'Jane Cooper',
-                    email: 'janecooper@gmail.com',
-                    date: '21/08/2020',
-                    id: 1
-                },
-                 {
-                    username: 'JaneCooper',
-                    fullname: 'Jane Cooper',
-                    email: 'janecooper@gmail.com',
-                    date: '21/08/2020',
-                    id: 2
-                },
-                 {
-                    username: 'JaneCooper',
-                    fullname: 'Jane Cooper',
-                    email: 'janecooper@gmail.com',
-                    date: '21/08/2020',
-                    id: 3
-                },
-                 {
-                    username: 'Codydan',
-                    fullname: 'Jane Cooper',
-                    email: 'janecoope12r@gmail.com',
-                    date: '21/08/2020',
-                    id: 4
-                },
-                 {
-                    username: 'JaneCooper',
-                    fullname: 'Jane Cooper',
-                    email: 'janecooper@gmail.com',
-                    date: '21/08/2020',
-                    id: 5
-                }
-            ]
+           
         }
     },
     methods: {
         View(id){
+            alert(id)
+             this.$store.dispatch('ViewQuestions', id) 
             this.$router.push('/questionnaire/'+ id)
         },
         Edit(){
@@ -173,6 +140,24 @@ export default {
         Delete(){
             alert("Deleted successfully!")
         }
+    },
+     computed:{
+        Entries(){
+             let entries =  this.$store.state.questionnaire.questionnaire
+                for(let i=0; i<entries.length; i++){
+                    entries[i].createdAt = moment(entries[i].createdAt).format('LL')
+                }
+            return entries
+        },
+    },
+     created(){
+         this.$store.dispatch('Questionnaire')
+        .then((success)=>{
+            console.log(success)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
     }
 
 }

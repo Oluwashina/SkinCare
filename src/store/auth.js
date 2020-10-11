@@ -17,6 +17,9 @@ export const auth = {
         },
         Users(state, data){
           state.users = data
+        },
+        Logout(state){
+          state.isLogged = false
         }
     },
     actions:{
@@ -53,7 +56,23 @@ export const auth = {
               reject(error)
             })
           })
-        }
+        },
+        AUTH_LOGOUT: ({commit})=>{
+          return new Promise((resolve) => {
+            localStorage.removeItem("token")
+            window.localStorage.removeItem("vuex")  
+            commit('Logout')        
+            // remove the axios default header
+            delete axios.defaults.headers.common['Authorization']
+            if(localStorage.getItem("vuex")){
+              resolve()
+            }else{
+              resolve()
+             
+            }
+            
+          })
+        },
     },
    
 }

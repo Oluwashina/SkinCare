@@ -28,7 +28,7 @@
       color="#000000">
          <v-tabs-slider color="#F7941D"></v-tabs-slider>
                 <v-tab>All Entries</v-tab>
-        <v-tab>Update Questions</v-tab>
+        <!-- <v-tab>Update Questions</v-tab> -->
 
         <!-- first tab layout -->
         <v-tab-item>
@@ -64,13 +64,13 @@
         </v-tab-item>
 
         <!-- second tab layout -->
-        <v-tab-item>
+        <!-- <v-tab-item>
           <v-toolbar class="mt-6" flat style="background-color:white" height="30">
             <v-spacer></v-spacer>
             <router-link to='/addbespoke' class="btn-add" style="text-decoration:none; color: white"><span style="">Add a question</span></router-link>
         </v-toolbar>
 
-        <!-- Questions -->
+         Questions ------
         <div class="mt-7 mb-3 question" v-for="(question, index) in Questions" :key="question.id">
             <h6 style="font-weight: bold; color: #4E4B46;" class="pt-3">Question {{index + 1}}</h6>
             
@@ -85,7 +85,7 @@
 
 
 
-        </v-tab-item>
+        </v-tab-item> --> 
         
              
 
@@ -96,6 +96,7 @@
 
 <script>
 import iziToast from 'izitoast'
+import moment from 'moment'
 export default {
     data(){
         return{
@@ -108,7 +109,7 @@ export default {
             },
             { text: 'Full Name', value: 'firstName' },
             { text: 'Email', value: 'email' },
-            { text: 'Date', value: 'updatedAt' },
+            { text: 'Date', value: 'createdAt' },
             { text: '', value: 'action', sortable: false, },
             ],
             search: '',
@@ -117,7 +118,6 @@ export default {
     },
     methods: {
         View(id){
-            alert(id)
              this.$store.dispatch('viewEntry', id) 
             this.$router.push('/bespoke/'+ id)
         },
@@ -142,7 +142,11 @@ export default {
     },
     computed:{
         Entries(){
-            return this.$store.state.bespoke.entries
+           let entries = this.$store.state.bespoke.entries
+                for(let i=0; i<entries.length; i++){
+                    entries[i].createdAt = moment(entries[i].createdAt).format('LL')
+                }
+            return entries
         },
         Questions(){
             return this.$store.state.bespoke.questions

@@ -11,11 +11,11 @@
                     <div class="card-body">
                         
                       <h5 class="card-title mt-3 mb-6" style="font-weight: bold; color: #F7941D;">Buyer Details</h5>
-                      <h6 class="card-text  card-text-col mb-3"><span style="font-weight: bold;">First Name</span>: <span style="">Adekalo</span> </h6>
-                      <h6 class="card-text  card-text-col mb-3"> <span style="font-weight: bold;">Last Name</span>: <span>Adenike</span></h6>
-                      <h6 class="card-text  card-text-col mb-3"> <span style="font-weight: bold;">Email</span>: <span>adekalo@gmail.com</span></h6>
-                      <h6 class="card-text  card-text-col mb-3"><span style="font-weight: bold;">Shipping address</span>: <span>N0 8, oluyole avenue, oseikita Ado Ekiti, </span></h6>
-                      <h6 class="card-text  card-text-col"> <span style="font-weight: bold;">Phone Number</span>: <span>080123232122</span></h6>
+                      <h6 class="card-text  card-text-col mb-3"><span style="font-weight: bold;">First Name</span>: <span style="">{{Request.firstName}}</span> </h6>
+                      <h6 class="card-text  card-text-col mb-3"> <span style="font-weight: bold;">Last Name</span>: <span>{{Request.lastName}}</span></h6>
+                      <h6 class="card-text  card-text-col mb-3"> <span style="font-weight: bold;">Email</span>: <span>{{Request.email}}</span></h6>
+                      <h6 class="card-text  card-text-col mb-3"><span style="font-weight: bold;">Shipping address</span>: <span>{{Request.address}} </span></h6>
+                      <h6 class="card-text  card-text-col"> <span style="font-weight: bold;">Requested Date</span>: <span>{{Request.createdAt}}</span></h6>
                         
                     </div>
                   </div>
@@ -24,12 +24,12 @@
                   <div class="card" style="height:310px; width: 340px;">
                     <div class="card-body">
                         <div class="text-center">
-                          <img :src="getImageUrl('/cream2.png')" alt="" height="138">
+                          <img :src="getImageUrl(Request.productId.imgUrl)" alt="" height="138">
                         </div>
                         <h5 class="card-title mt-6 " style="font-weight: bold; color: #F7941D;">Product Details</h5>
-                        <h6 class="card-text mt-3  card-text-col"><span style="font-weight: bold;">Product name</span>: <span>ALOPECIA AREATA</span> </h6>
-                        <h6 class="card-text  card-text-col"> <span style="font-weight: bold;">Quantity Ordered</span>: <span>4</span></h6>
-                        <h6 class="card-text  card-text-col"> <span style="font-weight: bold;">Payment Status</span>: <span>Payed</span></h6>
+                        <h6 class="card-text mt-3  card-text-col"><span style="font-weight: bold;">Product name</span>: <span>{{Request.productId.name}}</span> </h6>
+                        <h6 class="card-text  card-text-col"> <span style="font-weight: bold;">Quantity Requested</span>: <span>{{Request.quantitySelected}}</span></h6>
+                        <h6 class="card-text  card-text-col"> <span style="font-weight: bold;">Product Price</span>: <span>{{Request.productId.price}}</span></h6>
                         
                     </div>
                   </div>
@@ -46,12 +46,16 @@
               <div class="form-group">
                 <label for="description">Send Feedback</label>
                 <textarea class="form-control" id="decription" rows="5"
-                 v-model="description"
+                 v-model="replyMessage"
+                  v-bind:class="{'form-control' : true, 'is-invalid' : !validMessage(replyMessage) && messageBlured}"
+                v-on:blur="messageBlured = true"
                   />
-                  <div class="invalid-feedback">Please add a description</div>
+                  <div class="invalid-feedback">This field is required</div>
             </div>
             <div class="text-center mt-6">
-                <button class="btn btn-orange">Send</button>
+                <button :disabled="loading" class="btn btn-orange" @click="SendFeedback($event)">Send
+                   <span class="fa fa-circle-o-notch fa-spin" v-if="loader"></span>
+                </button>
             </div> 
             </div>
         </div>
@@ -64,25 +68,66 @@
 </template>
 
 <script>
+import iziToast from 'izitoast'
+import moment from 'moment'
 export default {
     data(){
         return{
-          
+           replyMessage: '',
+            loader: false,
+            loading: false,
+            messageBlured: false,
+            valid: false,
         }
     },
-    computed:{
-      order(){
-        let order = this.$store.state.orders.orderById
-        
-        return order
-      }
-    },
+     computed:{
+        Request(){
+           let request = this.$store.state.requested.request
+          request.createdAt = moment(request.createdAt).format('LL')          
+          return request
+        },
+     },
     methods:{
       getImageUrl(url){
         return url
       },
-      
-      
+      validMessage: function(replyMessage){
+        return replyMessage
+      },
+      validateMessage: function(){
+      this.messageBlured = true;
+        if(this.validMessage(this.replyMessage)){
+          this.valid = true
+        }
+      },
+      SendFeedback(event){
+      event.preventDefault()
+      this.validateMessage()
+      var id = this.$route.params.id
+        if(this.valid == true){
+          this.loader =  true
+          this.loading = true
+            this.$store.dispatch('replyRequest', {
+                "reply": this.replyMessage,
+                "id": id
+            })
+            .then((success)=>{
+                this.loader = false
+                 this.loading = false
+                 this.messageBlured= false
+                 iziToast.success({
+                    message: 'Reply has been sent successfully!',
+                    progressBar: false,
+                    })
+                console.log(success)
+            })
+            .catch((err)=>{
+                console.log(err)
+                this.loader = false
+                this.loading = false
+            })
+        }
+      }
     },
     
 }
