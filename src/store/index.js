@@ -7,6 +7,7 @@ import {skin} from './skin'
 import {bespoke} from './bespoke'
 import {requested} from './requested'
 import {questionnaire} from './questionnaire'
+import {adverts} from './adverts'
 
 Vue.use(Vuex)
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     skin: skin,
     bespoke: bespoke,
     requested: requested,
-    questionnaire: questionnaire
+    questionnaire: questionnaire,
+    adverts: adverts
   }
 })

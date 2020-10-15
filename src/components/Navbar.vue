@@ -159,6 +159,14 @@
              Requested Products
             </v-list-item-title> 
           </v-list-item> 
+            <v-list-item router-link to="/adverts" >
+            <v-list-item-icon>
+                <v-icon color="#F7941D">mdi-angularjs</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title style="font-size:14px" >
+             Adverts
+            </v-list-item-title> 
+          </v-list-item> 
             <v-list-item router-link to="/questionnaire" >
             <v-list-item-icon>
                 <v-icon color="#F7941D">mdi-help</v-icon>
