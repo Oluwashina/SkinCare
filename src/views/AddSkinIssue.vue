@@ -144,6 +144,50 @@
                                             <!-- <p class="black--text mt-n6 pt-0" v-if="disabled">please wait, uploading image...<span class="fa fa-circle-o-notch fa-spin"></span></p> -->
                                         </div>
 
+                                         <label>Recommend products for the skin issue</label>
+                                           <v-autocomplete
+                                        v-model="friends"
+                                        :disabled="isUpdating"
+                                        :items="Products"
+                                        filled
+                                        chips
+                                        color="blue-grey lighten-2"
+                                        label="Select a product"
+                                        item-text="name"
+                                        item-value="name"
+                                        multiple
+                                        @change="Yes"
+                                      >
+                                        <template v-slot:selection="data">
+                                          <v-chip
+                                            v-bind="data.attrs"
+                                            :input-value="data.selected"
+                                            close
+                                            @click="data.select"
+                                            @click:close="remove(data.item)"
+                                          >
+                                            <v-avatar left>
+                                              <v-img :src="data.item.imgUrl"></v-img>
+                                            </v-avatar>
+                                            {{ data.item.name }}
+                                          </v-chip>
+                                        </template>
+                                        <template v-slot:item="data">
+                                          <template v-if="typeof data.item !== 'object'">
+                                            <v-list-item-content v-text="data.item"></v-list-item-content>
+                                          </template>
+                                          <template v-else>
+                                            <v-list-item-avatar>
+                                              <img :src="data.item.imgUrl">
+                                            </v-list-item-avatar>
+                                            <v-list-item-content>
+                                              <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                                              <v-list-item-subtitle v-html="data.item.category"></v-list-item-subtitle>
+                                            </v-list-item-content>
+                                          </template>
+                                        </template>
+                                      </v-autocomplete>
+
                                      <div class="text-center mt-5">
                                     <button :disabled="loading1" @click="AddIssue($event)" class="btn btn-add">Add Skin Issue
                                         <span class="fa fa-circle-o-notch fa-spin" v-if="loader1"></span>
@@ -193,10 +237,27 @@ export default {
           chip1: true,
           selectedChips: [],
           files: '',
-          profileUrl: ''
+          profileUrl: '',
+          autoUpdate: true,
+        friends: [],
+        isUpdating: false,
         }
     },
+    watch: {
+      isUpdating (val) {
+        if (val) {
+          setTimeout(() => (this.isUpdating = false), 3000)
+        }
+      },
+    },
     methods: {
+      Yes(){
+        console.log(this.friends)
+      },
+       remove (item) {
+        const index = this.friends.indexOf(item.name)
+        if (index >= 0) this.friends.splice(index, 1)
+      },
     imageUrl(e){
       if(e){
        this.files = e;
@@ -341,16 +402,23 @@ export default {
     computed: {
       Symptoms(){
         return this.$store.state.skin.symptoms
+      },
+      Products(){
+        return this.$store.state.products.products
       }
     },
     created(){
       this.$store.dispatch("getSymptoms", this.selected1)
-      .then((success)=>{
-        console.log(success)
-
+      .then(()=>{
       })
       .catch((err)=>{
         console.log(err)
+      })
+      this.$store.dispatch("getProducts")
+      .then((success)=>{
+        console.log(success)
+      })
+      .catch(()=>{
       })
     }
 }
