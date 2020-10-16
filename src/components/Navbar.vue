@@ -217,8 +217,14 @@
     }),
     methods:{
       logout(){
-        this.$router.push('/')
-      },
+         this.$store.dispatch("AUTH_LOGOUT")
+        .then(()=>{
+            window.localStorage.removeItem("vuex")
+             this.$router.push('/')
+        })
+        .catch(()=>{
+        }) 
+      }
     },
     created(){
        this.$vuetify.theme.light = true

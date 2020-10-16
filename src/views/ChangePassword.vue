@@ -19,9 +19,9 @@
           <div class="card">
               <div class="text-center">
                   <img src="/logo.png" class="logo" width="79" height="65"/>
-                  <h5 class="card-title">Admin Login</h5>
+                  <h5 class="card-title">Change Password?</h5>
               </div>
-              <p class="card-text text-center">Hello, Welcome back!</p>
+              <p class="card-text text-center">Welcome back, Enter a new password of your choice.</p>
               <div class="card-body">
 
                   <form>
@@ -32,6 +32,7 @@
                         class="form-control input-style"
                         id="email"
                         required
+                        placeholder="Enter your email address"
                         v-model="email"
                          v-bind:class="{'form-control' : true, 'is-invalid' : !validEmail(email) && emailBlured}"
                         v-on:blur="emailBlured = true"
@@ -54,12 +55,12 @@
                     </div>
                       
                     <div class="text-right">
-                       <router-link to="/changepassword" style="text-decoration: none; color: #4E4B46;" >Change Password?</router-link>
+                       <router-link to="/" style="text-decoration: none; color: #4E4B46;" >Back to Login</router-link>
                     </div>
                    
 
                     <div class="text-center mt-3 mb-3">
-                        <button :disabled="signOk" @click="Login($event)" class="btn btn-add">Sign In
+                        <button :disabled="signOk" @click="Login($event)" class="btn btn-add">Submit
                               <span class="fa fa-circle-o-notch fa-spin" v-if="loader"></span>
                           </button>
                     </div>
@@ -121,7 +122,7 @@ export default {
         if(this.valid == true && this.valid1 == true){
            this.loader = true
            this.signOk = true
-          this.$store.dispatch("Login", {
+          this.$store.dispatch("ChangePassword", {
             "email": this.email,
             "password": this.password
           })
@@ -130,7 +131,7 @@ export default {
             this.loader = false
             this.signOk = false
             this.success = true
-            this.$router.push('/dashboard')
+            
           })
           .catch((err)=>{
             this.loader = false

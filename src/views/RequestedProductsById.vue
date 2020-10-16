@@ -73,7 +73,7 @@ import moment from 'moment'
 export default {
     data(){
         return{
-           replyMessage: '',
+           replyMessage: this.$store.state.requested.request.reply ? this.$store.state.requested.request.reply : '',
             loader: false,
             loading: false,
             messageBlured: false,
@@ -116,7 +116,7 @@ export default {
                  this.loading = false
                  this.messageBlured= false
                  iziToast.success({
-                    message: 'Reply has been sent successfully!',
+                    message: 'Feedback message sent successfully!',
                     progressBar: false,
                     })
                 console.log(success)

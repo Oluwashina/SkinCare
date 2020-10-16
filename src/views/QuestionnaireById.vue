@@ -87,7 +87,7 @@ export default {
         if(this.valid == true){
           this.loader =  true
           this.loading = true
-            this.$store.dispatch('replyRequest', {
+            this.$store.dispatch('replyQuestions', {
                 "reply": this.replyMessage,
                 "id": id
             })
@@ -96,7 +96,7 @@ export default {
                  this.loading = false
                  this.messageBlured= false
                  iziToast.success({
-                    message: 'Reply has been sent successfully!',
+                    message: 'Feedback message sent successfully!',
                     progressBar: false,
                     })
                 console.log(success)

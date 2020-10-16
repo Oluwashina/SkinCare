@@ -42,7 +42,20 @@ export const auth = {
               });
             })
           },
-
+          ChangePassword: ({commit},payload)=>{
+            return new Promise((resolve, reject)=>{
+              axios.post("/changepassword",payload)
+              .then(({data, status})=>{
+                if(status === 200){
+                  resolve(data)
+                  commit()
+                }
+              })
+              .catch((error)=>{
+                reject(error);
+              });
+            })
+          },
         getUsers: ({commit})=>{
           return new Promise((resolve, reject)=>{
             axios.get("/members?limit=5")

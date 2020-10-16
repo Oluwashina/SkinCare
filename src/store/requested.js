@@ -37,7 +37,7 @@ export const requested = {
             let send = {
               "reply": payload.reply,
           }
-            axios.put("/entry/"+payload.id, send)
+            axios.put("/reply/"+payload.id, send)
             .then(({status, data})=>{
                 if(status === 200){
                 resolve(data);

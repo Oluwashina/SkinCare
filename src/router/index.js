@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
+import ChangePassword from '../views/ChangePassword.vue'
 import Dashboard from '../views/Dashboard.vue'
 import RequestedProducts from '../views/RequestedProducts.vue'
 import RequestedProductsById from '../views/RequestedProductsById.vue'
@@ -34,6 +35,11 @@ Vue.use(VueRouter)
     path: '/',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/changepassword',
+    name: 'ChangePassword',
+    component: ChangePassword
   },
   
   // admin here
