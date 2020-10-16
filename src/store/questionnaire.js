@@ -37,7 +37,7 @@ export const questionnaire = {
             let send = {
               "reply": payload.reply,
           }
-            axios.put("/questionnaireentry/"+payload.id, send)
+            axios.put("/questioniareentry/"+payload.id, send)
             .then(({status, data})=>{
                 if(status === 200){
                 resolve(data);

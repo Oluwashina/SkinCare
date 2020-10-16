@@ -108,14 +108,14 @@
           <template v-for="(item, index) in users" >
             <v-subheader :key="index" v-if="index===0" class="my-2">Recently Registered Members</v-subheader>
             <v-divider
-              v-if="index>0"
-              :key="index"
+            v-if="index===0"
+            :key="item.code"
               class="my-1"
             ></v-divider>
 
             <v-list-item
-              :key="index"
-              
+               v-else
+              :key="item.code"
             >
               <v-list-item-avatar>
                 <v-img :src="getImageUrl()"></v-img>

@@ -63,7 +63,7 @@ import iziToast from 'izitoast'
 export default {
   data(){
     return{
-       replyMessage: '',
+       replyMessage: this.$store.state.questionnaire.question.reply ? this.$store.state.questionnaire.question.reply : '',
       loader: false,
       loading: false,
       messageBlured: false,

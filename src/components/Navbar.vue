@@ -6,12 +6,56 @@
         <!-- <h3 class="ma-3">SkinCare</h3> -->
         <img src="/logo.png" class="logo" width="79" height="65"/>
         <v-spacer></v-spacer>
-        <v-btn icon class="ma-3" @click="markNotification()">
+        <!-- <v-btn icon class="ma-3" @click="markNotification()">
+          <v-badge color="#F7941D" top overlap >
+            <template v-slot:badge>3</template>
+            <v-icon>mdi-bell-outline</v-icon>
+          </v-badge>
+        </v-btn> -->
+         <v-menu  open-on-hover offset-y>
+          <template v-slot:activator="{ on }">
+             <v-btn icon  v-on="on" class="ma-3">
           <v-badge color="#F7941D" top overlap >
             <template v-slot:badge>3</template>
             <v-icon>mdi-bell-outline</v-icon>
           </v-badge>
         </v-btn>
+          </template>
+          <v-card
+          max-width="344"
+          >
+          
+      
+    <v-list
+      subheader
+      two-line
+    >
+      <v-subheader inset style="font-size: 15px">Notifications</v-subheader>
+
+      <v-list-item
+        v-for="folder in folders"
+        :key="folder.title"
+      >
+        <v-list-item-avatar style="background: #F0F0F0; color: #F7941D;">
+            A.J
+        </v-list-item-avatar>
+
+        <v-list-item-content>
+          <v-list-item-title v-text="folder.title"></v-list-item-title>
+
+          <v-list-item-subtitle v-text="folder.subtitle"></v-list-item-subtitle>
+        </v-list-item-content>
+
+        <!-- <v-list-item-action>
+          <v-btn icon>
+            <v-icon color="grey lighten-1">mdi-information</v-icon>
+          </v-btn>
+        </v-list-item-action> -->
+      </v-list-item>
+    </v-list>
+        
+          </v-card>
+        </v-menu>
         <v-btn icon class="ma-3">
             <v-icon @click="logout()" color="#F7941D">
               mdi-power-standby
@@ -214,6 +258,21 @@
           ],
         },
       ],
+    folders: [
+        {
+          subtitle: '12:30pm',
+          title: 'Ade just submitted a request for a product',
+        },
+        {
+          subtitle: '09:30am',
+          title: 'Ayomide John placed an order',
+        },
+        {
+          subtitle: '13:23pm',
+          title: 'Yomi Johnson requested for a product',
+        },
+      ],
+   
     }),
     methods:{
       logout(){

@@ -21,7 +21,7 @@
                   <img src="/logo.png" class="logo" width="79" height="65"/>
                   <h5 class="card-title">Change Password?</h5>
               </div>
-              <p class="card-text text-center">Welcome back, Enter a new password of your choice.</p>
+              <p class="card-text text-center" style="padding-left: 20px; padding-right: 20px;">Welcome back, Enter a new password of your choice.</p>
               <div class="card-body">
 
                   <form>
