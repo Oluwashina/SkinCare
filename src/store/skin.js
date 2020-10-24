@@ -57,6 +57,7 @@ export const skin = {
           bodyFormData.set('name', payload.name);
           bodyFormData.set('description', payload.description);
           bodyFormData.set('symptom', JSON.stringify(payload.symptom));
+          bodyFormData.set('recommendedProducts', JSON.stringify(payload.recommendedProducts));
           bodyFormData.set('category', payload.category);
           bodyFormData.append('files', payload.files);
           return new Promise((resolve, reject)=>{

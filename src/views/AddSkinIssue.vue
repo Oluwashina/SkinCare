@@ -153,10 +153,10 @@
                                         chips
                                         color="blue-grey lighten-2"
                                         label="Select a product"
-                                        item-text="name"
-                                        item-value="name"
+                                        :item-text="Products"
+                                        :item-value="Products"
                                         multiple
-                                        @change="Yes"
+                                        @change="Yes()"
                                       >
                                         <template v-slot:selection="data">
                                           <v-chip
@@ -255,7 +255,7 @@ export default {
         console.log(this.friends)
       },
        remove (item) {
-        const index = this.friends.indexOf(item.name)
+        const index = this.friends.indexOf(item)
         if (index >= 0) this.friends.splice(index, 1)
       },
     imageUrl(e){
@@ -363,7 +363,8 @@ export default {
             "symptom": this.selectedChips,  
              "name": this.issueName,
              "files": this.files,
-              "description": this.description
+              "description": this.description,
+              "recommendedProducts": this.friends
           })
           .then(()=>{
             this.issueName = ''
@@ -415,8 +416,7 @@ export default {
         console.log(err)
       })
       this.$store.dispatch("getProducts")
-      .then((success)=>{
-        console.log(success)
+      .then(()=>{
       })
       .catch(()=>{
       })
