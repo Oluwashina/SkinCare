@@ -125,8 +125,7 @@ export default {
             "email": this.email,
             "password": this.password
           })
-          .then((success)=>{
-            console.log(success)
+          .then(()=>{
             this.loader = false
             this.signOk = false
             this.success = true

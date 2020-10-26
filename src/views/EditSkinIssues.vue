@@ -88,7 +88,7 @@
             
 
               <div class="text-center mt-5">
-                  <button :disabled="loading" @click="UpdateProduct($event)" class="btn btn-add">Update Product
+                  <button :disabled="loading" @click="UpdateProduct($event)" class="btn btn-add">Update Skin Issues
                     <span class="fa fa-circle-o-notch fa-spin" v-if="loader"></span>
                   </button>
                 </div>
