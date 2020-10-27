@@ -109,6 +109,7 @@
               Products
             </v-list-item-title> 
           </v-list-item>
+          
           <v-list dense>
         <template v-for="item in items">
           <v-row
@@ -136,6 +137,7 @@
             :key="item.text"
             v-model="item.model"
             prepend-icon="mdi-cart-variant"
+            color="#F7941D"
             :append-icon="item.model ? item.icon : item['icon-alt']"
           >
             <template v-slot:activator>
@@ -311,6 +313,9 @@
 }
 .v-list-item__title{
   color: #4E4B46;
+}
+.v-icon.v-icon {
+  color: #F7941D !important;
 }
 
 </style>
