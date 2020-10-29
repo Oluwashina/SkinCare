@@ -85,10 +85,55 @@
                   <v-file-input  show-size accept='image/*' label="Choose an image"  color="" background-color="#f5f3fc" solo flat @change="imageUrl($event)" ref="skinUrl"></v-file-input>
                    <p style="color: red; font-size: 13px;" class="mt-n6 pt-0" v-if="imageSelect">This field is required</p>
               </div>
-            
+
+              
+                  <label>Recommended products for the skin issue</label>
+                    <v-autocomplete
+                v-model="friends"
+                :disabled="isUpdating"
+                :items="Products"
+                filled
+                chips
+                color="blue-grey lighten-2"
+                label="Select a product"
+                :item-text="Products"
+                :item-value="Products"
+                multiple
+                @change="Yes()"
+              >
+                <template v-slot:selection="data">
+                  <v-chip
+                    v-bind="data.attrs"
+                    :input-value="data.selected"
+                    close
+                    @click="data.select"
+                    @click:close="remove(data.item)"
+                  >
+                    <v-avatar left>
+                      <v-img :src="data.item.imgUrl"></v-img>
+                    </v-avatar>
+                    {{ data.item.name }}
+                  </v-chip>
+                </template>
+                <template v-slot:item="data">
+                  <template v-if="typeof data.item !== 'object'">
+                    <v-list-item-content v-text="data.item"></v-list-item-content>
+                  </template>
+                  <template v-else>
+                    <v-list-item-avatar>
+                      <img :src="data.item.imgUrl">
+                    </v-list-item-avatar>
+                    <v-list-item-content>
+                      <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                      <v-list-item-subtitle v-html="data.item.category"></v-list-item-subtitle>
+                    </v-list-item-content>
+                  </template>
+                </template>
+              </v-autocomplete>
+
 
               <div class="text-center mt-5">
-                  <button :disabled="loading" @click="UpdateProduct($event)" class="btn btn-add">Update Skin Issues
+                  <button :disabled="loading" @click="UpdateIssues($event)" class="btn btn-add">Update Skin Issues
                     <span class="fa fa-circle-o-notch fa-spin" v-if="loader"></span>
                   </button>
                 </div>
@@ -118,10 +163,23 @@ export default {
           selectedChips: this.$store.state.skin.issue.symptom,
           files: this.$store.state.skin.issue.imgUrl,
           profileUrl: this.$store.state.skin.issue.imgUrl,
-          imageSelect: false
+          imageSelect: false,
+          friends: this.$store.state.skin.issue.recommendedProducts,
+          isUpdating: false
         }
     },
+     watch: {
+      isUpdating (val) {
+        if (val) {
+          setTimeout(() => (this.isUpdating = false), 3000)
+        }
+      },
+    },
     methods:{
+       remove (item) {
+        const index = this.friends.indexOf(item)
+        if (index >= 0) this.friends.splice(index, 1)
+      },
       imageUrl(e){
       if(e){
        this.files = e;
@@ -166,7 +224,7 @@ export default {
              this.selectedChips.push(...this.selectedsymptom.split(","));
         } 
       },
-      UpdateProduct(event){
+      UpdateIssues(event){
         event.preventDefault()
          this.validateImage();
         this.validateSymptomPick();
@@ -179,7 +237,8 @@ export default {
               "name": this.name,
               "files": this.files,
               "description": this.description,
-              "id": this.$store.state.skin.issue.id
+              "id": this.$store.state.skin.issue.id,
+              "recommendedProducts": this.friends
             })
             .then(()=>{
               this.loader = false,
@@ -206,6 +265,9 @@ export default {
     computed: {
       Symptoms(){
         return this.$store.state.skin.symptoms
+      },
+       Products(){
+        return this.$store.state.products.products
       }
     },
      created(){
@@ -216,6 +278,11 @@ export default {
       })
       .catch((err)=>{
         console.log(err)
+      })
+       this.$store.dispatch("getProducts")
+      .then(()=>{
+      })
+      .catch(()=>{
       })
     }
 

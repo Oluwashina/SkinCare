@@ -14,9 +14,9 @@
         </v-btn> -->
          <v-menu  open-on-hover offset-y>
           <template v-slot:activator="{ on }">
-             <v-btn icon  v-on="on" class="ma-3">
+             <v-btn icon @click="MarkRead()" v-on="on" class="ma-3">
           <v-badge color="#F7941D" top overlap >
-            <template v-slot:badge>3</template>
+            <template v-slot:badge>{{Count}}</template>
             <v-icon>mdi-bell-outline</v-icon>
           </v-badge>
         </v-btn>
@@ -33,17 +33,18 @@
       <v-subheader inset style="font-size: 15px">Notifications</v-subheader>
 
       <v-list-item
-        v-for="folder in folders"
-        :key="folder.title"
+        v-for="folder in Notifications"
+        :key="folder.id"
       >
         <v-list-item-avatar style="background: #F0F0F0; color: #F7941D;">
-            A.J
+            {{folder.messageFromFirstname.charAt(0).toUpperCase()}} {{folder.messageFromLastname.charAt(0).toUpperCase()}}
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item-title v-text="folder.title"></v-list-item-title>
+          <v-list-item-title v-text="folder.message"></v-list-item-title>
 
-          <v-list-item-subtitle v-text="folder.subtitle"></v-list-item-subtitle>
+          <!-- time -->
+          <v-list-item-subtitle v-text="folder.createdAt"></v-list-item-subtitle>
         </v-list-item-content>
 
         <!-- <v-list-item-action>
@@ -242,6 +243,7 @@
 </template>
 
 <script>
+import moment from 'moment'
   export default {
     name: 'Navbar',
     data: () => ({
@@ -285,9 +287,30 @@
         })
         .catch(()=>{
         }) 
+      },
+      MarkRead(){
+        console.log('marked')
+      }
+    },
+    computed:{
+      Notifications(){
+         let notify =  this.$store.state.notification.unread
+                for(let i=0; i<notify.length; i++){
+                    notify[i].createdAt = moment(notify[i].createdAt).fromNow();
+                }
+            return notify
+      },
+      Count(){
+        return this.$store.state.notification.unreadcount
       }
     },
     created(){
+      this.$store.dispatch("getUnreadNotifications")
+      .then((success)=>{
+        console.log(success)
+      })
+      .catch(()=>{
+      })
        this.$vuetify.theme.light = true
     }
   }
