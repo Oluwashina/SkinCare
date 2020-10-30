@@ -41,8 +41,9 @@
                     <h5 class="card-title text-center mt-2" style="font-weight: bold;">{{n.name}}</h5>
                     <h6 class="card-text text-center text-color">Qty Available: <span>{{n.quantityAvailable}}</span> </h6>
                     <h6 class="card-text text-center text-color">Price NGN: <span>{{n.price}}</span></h6>
-                    <div class="text-center">
+                    <div class="text-center mt-4" style="">
                         <button class="btn btn-green"  @click="EditHair(n.id)">Edit</button>
+                        <button @click="DeleteHair(n.id)" class="btn-add ml-3">Delete</button>
                     </div> 
                 </div>
                 </div>
@@ -80,8 +81,9 @@
                               <h5 class="card-title text-center mt-2" style="font-weight: bold;">{{n.name}}</h5>
                               <h6 class="card-text text-center text-color">Qty Available: <span>{{n.quantityAvailable}}</span> </h6>
                               <h6 class="card-text text-center text-color">Price NGN: <span>{{n.price}}</span></h6>
-                              <div class="text-center">
+                              <div class="text-center mt-4">
                                   <button class="btn btn-green"  @click="EditSkin(n.id)">Edit</button>
+                                   <button @click="DeleteSkin(n.id)" class="btn-add ml-3">Delete</button>
                               </div> 
                           </div>
                           </div>
@@ -113,6 +115,7 @@
 </template>
 
 <script>
+import iziToast from 'izitoast'
 export default {
     data(){
         return{
@@ -179,6 +182,40 @@ export default {
        EditSkin(id){
         this.$store.dispatch('skinProduct', id) 
         this.$router.push('/products/edit/'+id) 
+      },
+      DeleteSkin(id){
+        alert(id)
+          var confirm_flag = confirm("You are about to delete this product")
+        if(confirm_flag){
+          this.$store.dispatch('deleteProduct', id)
+            .then((success)=>{
+                 iziToast.success({
+              message: 'Product deleted successfully!',
+              progressBar: false,
+              })
+             this.$store.dispatch("getSkinProducts", {Offset:this.page,limit:5})
+              console.log(success)
+            }) 
+            .catch(()=>{
+            }) 
+       }
+      },
+      DeleteHair(id){
+        alert(id)
+          var confirm_flag = confirm("You are about to delete this product")
+        if(confirm_flag){
+          this.$store.dispatch('deleteProduct', id)
+            .then((success)=>{
+                 iziToast.success({
+              message: 'Product deleted successfully!',
+              progressBar: false,
+              })
+             this.$store.dispatch("getHairProducts", {Offset:this.page,limit:5})
+              console.log(success)
+            }) 
+            .catch(()=>{
+            }) 
+       }
       }
     },
     created(){

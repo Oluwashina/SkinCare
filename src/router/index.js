@@ -27,6 +27,7 @@ import QuestionnaireById from '../views/QuestionnaireById.vue'
 import QuestionnaireAdd from '../views/QuestionnaireAdd.vue'
 import QuestionnaireEdit from '../views/QuestionnaireEdit.vue'
 import Adverts from '../views/Adverts.vue'
+import Notifications from '../views/Notifications.vue'
 
 Vue.use(VueRouter)
 
@@ -167,6 +168,11 @@ Vue.use(VueRouter)
         path: '/adverts',
         name: 'Adverts',
         component: Adverts
+      },
+      {
+        path: '/notifications',
+        name: 'Notifications',
+        component: Notifications
       }
     ]
   },

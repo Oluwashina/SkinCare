@@ -136,6 +136,20 @@ export const skin = {
               reject(error)
             })
           })
+        },
+        deleteSkinIssue: ({commit},payload)=>{
+          return new Promise((resolve, reject)=>{
+            axios.delete("/skinissue/"+payload)
+            .then(({status, data})=>{
+                if(status === 200){
+                resolve(data);
+                commit()
+                }
+              })
+              .catch((error)=>{
+                  reject(error);
+              });
+          })
         }
 
     },

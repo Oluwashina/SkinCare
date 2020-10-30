@@ -12,7 +12,7 @@
             <v-icon>mdi-bell-outline</v-icon>
           </v-badge>
         </v-btn> -->
-         <v-menu  open-on-hover offset-y>
+         <v-menu  offset-y>
           <template v-slot:activator="{ on }">
              <v-btn icon @click="MarkRead()" v-on="on" class="ma-3">
           <v-badge color="#F7941D" top overlap >
@@ -22,7 +22,7 @@
         </v-btn>
           </template>
           <v-card
-          max-width="344"
+          max-width="400"
           >
           
       
@@ -30,7 +30,11 @@
       subheader
       two-line
     >
-      <v-subheader inset style="font-size: 15px">Notifications</v-subheader>
+    <div style="display: flex; justify-content: space-between;">
+      <p class="pt-4 pl-4" style="font-weight: bold; font-size: 15px;">RECENT UPDATES</p>
+        <router-link to="/notifications" class="pt-4 pr-4" style="text-decoration: none; color: #F7941D;" >View more <i class="mdi mdi-chevron-right"></i></router-link>
+    </div>
+      
 
       <v-list-item
         v-for="folder in Notifications"
@@ -52,7 +56,12 @@
             <v-icon color="grey lighten-1">mdi-information</v-icon>
           </v-btn>
         </v-list-item-action> -->
+         <div class="mt-2" v-if="Notifications.length===0" style="width: 400px;">
+             <h6 class="text-center" style="font-style: italic;">No new updates yet.</h6>            
+          </div>
+
       </v-list-item>
+      
     </v-list>
         
           </v-card>

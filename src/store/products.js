@@ -164,6 +164,20 @@ export const products = {
         skinProduct: ({commit}, payload) =>{
           commit('SkinProduct', payload)
       },
+      deleteProduct: ({commit},payload) =>{
+        return new Promise((resolve, reject)=>{
+          axios.delete("/products/"+payload)
+          .then(({status, data})=>{
+              if(status === 200){
+              resolve(data);
+              commit()
+              }
+            })
+            .catch((error)=>{
+                reject(error);
+            });
+        })
+      },
         offsetProduct: ({commit})=>{
           return new Promise((resolve, reject)=>{
             axios.get("/products")

@@ -36,6 +36,7 @@
                     <h6 class="card-text text-center text-color">Category: <span>{{n.category}}</span> </h6>
                     <div class="text-center mt-5">
                         <button class="btn btn-green"  @click="Edit(n.id)">Edit</button>
+                          <button @click="DeleteSkin(n.id)" class="btn-add ml-3">Delete</button>
                     </div> 
                 </div>
                 </div>
@@ -53,6 +54,7 @@
 </template>
 
 <script>
+import iziToast from 'izitoast'
 export default {
     data(){
         return{
@@ -60,7 +62,8 @@ export default {
             page: 1,
             total: 0,
             perPage: 0,
-            visible: 7
+            visible: 7,
+            overlay: false
           },
         }
     },
@@ -75,6 +78,23 @@ export default {
         this.$store.dispatch('editSkinIssues', id) 
         this.$router.push('/skinissues/edit/'+id) 
       }, 
+      DeleteSkin(id){
+        alert(id)
+       var confirm_flag = confirm("You are about to delete this skin isssue")
+        if(confirm_flag){
+          this.$store.dispatch('deleteSkinIssue', id)
+            .then((success)=>{
+                 iziToast.success({
+              message: 'Skin issue deleted successfully!',
+              progressBar: false,
+              })
+             this.$store.dispatch("GetSkinIssuesLimit", {Offset:this.page,limit:5})
+              console.log(success)
+            }) 
+            .catch(()=>{
+            }) 
+       }
+      }
     },
     computed: {
       Issues(){

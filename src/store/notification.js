@@ -30,27 +30,18 @@ export const notification = {
           })
         },
         MarkNotification:  ({commit},payload)=>{
-            var bodyFormData = new FormData();
-            bodyFormData.append('files', payload.files);
-            bodyFormData.set('description', payload.description);
-            return new Promise((resolve, reject)=>{
-              axios({
-                method: 'post',
-                url: '/adverts',
-                data: bodyFormData,
-                config: { }
-                    })
-                .then(({data, status}) => {
-                    if(status===201){
-                        resolve(data)
-                        commit()
-                    }
-                  
-                })
-                .catch((error)=>{
-                    reject(error)
-                 });
+          return new Promise((resolve, reject)=>{
+            axios.post("/markread", payload)
+            .then(({status, data})=>{
+                if(status === 200){
+                resolve(data);
+                commit()
+                }
             })
+            .catch((error)=>{
+                reject(error);
+            });
+          })
         }
                
     } 
