@@ -63,7 +63,6 @@ export default {
             total: 0,
             perPage: 0,
             visible: 7,
-            overlay: false
           },
         }
     },
@@ -79,7 +78,7 @@ export default {
         this.$router.push('/skinissues/edit/'+id) 
       }, 
       DeleteSkin(id){
-        alert(id)
+        console.log(this.pagination.page)
        var confirm_flag = confirm("You are about to delete this skin isssue")
         if(confirm_flag){
           this.$store.dispatch('deleteSkinIssue', id)
@@ -88,7 +87,7 @@ export default {
               message: 'Skin issue deleted successfully!',
               progressBar: false,
               })
-             this.$store.dispatch("GetSkinIssuesLimit", {Offset:this.page,limit:5})
+             this.$store.dispatch("GetSkinIssuesLimit", {Offset:this.pagination.page,limit:5})
               console.log(success)
             }) 
             .catch(()=>{

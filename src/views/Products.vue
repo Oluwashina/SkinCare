@@ -184,7 +184,7 @@ export default {
         this.$router.push('/products/edit/'+id) 
       },
       DeleteSkin(id){
-        alert(id)
+        console.log(this.pagination.page)
           var confirm_flag = confirm("You are about to delete this product")
         if(confirm_flag){
           this.$store.dispatch('deleteProduct', id)
@@ -193,7 +193,7 @@ export default {
               message: 'Product deleted successfully!',
               progressBar: false,
               })
-             this.$store.dispatch("getSkinProducts", {Offset:this.page,limit:5})
+             this.$store.dispatch("getSkinProducts", {Offset:this.pagination.page,limit:5})
               console.log(success)
             }) 
             .catch(()=>{
@@ -201,7 +201,7 @@ export default {
        }
       },
       DeleteHair(id){
-        alert(id)
+        console.log(this.pagination.page)
           var confirm_flag = confirm("You are about to delete this product")
         if(confirm_flag){
           this.$store.dispatch('deleteProduct', id)
@@ -210,7 +210,7 @@ export default {
               message: 'Product deleted successfully!',
               progressBar: false,
               })
-             this.$store.dispatch("getHairProducts", {Offset:this.page,limit:5})
+             this.$store.dispatch("getHairProducts", {Offset:this.pagination.page,limit:5})
               console.log(success)
             }) 
             .catch(()=>{
