@@ -5,13 +5,16 @@
 
           <!-- alert deiplay -->
           <div class="alert alert-danger alert-dismissible fade show" role="alert" v-if="invalid">
-            Invalid Credentials
+           Ooops!, This user does not exist.
              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
              </button>
         </div>
-        <div class="alert alert-success" role="alert" v-if="success">
-          Login Successful!
+        <div class="alert alert-success alert-dismissible fade show" role="alert" v-if="success">
+         Password successfully changed, Proceed to Login!
+           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+             </button>
         </div>
 
         <!-- end of alert display -->
@@ -131,13 +134,19 @@ export default {
             this.loader = false
             this.signOk = false
             this.success = true
-            
+            this.email = ''
+            this.password = ''
+            this.emailBlured = false
+            this.passwordBlured = false
+              setTimeout(() => { 
+              this.$router.push('/')
+             }, 4000);
           })
           .catch((err)=>{
             this.loader = false
             this.signOk = false
             this.invalid = true
-            console.log(err)
+            console.log(err.response)
           })  
         } 
       }

@@ -44,9 +44,9 @@ export const auth = {
           },
           ChangePassword: ({commit},payload)=>{
             return new Promise((resolve, reject)=>{
-              axios.post("/changepassword",payload)
+              axios.post("/changeadminpassword",payload)
               .then(({data, status})=>{
-                if(status === 200){
+                if(status === 201){
                   resolve(data)
                   commit()
                 }

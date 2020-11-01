@@ -23,6 +23,7 @@
           </template>
           <v-card
           max-width="400"
+          style="overflow: auto; height: 500px;"
           >
           
       
@@ -298,7 +299,13 @@ import moment from 'moment'
         }) 
       },
       MarkRead(){
-        console.log('marked')
+        this.$store.dispatch("MarkNotification")
+        .then(()=>{
+           this.$store.dispatch("getUnreadNotifications")
+        })
+        .catch(()=>{
+
+        })
       }
     },
     computed:{
