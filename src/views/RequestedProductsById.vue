@@ -7,7 +7,7 @@
               <div class="row">
             
                 <div class="col-lg-6 mb-3">
-                  <div class="card" style="height:310px; width: 340px;">
+                  <div class="card" style=" width: 340px;">
                     <div class="card-body">
                         
                       <h5 class="card-title mt-3 mb-6" style="font-weight: bold; color: #F7941D;">Buyer Details</h5>
@@ -21,15 +21,15 @@
                   </div>
                 </div>
                 <div class="col-lg-6 mb-3">
-                  <div class="card" style="height:310px; width: 340px;">
+                  <div class="card" style=" width: 340px;">
                     <div class="card-body">
-                        <!-- <div class="text-center">
+                        <div class="text-center">
                           <img :src="getImageUrl(Request.productId.imgUrl)" alt="" height="138">
-                        </div> -->
+                        </div>
                         <h5 class="card-title mt-6 " style="font-weight: bold; color: #F7941D;">Product Details</h5>
-                        <h6 class="card-text mt-3  card-text-col"><span style="font-weight: bold;">Product name</span>: <span>H</span> </h6>
+                        <h6 class="card-text mt-3  card-text-col"><span style="font-weight: bold;">Product name</span>: <span>{{Request.productId.name}}</span> </h6>
                         <h6 class="card-text  card-text-col"> <span style="font-weight: bold;">Quantity Requested</span>: <span>{{Request.quantitySelected}}</span></h6>
-                        <h6 class="card-text  card-text-col"> <span style="font-weight: bold;">Product Price</span>: <span>100</span></h6>
+                        <h6 class="card-text  card-text-col pb-4"> <span style="font-weight: bold;">Product Price</span>: <span>{{Request.productId.price}}</span></h6>
                         
                     </div>
                   </div>
