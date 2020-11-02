@@ -106,23 +106,24 @@
 
         <v-list three-line>
           <template v-for="(item, index) in users" >
-            <v-subheader :key="index" v-if="index===0" class="my-2">Recently Registered Members</v-subheader>
+            <v-subheader 
+            :key="index" 
+              v-if="index === 0"
+            class="my-2">Recently Registered Members</v-subheader>
             <v-divider
-            v-if="index===0"
-            :key="item.code"
-              class="my-1"
+              :key="index"
+                class="my-1"  
             ></v-divider>
 
             <v-list-item
-               v-else
-              :key="item.code"
+              :key="item.id"
             >
               <v-list-item-avatar>
                 <v-img :src="getImageUrl()"></v-img>
               </v-list-item-avatar>
 
               <v-list-item-content>
-                <v-list-item-title v-html="item.firstName+ '' + item.lastName"></v-list-item-title>
+                <v-list-item-title v-html="item.firstName+ ' ' + item.lastName"></v-list-item-title>
                 <v-list-item-subtitle v-html="item.email"></v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
@@ -137,6 +138,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   name: 'Home',
   components: {
@@ -144,19 +146,25 @@ export default {
   data(){
     return{
        headers:[
-            {
-              text: 'Item Image',
+           { text: 'Order Date', value: 'createdAt' },
+           {
+              text: 'Customer name',
               align: 'start',
               sortable: false,
-              value: 'imgUrl',
+              value: 'firstName',
             },
             {
-              text: 'Name',
+              text: 'Payment Id',
               align: 'start',
               sortable: false,
-              value: 'name',
+              value: 'paymentId',
             },
-            { text: 'Quantity', value: 'quantity' },
+            {
+              text: 'Status',
+              align: 'start',
+              sortable: false,
+              value: 'status',
+            },
             { text: '', value: 'action', sortable: false, },
           ],
          
@@ -177,7 +185,11 @@ export default {
       return this.$store.state.orders.ordersCount.pendingOrder
     },
      NewOrders(){
-      return this.$store.state.orders.neworders
+      let newOrder = this.$store.state.orders.neworders
+                for(let i=0; i<newOrder.length; i++){
+                    newOrder[i].createdAt = moment(newOrder[i].createdAt).format('LL')
+                }
+        return newOrder
     }
   },
  methods:{
@@ -200,7 +212,8 @@ export default {
  },
   created(){
     this.$store.dispatch("getUsers")
-    .then(()=>{
+    .then((success)=>{
+      console.log(success)
     })
     .catch(()=>{
     })

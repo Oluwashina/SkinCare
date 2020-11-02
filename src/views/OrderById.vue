@@ -3,11 +3,34 @@
      <div class="container">    
         <h5 class="heading">Order Details</h5>
           <div class="row">
+
+            <div class="row">
+              <div class="col-lg-12">
+                  <v-card class="mt-4">
+              <v-card-title>
+                Product Details
+              </v-card-title>
+              <v-data-table
+                :headers="headers"
+                :items="Product"
+                hide-default-footer
+                no-data-text='No new order placed yet'
+              >
+                <template v-slot:item.productImgUrl="{ item }">
+                  <v-img :src="getImageUrl(item.productImgUrl)" height="60" width="80" class="ma-0" contain></v-img>
+                </template>
+                <template v-slot:item.action="{ item }">
+                    <v-btn text  @click="View(item.id)" style="border: 1px solid #F7941D; color:#F7941D; border-radius: 25px;" class="text-none" small>View</v-btn>
+                </template>
+              </v-data-table>
+            </v-card>
+              </div>
+            </div>
             <div class="col-lg-10">
               <div class="row">
             
-                <div class="col-lg-6 mb-3">
-                  <div class="card" style="height:310px; width: 340px;">
+                <div class="col-lg-6">
+                  <div class="card" style="">
                     <div class="card-body">
                         
                       <h5 class="card-title mt-3 mb-6" style="font-weight: bold; color: #F7941D;">Buyer Details</h5>
@@ -16,20 +39,6 @@
                       <h6 class="card-text  card-text-col mb-3"> <span style="font-weight: bold;">Email</span>: <span>{{Buyer.email}}</span></h6>
                       <h6 class="card-text  card-text-col mb-3"><span style="font-weight: bold;">Shipping address</span>: <span>N0 8, oluyole avenue, oseikita Ado Ekiti, </span></h6>
                       <h6 class="card-text  card-text-col"> <span style="font-weight: bold;">Phone Number</span>: <span>{{Buyer.phoneNo}}</span></h6>
-                        
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6 mb-3">
-                  <div class="card" style="height:310px; width: 340px;">
-                    <div class="card-body">
-                        <div class="text-center">
-                          <img :src="getImageUrl(Product.imgUrl)" alt="" height="138">
-                        </div>
-                        <h5 class="card-title mt-6 " style="font-weight: bold; color: #F7941D;">Product Details</h5>
-                        <h6 class="card-text mt-3  card-text-col"><span style="font-weight: bold;">Product name</span>: <span>{{Product.name}}</span> </h6>
-                        <h6 class="card-text  card-text-col"> <span style="font-weight: bold;">Quantity Ordered</span>: <span>{{Product.quantityAvailable}}</span></h6>
-                        <h6 class="card-text  card-text-col"> <span style="font-weight: bold;">Payment Status</span>: <span>{{order.status}}</span></h6>
                         
                     </div>
                   </div>
@@ -128,6 +137,22 @@ import iziToast from 'izitoast'
 export default {
     data(){
         return{
+           headers:[
+            {
+              text: 'Item Image',
+              align: 'start',
+              sortable: false,
+              value: 'productImgUrl',
+            },
+            {
+              text: 'Product Name',
+              align: 'start',
+              sortable: false,
+              value: 'productName',
+            },
+            { text: 'Price', value: 'productPrice' },
+            { text: 'Quantity Ordered', value: 'quantitySelected' },
+          ],
           name: '',
           nameBlured: false,
           phone: '',
@@ -147,7 +172,7 @@ export default {
     },
     computed:{
       Product(){
-        let order = this.$store.state.orders.orderById.productDetails
+        let order = this.$store.state.orders.orderById.order.products
         
         return order
       },
@@ -163,8 +188,12 @@ export default {
       }
     },
     methods:{
-      getImageUrl(url){
-        return url
+       getImageUrl(url){
+        if(url){
+          return url
+        }else{
+          return '/avatar.png'
+        }
       },
       validName: function(name){
         return name

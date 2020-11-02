@@ -49,7 +49,7 @@ export default {
                 sortable: false,
                 value: 'firstName',
             },
-            { text: 'Product requested', value: 'productId.name' },
+            { text: 'Email', value: 'email' },
             { text: 'Quantity', value: 'quantitySelected' },
             { text: 'Date', value: 'createdAt' },
             { text: '', value: 'action', sortable: false, },

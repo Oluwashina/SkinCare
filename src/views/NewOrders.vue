@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
     data(){
         return{
@@ -48,8 +49,9 @@ export default {
                 sortable: false,
                 value: 'firstName',
             },
-            { text: 'Product requested', value: 'name' },
-            { text: 'Quantity', value: 'quantity' },
+            { text: 'Payment Id', value: 'paymentId' },
+            { text: 'Status', value: 'status' },
+             { text: 'Total Price', value: 'totalPrice' },
             { text: 'Order Date', value: 'createdAt'},
             { text: '', value: 'action', sortable: false, },
             ],
@@ -83,7 +85,6 @@ export default {
     },
     methods: {
         View(id){
-            alert(id)
             this.$store.dispatch("OrderById", id)
             .then((success)=>{
                 console.log(success)
@@ -95,8 +96,12 @@ export default {
         },
     },
     computed:{
-         NewOrders(){
-      return this.$store.state.orders.neworders
+        NewOrders(){
+          let newOrder = this.$store.state.orders.neworders
+                for(let i=0; i<newOrder.length; i++){
+                    newOrder[i].createdAt = moment(newOrder[i].createdAt).format('LL')
+                }
+            return newOrder
         }
     },
     created(){

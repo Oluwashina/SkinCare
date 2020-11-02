@@ -32,7 +32,7 @@
                 <div class="card">
                      <img :src="getImageUrl(n.imgUrl)" class="card-img-top" alt="Images" style="background-repeat: no-repeat; height: 172.14px;" />
                 <div class="card-body">
-                    <h5 class="card-title text-center" style="font-weight: bold;">{{n.name}}</h5>
+                    <h6 class="card-title text-center" style="font-weight: bold;">{{n.name}}</h6>
                     <h6 class="card-text text-center text-color">Category: <span>{{n.category}}</span> </h6>
                     <div class="text-center mt-5">
                         <button class="btn btn-green"  @click="Edit(n.id)">Edit</button>

@@ -38,7 +38,7 @@
                     <div class="mx-auto">
                       <v-img class="mx-auto" :src="getImageUrl(n.imgUrl)" width="266" height="138"></v-img>
                     </div>
-                    <h5 class="card-title text-center mt-2" style="font-weight: bold;">{{n.name}}</h5>
+                    <h6 class="card-title text-center mt-4" style="font-weight: bold;">{{n.name}}</h6>
                     <h6 class="card-text text-center text-color">Qty Available: <span>{{n.quantityAvailable}}</span> </h6>
                     <h6 class="card-text text-center text-color">Price NGN: <span>{{n.price}}</span></h6>
                     <div class="text-center mt-4" style="">
@@ -78,7 +78,7 @@
                               <div class="mx-auto">
                                 <v-img class="mx-auto" :src="getImageUrl(n.imgUrl)" width="266" height="138"></v-img>
                               </div>
-                              <h5 class="card-title text-center mt-2" style="font-weight: bold;">{{n.name}}</h5>
+                              <h6 class="card-title text-center mt-4" style="font-weight: bold;">{{n.name}}</h6>
                               <h6 class="card-text text-center text-color">Qty Available: <span>{{n.quantityAvailable}}</span> </h6>
                               <h6 class="card-text text-center text-color">Price NGN: <span>{{n.price}}</span></h6>
                               <div class="text-center mt-4">
