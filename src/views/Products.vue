@@ -35,8 +35,8 @@
            <div class="col-lg-4 mb-3"  v-for="n in hairproducts" :key="n.id">
                 <div class="card">
                 <div class="card-body">
-                    <div class="text-center">
-                      <v-img :src="getImageUrl(n.imgUrl)" width="266" height="138"></v-img>
+                    <div class="mx-auto">
+                      <v-img class="mx-auto" :src="getImageUrl(n.imgUrl)" width="266" height="138"></v-img>
                     </div>
                     <h5 class="card-title text-center mt-2" style="font-weight: bold;">{{n.name}}</h5>
                     <h6 class="card-text text-center text-color">Qty Available: <span>{{n.quantityAvailable}}</span> </h6>
@@ -75,8 +75,8 @@
                     <div class="col-lg-4 mb-3"  v-for="n in skinproducts" :key="n.id">
                           <div class="card">
                           <div class="card-body">
-                              <div class="text-center">
-                                <v-img :src="getImageUrl(n.imgUrl)" width="266" height="138"></v-img>
+                              <div class="mx-auto">
+                                <v-img class="mx-auto" :src="getImageUrl(n.imgUrl)" width="266" height="138"></v-img>
                               </div>
                               <h5 class="card-title text-center mt-2" style="font-weight: bold;">{{n.name}}</h5>
                               <h6 class="card-text text-center text-color">Qty Available: <span>{{n.quantityAvailable}}</span> </h6>
