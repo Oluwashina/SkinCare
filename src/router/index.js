@@ -28,6 +28,7 @@ import QuestionnaireAdd from '../views/QuestionnaireAdd.vue'
 import QuestionnaireEdit from '../views/QuestionnaireEdit.vue'
 import Adverts from '../views/Adverts.vue'
 import Notifications from '../views/Notifications.vue'
+import FAQ from '../views/FAQ.vue'
 
 Vue.use(VueRouter)
 
@@ -41,6 +42,11 @@ Vue.use(VueRouter)
     path: '/changepassword',
     name: 'ChangePassword',
     component: ChangePassword
+  },
+  {
+    path: '/faq',
+    name: 'FAQ',
+    component: FAQ
   },
   
   // admin here
@@ -173,7 +179,7 @@ Vue.use(VueRouter)
         path: '/notifications',
         name: 'Notifications',
         component: Notifications
-      }
+      },
     ]
   },
   

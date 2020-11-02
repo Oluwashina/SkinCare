@@ -87,7 +87,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .heading{
   color: #4E4B46;
   font-weight: bold;

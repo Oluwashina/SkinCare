@@ -232,6 +232,14 @@
               Questionnaires
             </v-list-item-title> 
           </v-list-item> 
+          <v-list-item router-link to="/faq" >
+            <v-list-item-icon>
+                <v-icon color="#F7941D">mdi-frequently-asked-questions</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title style="font-size:14px" >
+              FAQ
+            </v-list-item-title> 
+          </v-list-item>
             <v-list-item @click="logout()" >
             <v-list-item-icon>
                 <v-icon color="#F7941D">mdi-power-standby</v-icon>
