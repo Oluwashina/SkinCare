@@ -264,7 +264,11 @@ export default {
     },
     computed: {
       Symptoms(){
-        return this.$store.state.skin.symptoms
+       let symptom = this.$store.state.skin.symptoms
+          for(let i=0; i<symptom.length; i++){
+                symptom[i] = symptom[i].toString().replace(/,/g , " ");
+            }
+        return symptom
       },
        Products(){
         return this.$store.state.products.products
