@@ -92,7 +92,7 @@
                 v-model="friends"
                 :disabled="isUpdating"
                 :items="Products"
-                filled
+                
                 chips
                 color="blue-grey lighten-2"
                 label="Select a product"
@@ -184,10 +184,10 @@ export default {
       if(e){
        this.files = e;
        this.imageSelect = false
-       this.profileUrl = e
+      //  this.profileUrl = e
        this.url = URL.createObjectURL(e);
       }else{
-          this.profileUrl = ''
+          this.files = ''
           this.imageSelect = true
       }
      },
@@ -199,7 +199,7 @@ export default {
       } 
     },
       validateImage: function(){
-        if(this.profileUrl == ''){
+        if(this.files == ''){
           this.imageSelect = true
         }
       },

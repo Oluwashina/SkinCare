@@ -149,7 +149,6 @@
                                         v-model="friends"
                                         :disabled="isUpdating"
                                         :items="Products"
-                                        filled
                                         chips
                                         color="blue-grey lighten-2"
                                         label="Select a product"
@@ -257,6 +256,7 @@ export default {
        remove (item) {
         const index = this.friends.indexOf(item)
         if (index >= 0) this.friends.splice(index, 1)
+
       },
     imageUrl(e){
       if(e){
@@ -281,7 +281,7 @@ export default {
         }
         else{
           this.symptompick = false
-           this.selectedChips.push(...this.selectedsymptom.split(","));
+           this.selectedChips.push(...this.selectedsymptom.split(","))
         }  
       },
       validSymptom: function(symptoms){
@@ -402,7 +402,11 @@ export default {
     },
     computed: {
       Symptoms(){
-        return this.$store.state.skin.symptoms
+        let symptom = this.$store.state.skin.symptoms
+          for(let i=0; i<symptom.length; i++){
+                symptom[i] = symptom[i].toString().replace(/,/g , " ");
+            }
+        return symptom
       },
       Products(){
         return this.$store.state.products.products
