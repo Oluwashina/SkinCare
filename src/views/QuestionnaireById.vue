@@ -6,7 +6,7 @@
           <div style="display: flex;" class="mt-5">
             <div>
              <v-list-item-avatar  size="70">
-                  <v-img src="/Ajayi.png" ></v-img>
+                  <v-img src="/avatar.png" ></v-img>
                 </v-list-item-avatar>
             </div>
                 <div>

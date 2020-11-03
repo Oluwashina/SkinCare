@@ -8,7 +8,7 @@
               <div class="col-lg-12">
                   <v-card class="mt-4">
               <v-card-title>
-                Product Details
+                Product Ordered
               </v-card-title>
               <v-data-table
                 :headers="headers"
@@ -150,6 +150,12 @@ export default {
               sortable: false,
               value: 'productName',
             },
+            {
+              text: 'Product Category',
+              align: 'start',
+              sortable: false,
+              value: 'productCategory',
+            },
             { text: 'Price', value: 'productPrice' },
             { text: 'Quantity Ordered', value: 'quantitySelected' },
           ],
@@ -171,7 +177,7 @@ export default {
         }
     },
     computed:{
-      Product(){
+     Product(){
         let order = this.$store.state.orders.orderById.order.products
         
         return order

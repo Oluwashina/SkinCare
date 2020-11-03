@@ -41,16 +41,17 @@
 export default {
     data(){
         return{
-            headers: [
+           headers: [
             {
                 text: 'Customer Name',
                 align: 'start',
                 sortable: false,
                 value: 'firstName',
             },
-            { text: 'Product requested', value: 'name' },
-            { text: 'Quantity', value: 'quantity' },
-            { text: 'Dispatch Date', value: 'updatedAt' },
+            { text: 'Payment Id', value: 'paymentId' },
+            { text: 'Status', value: 'status' },
+             { text: 'Total Price', value: 'totalPrice' },
+            { text: 'Dispatched Date', value: 'updatedAt'},
             { text: '', value: 'action', sortable: false, },
             ],
             products: [

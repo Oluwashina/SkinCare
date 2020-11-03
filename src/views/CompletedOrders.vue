@@ -48,9 +48,10 @@ export default {
                 sortable: false,
                 value: 'firstName',
             },
-            { text: 'Product requested', value: 'name' },
-            { text: 'Quantity', value: 'quantity' },
-            { text: 'Completed', value: 'updatedAt' },
+            { text: 'Payment Id', value: 'paymentId' },
+            { text: 'Status', value: 'status' },
+             { text: 'Total Price', value: 'totalPrice' },
+            { text: 'Order Date', value: 'updatedAt'},
             { text: '', value: 'action', sortable: false, },
             ],
             products: [

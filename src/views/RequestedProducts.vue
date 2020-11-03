@@ -60,7 +60,6 @@ export default {
     },
     methods: {
         View(id){
-            alert(id)
              this.$store.dispatch('viewRequested', id) 
             this.$router.push('/requestedproducts/'+id)
         },
@@ -77,8 +76,7 @@ export default {
     },
     created(){
          this.$store.dispatch('RequestedProducts')
-        .then((success)=>{
-            console.log(success)
+        .then(()=>{
         })
         .catch((err)=>{
             console.log(err)

@@ -2,8 +2,33 @@
   <v-container>
       <div class="container">
            <h5 class="heading">Completed Order</h5>
+           
+            <div class="row">
+              <div class="col-lg-12">
+                  <v-card class="mt-4">
+              <v-card-title>
+                Product Ordered
+              </v-card-title>
+              <v-data-table
+                :headers="headers"
+                :items="Product"
+                hide-default-footer
+                no-data-text='No new order placed yet'
+              >
+                <template v-slot:item.productImgUrl="{ item }">
+                  <v-img :src="getImageUrl(item.productImgUrl)" height="60" width="80" class="ma-0" contain></v-img>
+                </template>
+                <template v-slot:item.action="{ item }">
+                    <v-btn text  @click="View(item.id)" style="border: 1px solid #F7941D; color:#F7941D; border-radius: 25px;" class="text-none" small>View</v-btn>
+                </template>
+              </v-data-table>
+            </v-card>
+              </div>
+            </div>
+
+
            <div class="row">
-               <div class="col-lg-4">
+               <div class="col-lg-6">
                    <div class="card" style="height:310px">
                     <div class="card-body">
                         
@@ -17,21 +42,8 @@
                     </div>
                   </div>
                </div>
-               <div class="col-lg-4">
-                    <div class="card" style="height:310px">
-                    <div class="card-body">
-                        <div class="text-center">
-                          <img :src="getImageUrl(Product.imgUrl)" alt="" height="138">
-                        </div>
-                        <h5 class="card-title mt-6 text-center" style="font-weight: bold; color: #F7941D;">Product Details</h5>
-                        <h6 class="card-text mt-3  card-text-col"><span style="font-weight: bold;">Product name</span>: <span>{{Product.name}}</span> </h6>
-                        <h6 class="card-text  card-text-col"> <span style="font-weight: bold;">Quantity Ordered</span>: <span>{{Product.quantityAvailable}}</span></h6>
-                        <h6 class="card-text  card-text-col"> <span style="font-weight: bold;">Payment Status</span>: <span>{{order.status}}</span></h6>
-                        
-                    </div>
-                  </div>
-               </div>
-               <div class="col-lg-4">
+              
+               <div class="col-lg-6">
                     <div class="card" style="height:310px">
                     <div class="card-body dispatch-body">
                         
@@ -70,7 +82,28 @@ import moment from 'moment'
 export default {
     data(){
         return{
-
+           headers:[
+            {
+              text: 'Item Image',
+              align: 'start',
+              sortable: false,
+              value: 'productImgUrl',
+            },
+            {
+              text: 'Product Name',
+              align: 'start',
+              sortable: false,
+              value: 'productName',
+            },
+              {
+              text: 'Product Category',
+              align: 'start',
+              sortable: false,
+              value: 'productCategory',
+            },
+            { text: 'Price', value: 'productPrice' },
+            { text: 'Quantity Ordered', value: 'quantitySelected' },
+          ],
         }
     },
     methods:{
@@ -80,7 +113,7 @@ export default {
     },
     computed:{
        Product(){
-        let order = this.$store.state.orders.orderById.productDetails
+        let order = this.$store.state.orders.orderById.order.products
         
         return order
       },

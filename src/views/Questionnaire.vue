@@ -130,7 +130,6 @@ export default {
     },
     methods: {
         View(id){
-            alert(id)
              this.$store.dispatch('ViewQuestions', id) 
             this.$router.push('/questionnaire/'+ id)
         },
