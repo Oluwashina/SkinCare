@@ -50,7 +50,7 @@
                       <h6 class="card-text  card-text-col mb-3"><span style="font-weight: bold;">Full Name</span>: <span style="">{{Dispatch.fullName}}</span> </h6>
                       <h6 class="card-text  card-text-col mb-3"> <span style="font-weight: bold;">Company</span>: <span>{{Dispatch.companyName}}</span></h6>
                       <h6 class="card-text  card-text-col mb-3"> <span style="font-weight: bold;">Phone No</span>: <span>{{Dispatch.phoneNumber}}</span></h6>
-                      <h6 class="card-text  card-text-col mb-3"><span style="font-weight: bold;">ID</span>: <span>222333333</span></h6>                    
+                      <h6 class="card-text  card-text-col mb-3"><span style="font-weight: bold;">ID</span>: <span>{{Dispatch.dispatcherId}}</span></h6>                    
                     </div>
                   </div>
                </div>

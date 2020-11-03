@@ -23,7 +23,7 @@
           </template>
           <v-card
           max-width="400"
-          style="overflow: auto; height: 500px;"
+          style="overflow: auto; height: 450px;"
           >
           
       
@@ -309,7 +309,7 @@ import moment from 'moment'
       MarkRead(){
         this.$store.dispatch("MarkNotification")
         .then(()=>{
-           this.$store.dispatch("getUnreadNotifications")
+           this.$store.dispatch("getNotifications")
         })
         .catch(()=>{
 
@@ -329,7 +329,7 @@ import moment from 'moment'
       }
     },
     created(){
-      this.$store.dispatch("getUnreadNotifications")
+      this.$store.dispatch("getNotifications")
       .then((success)=>{
         console.log(success)
       })

@@ -14,9 +14,9 @@ export const notification = {
         }
     },
     actions:{
-      getUnreadNotifications: ({commit})=>{
+      getNotifications: ({commit})=>{
             return new Promise((resolve, reject)=>{
-            axios.get("/allnotifications")
+            axios.get("/allnotifications?limit=5")
             .then(({data, status})=>{
               if(status === 200){
                 commit('UnreadNotfications', data)
@@ -29,6 +29,21 @@ export const notification = {
             })
           })
         },
+        getAllNotifications: ({commit})=>{
+          return new Promise((resolve, reject)=>{
+          axios.get("/allnotifications")
+          .then(({data, status})=>{
+            if(status === 200){
+              commit('UnreadNotfications', data)
+              commit('Unreadcount', data)
+              resolve(data)
+            }
+          })
+          .catch((error)=>{
+            reject(error)
+          })
+        })
+      },
         MarkNotification:  ({commit},payload)=>{
           return new Promise((resolve, reject)=>{
             axios.post("/markread", payload)

@@ -137,7 +137,7 @@ export default {
       },
     },
     created(){
-     this.$store.dispatch("getUnreadNotifications")
+     this.$store.dispatch("getAllNotifications")
       .then((success)=>{
         console.log(success)
       })
