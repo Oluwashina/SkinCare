@@ -278,7 +278,7 @@ export default {
       this.$store.dispatch("getSymptoms", this.selected)
       .then((success)=>{
         console.log(success)
-
+        
       })
       .catch((err)=>{
         console.log(err)

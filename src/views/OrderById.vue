@@ -36,8 +36,8 @@
                       <h5 class="card-title mt-3 mb-6" style="font-weight: bold; color: #F7941D;">Buyer Details</h5>
                       <h6 class="card-text  card-text-col mb-3"><span style="font-weight: bold;">First Name</span>: <span style="">{{Buyer.firstName}}</span> </h6>
                       <h6 class="card-text  card-text-col mb-3"> <span style="font-weight: bold;">Last Name</span>: <span>{{Buyer.lastName}}</span></h6>
-                      <h6 class="card-text  card-text-col mb-3"> <span style="font-weight: bold;">Email</span>: <span>{{Buyer.email}}</span></h6>
-                      <h6 class="card-text  card-text-col mb-3"><span style="font-weight: bold;">Shipping address</span>: <span>N0 8, oluyole avenue, oseikita Ado Ekiti, </span></h6>
+                      <h6 class="card-text  card-text-col mb-3"> <span style="font-weight: bold;">State</span>: <span>{{Buyer.state}}</span></h6>
+                      <h6 class="card-text  card-text-col mb-3"><span style="font-weight: bold;">Shipping address</span>: <span>{{Buyer.address}}</span></h6>
                       <h6 class="card-text  card-text-col"> <span style="font-weight: bold;">Phone Number</span>: <span>{{Buyer.phoneNo}}</span></h6>
                         
                     </div>
@@ -188,7 +188,7 @@ export default {
         return order
       },
        Buyer(){
-        let order = this.$store.state.orders.orderById.userDetails
+        let order = this.$store.state.orders.orderById.order.shippinDetails
         
         return order
       }

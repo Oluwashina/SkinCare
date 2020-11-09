@@ -31,12 +31,12 @@
                <div class="col-lg-6">
                    <div class="card" style="height:310px">
                     <div class="card-body">
-                        
+                      
                       <h5 class="card-title mt-3 mb-6" style="font-weight: bold; color: #F7941D;">Buyer Details</h5>
                       <h6 class="card-text  card-text-col mb-3"><span style="font-weight: bold;">First Name</span>: <span style="">{{Buyer.firstName}}</span> </h6>
                       <h6 class="card-text  card-text-col mb-3"> <span style="font-weight: bold;">Last Name</span>: <span>{{Buyer.lastName}}</span></h6>
-                      <h6 class="card-text  card-text-col mb-3"> <span style="font-weight: bold;">Email</span>: <span>{{Buyer.email}}</span></h6>
-                      <h6 class="card-text  card-text-col mb-3"><span style="font-weight: bold;">Shipping address</span>: <span>Shipping address: N0 8, oluyole aveue, oseikita Ado Ekiti, </span></h6>
+                      <h6 class="card-text  card-text-col mb-3"> <span style="font-weight: bold;">State</span>: <span>{{Buyer.state}}</span></h6>
+                      <h6 class="card-text  card-text-col mb-3"><span style="font-weight: bold;">Shipping address</span>: <span>{{Buyer.address}}</span></h6>
                       <h6 class="card-text  card-text-col"> <span style="font-weight: bold;">Phone Number</span>: <span>{{Buyer.phoneNo}}</span></h6>
                         
                     </div>
@@ -46,12 +46,12 @@
                <div class="col-lg-6">
                     <div class="card" style="height:310px">
                     <div class="card-body dispatch-body">
-                        
+                          
                       <h5 class="card-title mt-3 mb-6" style="font-weight: bold; color: #F7941D;">Dispatcher Details</h5>
                       <h6 class="card-text  card-text-col mb-3"><span style="font-weight: bold;">Full Name</span>: <span style="">{{Dispatch.fullName}}</span> </h6>
                       <h6 class="card-text  card-text-col mb-3"> <span style="font-weight: bold;">Company</span>: <span>{{Dispatch.companyName}}</span></h6>
-                      <h6 class="card-text  card-text-col mb-3"> <span style="font-weight: bold;">Phone No</span>: <span>080234223344</span></h6>
-                      <h6 class="card-text  card-text-col mb-3"><span style="font-weight: bold;">ID</span>: <span>{{Dispatch.phoneNumber}}</span></h6>                    
+                      <h6 class="card-text  card-text-col mb-3"> <span style="font-weight: bold;">Phone No</span>: <span>{{Dispatch.phoneNumber}}</span></h6>
+                      <h6 class="card-text  card-text-col mb-3"><span style="font-weight: bold;">ID</span>: <span>{{Dispatch.dispatcherId}}</span></h6>                      
                     </div>
                   </div>
                </div>
@@ -124,7 +124,7 @@ export default {
         return order
       },
        Buyer(){
-        let order = this.$store.state.orders.orderById.userDetails
+       let order = this.$store.state.orders.orderById.order.shippinDetails
         
         return order
       },

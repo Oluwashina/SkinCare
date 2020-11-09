@@ -162,6 +162,7 @@ export default {
         let word=event.target.value
         this.$store.dispatch("productFilter", word )
         .then(()=>{
+          
         })
         .catch(()=>{
         })
