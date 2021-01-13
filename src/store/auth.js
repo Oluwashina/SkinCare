@@ -15,9 +15,9 @@ export const auth = {
         LoginDetails(state, data){
             state.logindetails = data
         },
-        Users(state, data){
-          state.users = data
-        },
+          Users(state, data){
+            state.users = data
+          },
         Logout(state){
           state.isLogged = false
         }

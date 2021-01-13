@@ -152,8 +152,8 @@
                                         chips
                                         color="blue-grey lighten-2"
                                         label="Select a product"
-                                        :item-text="Products"
-                                        :item-value="Products"
+                                        item-text="name"
+                                        item-value="name"
                                         multiple
                                         @change="Yes()"
                                       >
@@ -187,6 +187,7 @@
                                         </template>
                                       </v-autocomplete>
 
+      
                                      <div class="text-center mt-5">
                                     <button :disabled="loading1" @click="AddIssue($event)" class="btn btn-add">Add Skin Issue
                                         <span class="fa fa-circle-o-notch fa-spin" v-if="loader1"></span>
@@ -238,8 +239,8 @@ export default {
           files: '',
           profileUrl: '',
           autoUpdate: true,
-        friends: [],
-        isUpdating: false,
+          isUpdating: false,
+          friends: [ "Hair cream"],
         }
     },
     watch: {
@@ -253,10 +254,14 @@ export default {
       Yes(){
         console.log(this.friends)
       },
-       remove (item) {
-        const index = this.friends.indexOf(item)
-        if (index >= 0) this.friends.splice(index, 1)
+      //  remove (item) {
+      //   const index = this.friends.indexOf(item)
+      //   if (index >= 0) this.friends.splice(index, 1)
 
+      // },
+      remove (item) {
+        const index = this.friends.indexOf(item.name)
+        if (index >= 0) this.friends.splice(index, 1)
       },
     imageUrl(e){
       if(e){

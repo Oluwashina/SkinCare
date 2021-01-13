@@ -96,8 +96,8 @@
                 chips
                 color="blue-grey lighten-2"
                 label="Select a product"
-                :item-text="Products"
-                :item-value="Products"
+                item-text="name"
+                item-value="name"
                 multiple
                 @change="Yes()"
               >
@@ -165,6 +165,7 @@ export default {
           profileUrl: this.$store.state.skin.issue.imgUrl,
           imageSelect: false,
           friends: this.$store.state.skin.issue.recommendedProducts,
+          // friends: ["Hair cream"],
           isUpdating: false
         }
     },
@@ -177,7 +178,7 @@ export default {
     },
     methods:{
        remove (item) {
-        const index = this.friends.indexOf(item)
+        const index = this.friends.indexOf(item.name)
         if (index >= 0) this.friends.splice(index, 1)
       },
       imageUrl(e){
