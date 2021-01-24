@@ -144,7 +144,7 @@
                                             <!-- <p class="black--text mt-n6 pt-0" v-if="disabled">please wait, uploading image...<span class="fa fa-circle-o-notch fa-spin"></span></p> -->
                                         </div>
 
-                                         <label>Recommend products for the skin issue</label>
+                                         <label>Recommend a product for the skin issue</label>
                                            <v-autocomplete
                                         v-model="friends"
                                         :disabled="isUpdating"
@@ -154,14 +154,14 @@
                                         label="Select a product"
                                         item-text="name"
                                         item-value="name"
-                                        multiple
+                                        
                                         @change="Yes()"
                                       >
                                         <template v-slot:selection="data">
                                           <v-chip
                                             v-bind="data.attrs"
                                             :input-value="data.selected"
-                                            close
+                                            
                                             @click="data.select"
                                             @click:close="remove(data.item)"
                                           >
@@ -187,7 +187,7 @@
                                         </template>
                                       </v-autocomplete>
 
-      
+                                     
                                      <div class="text-center mt-5">
                                     <button :disabled="loading1" @click="AddIssue($event)" class="btn btn-add">Add Skin Issue
                                         <span class="fa fa-circle-o-notch fa-spin" v-if="loader1"></span>
@@ -240,7 +240,7 @@ export default {
           profileUrl: '',
           autoUpdate: true,
           isUpdating: false,
-          friends: [ "Hair cream"],
+          friends: ""
         }
     },
     watch: {
@@ -252,13 +252,9 @@ export default {
     },
     methods: {
       Yes(){
-        console.log(this.friends)
+        const value = this.friends
+        this.$store.commit("getProductId", value)
       },
-      //  remove (item) {
-      //   const index = this.friends.indexOf(item)
-      //   if (index >= 0) this.friends.splice(index, 1)
-
-      // },
       remove (item) {
         const index = this.friends.indexOf(item.name)
         if (index >= 0) this.friends.splice(index, 1)
@@ -355,6 +351,7 @@ export default {
         }
       },
       AddIssue(event){
+        console.log(this.ProductId)
         event.preventDefault()
         this.validateIssueName();
         this.validateDescription();
@@ -369,7 +366,8 @@ export default {
              "name": this.issueName,
              "files": this.files,
               "description": this.description,
-              "recommendedProducts": this.friends
+              "recommendedProduct": this.friends,
+              "recommendedProductId": this.ProductId
           })
           .then(()=>{
             this.issueName = ''
@@ -389,6 +387,7 @@ export default {
 
       },
       onChange(event) {
+        // change symptom
           this.$store.dispatch("getSymptoms", event.target.value)
           .then(()=>{
             this.selectedsymptom = 'pick'
@@ -396,6 +395,13 @@ export default {
           .catch((err)=>{
             console.log(err)
           })
+          // change the recommended products display
+          if(event.target.value == "Skin"){
+              this.$store.dispatch("getAllSkinProducts")
+          }
+          else{
+             this.$store.dispatch("getAllHairProducts")
+          }
       },
       onChangeSymptom(event){
         if(event.target.value !== 'pick' && this.selectedChips.length !== 0){
@@ -414,7 +420,10 @@ export default {
         return symptom
       },
       Products(){
-        return this.$store.state.products.products
+        return this.$store.state.products.recommendedproducts
+      },
+      ProductId(){
+        return this.$store.state.products.recommendedproduct.id
       }
     },
     created(){
@@ -424,7 +433,8 @@ export default {
       .catch((err)=>{
         console.log(err)
       })
-      this.$store.dispatch("getProducts")
+      // get hair products
+      this.$store.dispatch("getAllHairProducts")
       .then(()=>{
       })
       .catch(()=>{

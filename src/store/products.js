@@ -6,6 +6,8 @@ export const products = {
         products: [],
         hairproducts: [],
         skinproducts: [],
+        recommendedproducts: [],
+        recommendedproduct: {},
         productsOriginal: [],
         productsLength:0,
         HairCount: 0,
@@ -25,8 +27,14 @@ export const products = {
           state.hairproducts = data
           state.productsOriginal = data
         },
+        AllHairProducts(state, data){
+          state.recommendedproducts = data
+        },
         SkinProducts(state, data){
           state.skinproducts = data
+        },
+        AllSkinProducts(state, data){
+          state.recommendedproducts = data
         },
         ProductFilter(state,word){
             word=word.toLowerCase()
@@ -37,6 +45,11 @@ export const products = {
         EditProduct(state, id){
           var product = state.hairproducts.find(pro => pro.id === id)
           state.product = product
+        },
+        getProductId(state, value){
+          console.log(value)
+          var product = state.recommendedproducts.find(pro => pro.name === value)
+          state.recommendedproduct = product
         },
         SkinProduct(state, id){
           var product = state.skinproducts.find(pro => pro.id === id)
@@ -72,12 +85,40 @@ export const products = {
           })
         })
       },
+      getAllHairProducts: ({commit})=>{
+        return new Promise((resolve, reject)=>{
+          axios.get(`/products/Hair`)
+          .then(({data, status})=>{
+            if(status === 200){
+              commit('AllHairProducts', data)
+              resolve(data)
+            }
+          })
+          .catch((error)=>{
+            reject(error)
+          })
+        })
+      },
         getHairProducts: ({commit},payload)=>{
           return new Promise((resolve, reject)=>{
             axios.get(`/products/Hair?limit=${payload.limit}&offset=${payload.Offset}`)
             .then(({data, status})=>{
               if(status === 200){
                 commit('HairProducts', data)
+                resolve(data)
+              }
+            })
+            .catch((error)=>{
+              reject(error)
+            })
+          })
+        },
+        getAllSkinProducts: ({commit})=>{
+          return new Promise((resolve, reject)=>{
+            axios.get(`/products/Skin`)
+            .then(({data, status})=>{
+              if(status === 200){
+                commit('AllSkinProducts', data)
                 resolve(data)
               }
             })

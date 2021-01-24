@@ -112,7 +112,8 @@ export default {
         console.log(err)
       }),
        this.$store.dispatch("GetSkinIssues")
-      .then(()=>{
+      .then((success)=>{
+        console.log(success)
        
       })
       .catch((err)=>{

@@ -19,7 +19,7 @@
 
              <div class="form-group">
                       <label for="category">Category</label>
-                      <select class="custom-select my-1 mr-sm-2" v-model="selected" id="category">
+                      <select @change="onChange($event)"  class="custom-select my-1 mr-sm-2" v-model="selected" id="category">
                         <option v-for="(cat, index) in category" 
                               :key="index"
                             :value="cat"
@@ -87,7 +87,7 @@
               </div>
 
               
-                  <label>Recommended products for the skin issue</label>
+                  <label>Recommended a product for the skin issue</label>
                     <v-autocomplete
                 v-model="friends"
                 :disabled="isUpdating"
@@ -98,14 +98,14 @@
                 label="Select a product"
                 item-text="name"
                 item-value="name"
-                multiple
+                
                 @change="Yes()"
               >
                 <template v-slot:selection="data">
                   <v-chip
                     v-bind="data.attrs"
                     :input-value="data.selected"
-                    close
+                    
                     @click="data.select"
                     @click:close="remove(data.item)"
                   >
@@ -164,8 +164,8 @@ export default {
           files: this.$store.state.skin.issue.imgUrl,
           profileUrl: this.$store.state.skin.issue.imgUrl,
           imageSelect: false,
-          friends: this.$store.state.skin.issue.recommendedProducts,
-          // friends: ["Hair cream"],
+          friends: this.$store.state.skin.issue.recommendedProduct,
+          // friends: "Hair cream",
           isUpdating: false
         }
     },
@@ -177,6 +177,10 @@ export default {
       },
     },
     methods:{
+       Yes(){
+        const value = this.friends
+        this.$store.commit("getProductId", value)
+      },
        remove (item) {
         const index = this.friends.indexOf(item.name)
         if (index >= 0) this.friends.splice(index, 1)
@@ -239,7 +243,8 @@ export default {
               "files": this.files,
               "description": this.description,
               "id": this.$store.state.skin.issue.id,
-              "recommendedProducts": this.friends
+              "recommendedProduct": this.friends,
+              "recommendedProductId": this.ProductId
             })
             .then(()=>{
               this.loader = false,
@@ -259,9 +264,24 @@ export default {
               })
             })
          }
-       
-
-      }
+      },
+       onChange(event) {
+        // change symptom
+          this.$store.dispatch("getSymptoms", event.target.value)
+          .then(()=>{
+            this.selectedsymptom = 'pick'
+          })
+          .catch((err)=>{
+            console.log(err)
+          })
+          // change the recommended products display
+          if(event.target.value == "Skin"){
+              this.$store.dispatch("getAllSkinProducts")
+          }
+          else{
+             this.$store.dispatch("getAllHairProducts")
+          }
+      },
     },
     computed: {
       Symptoms(){
@@ -272,7 +292,10 @@ export default {
         return symptom
       },
        Products(){
-        return this.$store.state.products.products
+        return this.$store.state.products.recommendedproducts
+      },
+      ProductId(){
+        return this.$store.state.products.recommendedproduct.id
       }
     },
      created(){
@@ -284,8 +307,11 @@ export default {
       .catch((err)=>{
         console.log(err)
       })
-       this.$store.dispatch("getProducts")
+       // get hair products
+      this.$store.dispatch("getAllHairProducts")
       .then(()=>{
+         //  get the product id of the recommended product selected
+        this.$store.commit("getProductId", this.$store.state.skin.issue.recommendedProduct)
       })
       .catch(()=>{
       })
