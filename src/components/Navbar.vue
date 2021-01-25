@@ -85,7 +85,7 @@
           <v-flex class="mt-3">
               <div class="mt-3">
                 <v-list-item-avatar  size="100">
-                  <v-img src="/casual.png" ></v-img>
+                  <v-img src="/avatar.png" ></v-img>
                 </v-list-item-avatar>
               </div>
             
@@ -222,6 +222,14 @@
             </v-list-item-icon>
             <v-list-item-title style="font-size:14px" >
              Adverts
+            </v-list-item-title> 
+          </v-list-item> 
+           <v-list-item router-link to="/admin" >
+            <v-list-item-icon>
+                <v-icon color="#F7941D">mdi-account-tie-outline</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title style="font-size:14px" >
+             Admins
             </v-list-item-title> 
           </v-list-item> 
             <v-list-item router-link to="/questionnaire" >

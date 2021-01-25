@@ -29,6 +29,8 @@ import QuestionnaireEdit from '../views/QuestionnaireEdit.vue'
 import Adverts from '../views/Adverts.vue'
 import Notifications from '../views/Notifications.vue'
 import FAQ from '../views/FAQ.vue'
+import Admin from '../views/Admin.vue'
+import NewAdmin from '../views/NewAdmin.vue'
 
 Vue.use(VueRouter)
 
@@ -174,6 +176,16 @@ Vue.use(VueRouter)
         path: '/adverts',
         name: 'Adverts',
         component: Adverts
+      },
+      {
+        path: '/admin',
+        name: 'Admin',
+        component: Admin
+      },
+      {
+        path: '/admin/create',
+        name: 'New Admin',
+        component: NewAdmin
       },
       {
         path: '/notifications',

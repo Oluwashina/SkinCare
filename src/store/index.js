@@ -10,6 +10,7 @@ import {requested} from './requested'
 import {questionnaire} from './questionnaire'
 import {adverts} from './adverts'
 import {notification} from './notification'
+import { admin } from './admin'
 
 Vue.use(Vuex)
 
@@ -31,6 +32,7 @@ export default new Vuex.Store({
     requested: requested,
     questionnaire: questionnaire,
     adverts: adverts,
+    admin: admin,
     notification: notification
   }
 })
