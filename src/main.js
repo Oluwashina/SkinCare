@@ -31,6 +31,10 @@ Vue.use(VueIziToast);
 
 new Vue({
   router,
+  watch:{
+    '$route' (to) {
+       if(to.currentRoute.meta.reload==true){window.location.reload()}
+   }},
   store,
   vuetify,
   render: h => h(App)

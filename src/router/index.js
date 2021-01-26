@@ -60,12 +60,15 @@ Vue.use(VueRouter)
       {
         path: '/dashboard',
         name: 'Dashboard',
-        component: Dashboard
+        component: Dashboard,
+        meta: {
+          reload: true
+        }
       },
       {
         path: '/neworders',
         name: 'NewOrders',
-        component: NewOrders
+        component: NewOrders,
       },
       {
         path: '/orders/:id',
