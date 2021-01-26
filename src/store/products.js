@@ -47,7 +47,6 @@ export const products = {
           state.product = product
         },
         getProductId(state, value){
-          console.log(value)
           var product = state.recommendedproducts.find(pro => pro.name === value)
           state.recommendedproduct = product
         },

@@ -300,21 +300,33 @@ export default {
     },
      created(){
       this.$store.dispatch("getSymptoms", this.selected)
-      .then((success)=>{
-        console.log(success)
+      .then(()=>{
         
       })
       .catch((err)=>{
         console.log(err)
       })
-       // get hair products
-      this.$store.dispatch("getAllHairProducts")
-      .then(()=>{
-         //  get the product id of the recommended product selected
-        this.$store.commit("getProductId", this.$store.state.skin.issue.recommendedProduct)
-      })
-      .catch(()=>{
-      })
+
+       if(this.selected == "Skin"){
+             this.$store.dispatch("getAllSkinProducts")
+             .then(()=>{
+                  //  get the product id of the recommended product selected
+                this.$store.commit("getProductId", this.$store.state.skin.issue.recommendedProduct)
+             })
+             .catch(()=>{
+
+             })
+          }
+          else{
+             this.$store.dispatch("getAllHairProducts")
+             .then(()=>{
+                  //  get the product id of the recommended product selected
+                this.$store.commit("getProductId", this.$store.state.skin.issue.recommendedProduct)
+             })
+             .catch(()=>{
+               
+             })
+        }
     }
 
 }
