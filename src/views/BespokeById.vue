@@ -34,22 +34,48 @@
               </div>
              </div>
 
+             <!-- images section -->
+             <div class="mt-10">
+                <h6>Skin Images</h6>
+                <div class="row">
+                  <div class="col-3">
+                    <div class="imageFile">
+                       <img :src="file" alt="..."
+                         style="width: 100%; height: auto; border-radius: 4px;" />
+                    </div>
+                  </div>
+                </div>
+             </div>
+
+
+              <!-- reply section -->
+              <div class="mt-8 mb-10" v-if="this.$store.state.bespoke.entry.reply !== ''">
+                <h6>Replies Section</h6>
+                  <div class="mt-4 question">
+                    <p class="pb-3 pt-3">{{this.$store.state.bespoke.entry.reply}}</p>
+                  </div>
+              </div>
+
           <!-- message reply section -->
-          <div class="form-group mt-5">
+          <div class="form-group mt-10" v-if="this.$store.state.bespoke.entry.reply === ''">
               <label for="description">Send a reply</label>
               <textarea class="form-control" v-model="replyMessage" 
               v-bind:class="{'form-control' : true, 'is-invalid' : !validMessage(replyMessage) && messageBlured}"
                 v-on:blur="messageBlured = true"
               id="decription" rows="5"></textarea>
                 <div class="invalid-feedback">This field is required</div>
+
+                  <!-- send messsage -->
+              <div class="text-center mt-5 mb-3">
+                  <button :disabled="loading" @click="UpdateBespoke($event)" class="btn btn-add">Send
+                        <span class="fa fa-circle-o-notch fa-spin" v-if="loader"></span>
+                    </button>
+            </div>
           </div>
 
-          <!-- send messsage -->
-            <div class="text-center mt-5 mb-3">
-                <button :disabled="loading" @click="UpdateBespoke($event)" class="btn btn-add">Send
-                      <span class="fa fa-circle-o-notch fa-spin" v-if="loader"></span>
-                  </button>
-           </div>
+         
+
+         
 
       </div>
   </v-container>
@@ -61,11 +87,12 @@ import moment from 'moment'
 export default {
   data(){
     return{
-      replyMessage: this.$store.state.bespoke.entry.reply ? this.$store.state.bespoke.entry.reply : '',
+      replyMessage: '',
       loader: false,
       loading: false,
       messageBlured: false,
       valid: false,
+      file: this.$store.state.bespoke.entry.imgUrl
       
     }
   },
@@ -82,7 +109,6 @@ export default {
     UpdateBespoke(event){
       event.preventDefault()
       this.validateMessage()
-      alert('ddd')
       var id = this.$route.params.id
         if(this.valid == true){
           this.loader =  true
@@ -162,5 +188,9 @@ textarea:focus{
 border-color: rgba(50, 54, 67, 0.2);
   box-shadow: 0px 5px 30px rgba(50, 54, 67, 0.2);
   outline: 0 none;
+}
+
+.imageFile{
+  width: 200px;
 }
 </style>

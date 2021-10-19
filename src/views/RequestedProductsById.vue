@@ -73,7 +73,7 @@ import moment from 'moment'
 export default {
     data(){
         return{
-           replyMessage: this.$store.state.requested.request.reply ? this.$store.state.requested.request.reply : '',
+           replyMessage: '',
             loader: false,
             loading: false,
             messageBlured: false,

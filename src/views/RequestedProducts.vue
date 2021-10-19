@@ -44,11 +44,12 @@ export default {
         return{
             headers: [
             {
-                text: 'Name',
+                text: 'Firstname',
                 align: 'start',
                 sortable: false,
                 value: 'firstName',
             },
+             { text: 'Lastname', value: 'lastName' },
             { text: 'Email', value: 'email' },
             { text: 'Quantity', value: 'quantitySelected' },
             { text: 'Date', value: 'createdAt' },

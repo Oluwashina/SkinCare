@@ -84,7 +84,6 @@ export default {
     },
     methods: {
         View(id){
-                 alert(id)
             this.$store.dispatch("OrderById", id)
             .then((success)=>{
                 console.log(success)

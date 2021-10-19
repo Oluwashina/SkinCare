@@ -113,13 +113,8 @@ export default {
      data(){
         return{
             headers: [
-            {
-                text: 'User Name',
-                align: 'start',
-                sortable: false,
-                value: 'username',
-            },
-            { text: 'Full Name', value: 'firstName' },
+            { text: 'Firstname', value: 'firstName' },
+             { text: 'Lastname', value: 'lastName' },
             { text: 'Email', value: 'email' },
             { text: 'Date', value: 'createdAt' },
             { text: '', value: 'action', sortable: false, },
