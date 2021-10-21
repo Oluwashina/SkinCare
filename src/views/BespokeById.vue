@@ -36,7 +36,7 @@
 
              <!-- images section -->
              <div class="mt-10">
-                <h6>Skin Images</h6>
+                <h6>Attached Images</h6>
                 <div class="row">
                   <div class="col-3">
                     <div class="imageFile">
