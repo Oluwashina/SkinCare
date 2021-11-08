@@ -39,10 +39,18 @@
             </div>
               
           </div>
-  
-          <div class="row">
-            <div class="col-lg-9">
 
+
+          <!-- reply section -->
+          <div class="mt-8 mb-10" v-if="this.$store.state.requested.request.reply !== ' '">
+            <h6>Replies Section</h6>
+              <div class="mt-4 question">
+                <p class="pb-3 pt-3">{{this.$store.state.requested.request.reply}}</p>
+              </div>
+          </div>
+  
+          <div class="row" v-if="this.$store.state.requested.request.reply == ' '">
+            <div class="col-lg-9">
               <div class="form-group">
                 <label for="description">Send Feedback</label>
                 <textarea class="form-control" id="decription" rows="5"

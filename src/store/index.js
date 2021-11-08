@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import VuexPersist from 'vuex-persist'
+// import VuexPersist from 'vuex-persist'
 import {auth} from './auth'
 import {products} from './products'
 import {orders} from './orders'
@@ -15,14 +15,14 @@ import { admin } from './admin'
 Vue.use(Vuex)
 
 
-const vuexLocalStorage = new VuexPersist({
-  key: 'vuex',
-  storage: window.localStorage,
-  reducer: state => state,
-})
+// const vuexLocalStorage = new VuexPersist({
+//   key: 'vuex',
+//   storage: window.localStorage,
+//   reducer: state => state,
+// })
 
 export default new Vuex.Store({
-  plugins: [vuexLocalStorage.plugin],
+  // plugins: [vuexLocalStorage.plugin],
   modules: {
     auth: auth,
     products: products,
