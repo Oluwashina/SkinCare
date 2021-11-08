@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import VuexPersist from 'vuex-persist'
+import VuexPersist from 'vuex-persist'
 import {auth} from './auth'
 import {products} from './products'
 import {orders} from './orders'
