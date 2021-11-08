@@ -15,14 +15,14 @@ import { admin } from './admin'
 Vue.use(Vuex)
 
 
-// const vuexLocalStorage = new VuexPersist({
-//   key: 'vuex',
-//   storage: window.localStorage,
-//   reducer: state => state,
-// })
+const vuexLocalStorage = new VuexPersist({
+  key: 'vuex',
+  storage: window.localStorage,
+  reducer: state => state,
+})
 
 export default new Vuex.Store({
-  // plugins: [vuexLocalStorage.plugin],
+  plugins: [vuexLocalStorage.plugin],
   modules: {
     auth: auth,
     products: products,
