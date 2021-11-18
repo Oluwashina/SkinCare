@@ -77,7 +77,7 @@
               <v-data-table
                 :headers="headers"
                 :items="NewOrders"
-                hide-default-footer
+               
                 no-data-text='No new order placed yet'
               >
                 <template v-slot:item.imgUrl="{ item }">

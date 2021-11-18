@@ -20,7 +20,7 @@
                     <v-data-table
                         :headers="headers"
                         :items="Requested"
-                        hide-default-footer
+                   
                         no-data-text='No requested products yet'
                         :search="search"
                     >

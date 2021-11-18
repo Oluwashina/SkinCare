@@ -20,7 +20,7 @@
                     <v-data-table
                         :headers="headers"
                         :items="NewOrders"
-                        hide-default-footer
+                    
                         no-data-text='No completed orders yet'
                         :search="search"
                     >

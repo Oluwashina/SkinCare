@@ -20,7 +20,7 @@
                     <v-data-table
                         :headers="headers"
                         :items="DispatchedOrders"
-                        hide-default-footer
+                        
                         no-data-text='No dispatched products yet'
                         :search="search"
                     >
