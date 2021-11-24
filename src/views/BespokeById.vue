@@ -117,15 +117,20 @@ export default {
                 "reply": this.replyMessage,
                 "id": id
             })
-            .then((success)=>{
+            .then(()=>{
                 this.loader = false
                  this.loading = false
                  this.messageBlured= false
                  iziToast.success({
                     message: 'Reply has been sent successfully!',
                     progressBar: false,
+                    position: 'topRight'
                     })
-                console.log(success)
+
+                setTimeout(()=>{
+                    this.$router.push('/bespoke')
+                }, 3000)
+  
             })
             .catch((err)=>{
                 console.log(err)
