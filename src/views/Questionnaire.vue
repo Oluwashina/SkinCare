@@ -29,7 +29,7 @@
             :items="Entries"
             :items-per-page="5"
             class="elevation-1 mt-5"
-            hide-default-footer
+          
             no-data-text='No Entries made yet!!!'
             :search="search"
         >
